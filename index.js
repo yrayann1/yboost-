@@ -197,16 +197,15 @@ const renderLayout = (title, body, activePage = 'home') => `
             margin: 0;
             font-family: 'Manrope', 'Segoe UI', sans-serif;
             background:
-                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0 2px, rgba(255, 255, 255, 0) 2px 18px),
-                radial-gradient(circle at 10% 18%, rgba(16, 185, 129, 0.22) 0, rgba(16, 185, 129, 0.08) 24%, transparent 45%),
-                radial-gradient(circle at 88% 16%, rgba(14, 165, 233, 0.18) 0, rgba(14, 165, 233, 0.06) 22%, transparent 44%),
-                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.14) 0, rgba(251, 191, 36, 0.04) 20%, transparent 40%),
-                linear-gradient(180deg, #f7fffc 0%, #ecf9f4 52%, #e8f4ff 100%);
+                radial-gradient(circle at 12% 16%, rgba(99, 102, 241, 0.13) 0, rgba(99, 102, 241, 0.04) 28%, transparent 48%),
+                radial-gradient(circle at 90% 14%, rgba(14, 165, 233, 0.12) 0, rgba(14, 165, 233, 0.03) 24%, transparent 44%),
+                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.1) 0, rgba(251, 191, 36, 0.02) 20%, transparent 40%),
+                linear-gradient(180deg, #f8fbff 0%, #f2f7ff 52%, #edf3ff 100%);
             color: var(--text);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            background-size: auto, auto, auto, auto, auto;
+            background-size: auto, auto, auto, auto;
         }
         body::before,
         body::after {
@@ -367,30 +366,40 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .list-hero {
             background:
-                radial-gradient(circle at 86% 24%, rgba(34, 211, 238, 0.16) 0, transparent 44%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 254, 252, 0.9));
-            border-color: rgba(45, 212, 191, 0.22);
-            box-shadow: 0 22px 48px rgba(15, 118, 110, 0.12);
+                radial-gradient(circle at 86% 24%, rgba(99, 102, 241, 0.12) 0, transparent 44%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(243, 248, 255, 0.94));
+            border-color: rgba(99, 102, 241, 0.18);
+            box-shadow: 0 24px 50px rgba(30, 41, 59, 0.12);
+        }
+        .list-hero::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: linear-gradient(180deg, #4f46e5, #0ea5e9);
+            border-radius: 20px 0 0 20px;
         }
         .list-hero-main {
             max-width: 660px;
         }
         .list-hero-main h1 {
             font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
-            font-size: clamp(34px, 5vw, 48px);
-            line-height: 1.02;
+            font-size: clamp(32px, 4.4vw, 46px);
+            line-height: 1.04;
             letter-spacing: -0.04em;
             margin-bottom: 8px;
         }
         .list-hero-main .muted {
-            font-size: 22px;
-            color: #245068;
+            font-size: 20px;
+            color: #1e3a5f;
             font-weight: 700;
             margin-top: 6px;
         }
         .list-hero-note {
             margin-top: 10px;
-            color: #41627a;
+            color: #475569;
             font-weight: 600;
             font-size: 14px;
         }
@@ -398,9 +407,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             min-width: 190px;
             border-radius: 18px;
             padding: 14px 16px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(220, 252, 244, 0.72));
-            border: 1px solid rgba(94, 234, 212, 0.42);
-            box-shadow: 0 14px 24px rgba(15, 118, 110, 0.14);
+            background: linear-gradient(165deg, #1e293b, #334155);
+            border: 1px solid rgba(99, 102, 241, 0.28);
+            box-shadow: 0 16px 26px rgba(30, 41, 59, 0.28);
             text-align: right;
         }
         .list-hero-count {
@@ -409,16 +418,16 @@ const renderLayout = (title, body, activePage = 'home') => `
             line-height: 1;
             font-weight: 800;
             letter-spacing: -0.04em;
-            color: #0f172a;
+            color: #f8fafc;
         }
         .list-hero-label {
             margin-top: 4px;
-            color: #1f3f52;
+            color: #cbd5e1;
             font-weight: 700;
         }
         .list-hero-sub {
             margin-top: 8px;
-            color: #0f766e;
+            color: #7dd3fc;
             font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
@@ -431,9 +440,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             margin-top: 10px;
         }
         .metric-pill {
-            background: #ecfeff;
-            color: #115e59;
-            border: 1px solid #99f6e4;
+            background: rgba(255, 255, 255, 0.92);
+            color: #1e3a8a;
+            border: 1px solid #c7d2fe;
             border-radius: 999px;
             padding: 5px 10px;
             font-size: 12px;
@@ -441,7 +450,7 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .metric-pill strong {
             font-weight: 800;
-            color: #0f766e;
+            color: #3730a3;
         }
         .home-hero {
             position: relative;
@@ -746,12 +755,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             animation: fadeUp 0.5s ease both;
         }
         .list-toolbar {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(236, 254, 255, 0.82));
-            border-color: rgba(94, 234, 212, 0.28);
-            box-shadow: 0 14px 28px rgba(15, 118, 110, 0.12);
-            position: sticky;
-            top: 84px;
-            z-index: 12;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 255, 0.9));
+            border-color: rgba(129, 140, 248, 0.22);
+            box-shadow: 0 14px 28px rgba(51, 65, 85, 0.12);
         }
         .search-panel input,
         .search-panel select,
@@ -777,16 +783,16 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .search-panel button {
             cursor: pointer;
-            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            background: linear-gradient(135deg, #4338ca, #0284c7);
             color: white;
             font-weight: 700;
             border: 0;
-            box-shadow: 0 10px 18px rgba(15, 118, 110, 0.28);
+            box-shadow: 0 10px 18px rgba(67, 56, 202, 0.28);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .search-panel button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 12px 22px rgba(15, 118, 110, 0.34);
+            box-shadow: 0 12px 22px rgba(67, 56, 202, 0.34);
         }
         .search-panel button:active {
             transform: translateY(0);
@@ -803,9 +809,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 12px 14px;
             text-decoration: none;
             font-weight: 700;
-            border: 1px solid #99f6e4;
-            color: #134e4a;
-            background: linear-gradient(180deg, #ecfeff, #ccfbf1);
+            border: 1px solid #c7d2fe;
+            color: #312e81;
+            background: linear-gradient(180deg, #f8faff, #e0e7ff);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .filter-reset:hover {
@@ -858,13 +864,13 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .list-grid .card {
             border-radius: 22px;
-            box-shadow: 0 16px 32px rgba(11, 54, 84, 0.14);
-            border-color: rgba(94, 234, 212, 0.24);
+            box-shadow: 0 16px 32px rgba(30, 41, 59, 0.14);
+            border-color: rgba(129, 140, 248, 0.18);
         }
         .list-grid .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 24px 42px rgba(15, 118, 110, 0.2);
-            border-color: rgba(20, 184, 166, 0.38);
+            box-shadow: 0 24px 42px rgba(67, 56, 202, 0.18);
+            border-color: rgba(79, 70, 229, 0.34);
         }
         .card:hover::after {
             opacity: 1;
@@ -1315,18 +1321,18 @@ const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc'
     return renderLayout('Pokemons', `
         <section class="hero list-hero">
             <div class="list-hero-main">
-                <h1>Pokemons en images</h1>
-                <p class="muted">Recherche rapide et tri intelligent.</p>
+                <h1>Collection Pokemon</h1>
+                <p class="muted">Un style clair pour explorer les meilleurs.</p>
                 <div class="hero-metrics">
                     <span class="metric-pill">Moyenne <strong>${avgPower}</strong></span>
                     <span class="metric-pill">Attaque max <strong>${topAttack}</strong></span>
                     <span class="metric-pill">Tri <strong>${escapeHtml(sortLabel)}</strong></span>
                 </div>
-                <p class="list-hero-note">Sélectionne un Pokémon pour ouvrir sa fiche complète avec talents, faiblesses et évolution.</p>
+                <p class="list-hero-note">Choisis un Pokémon pour ouvrir sa fiche complète, ses talents et son évolution.</p>
             </div>
             <div class="list-hero-aside">
                 <span class="list-hero-count">${items.length}</span>
-                <div class="list-hero-label">Pokemons disponibles</div>
+                <div class="list-hero-label">Pokemon disponibles</div>
                 <div class="list-hero-sub">Pokedex YBoost</div>
             </div>
         </section>
