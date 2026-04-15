@@ -26,6 +26,21 @@ const formatDate = (value) => {
     });
 };
 
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const getPokemonExtraStats = (pokemon) => {
+    const attack = clamp(Math.round((pokemon.power || 0) * 1.6 + (pokemon.cp || 0) * 2.5), 15, 99);
+    const defense = clamp(Math.round((pokemon.hp || 0) * 1.25 + (pokemon.cp || 0) * 2 + (pokemon.types?.length || 1) * 2), 15, 99);
+    const speed = clamp(Math.round((pokemon.power || 0) * 1.2 + 40 - (pokemon.hp || 0) * 0.35), 15, 99);
+
+    let rarity = 'Commun';
+    if ((pokemon.power || 0) >= 40) rarity = 'Légendaire';
+    else if ((pokemon.power || 0) >= 34) rarity = 'Épique';
+    else if ((pokemon.power || 0) >= 28) rarity = 'Rare';
+
+    return { attack, defense, speed, rarity };
+};
+
 const renderLayout = (title, body) => `
 <!doctype html>
 <html lang="fr">
@@ -274,6 +289,14 @@ const renderLayout = (title, body) => `
             font-size: 14px;
             font-weight: 600;
         }
+        .card-substats {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #475569;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
         .search-panel {
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr auto auto;
@@ -404,6 +427,20 @@ const renderLayout = (title, body) => `
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 12px;
             margin-top: 10px;
+        }
+        .detail-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .detail-tag {
+            background: #dbeafe;
+            color: #1e3a8a;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 700;
         }
         .stat {
             background: #f8fafc;
@@ -578,6 +615,7 @@ const renderSearchPanel = (query, selectedId, sortBy) => `
             <option value="power-desc" ${sortBy === 'power-desc' ? 'selected' : ''}>Puissance décroissante</option>
             <option value="power-asc" ${sortBy === 'power-asc' ? 'selected' : ''}>Puissance croissante</option>
             <option value="hp-desc" ${sortBy === 'hp-desc' ? 'selected' : ''}>HP décroissants</option>
+            <option value="attack-desc" ${sortBy === 'attack-desc' ? 'selected' : ''}>Attaque décroissante</option>
         </select>
         <button type="submit">Voir</button>
         <a class="card secondary" href="/api/pokemons" style="display:flex;align-items:center;justify-content:center;padding:12px 14px;text-decoration:none;font-weight:700;">Réinitialiser</a>
@@ -593,6 +631,10 @@ const sortPokemons = (items, sortBy) => {
 
     if (sortBy === 'hp-desc') {
         return list.sort((left, right) => (right.hp || 0) - (left.hp || 0));
+    }
+
+    if (sortBy === 'attack-desc') {
+        return list.sort((left, right) => getPokemonExtraStats(right).attack - getPokemonExtraStats(left).attack);
     }
 
     return list.sort((left, right) => (right.power || 0) - (left.power || 0));
@@ -612,19 +654,25 @@ const renderTypesBadges = (types) => {
 };
 
 const renderCardFull = (pokemon) => `
+    (() => {
+        const extra = getPokemonExtraStats(pokemon);
+        return `
     <a class="card" href="/api/pokemons?id=${pokemon.id}">
         <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
         <div class="card-header">
             <div class="card-name-section">
                 <p class="name">${escapeHtml(pokemon.name)}</p>
-                <p class="card-meta">n°${pokemon.id}</p>
+                <p class="card-meta">n°${pokemon.id} • ${extra.rarity}</p>
             </div>
-            <div class="power-badge">${pokemon.power}</div>
+            <div class="power-badge">PWR ${pokemon.power}</div>
         </div>
         <div class="card-types">${renderTypesBadges(pokemon.types)}</div>
+        <p class="card-substats">ATK ${extra.attack} • DEF ${extra.defense} • VIT ${extra.speed}</p>
         <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
     </a>
 `;
+    })()
+);
 
 const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc') => {
     const cards = items.map((pokemon) => renderCardFull(pokemon)).join('');
@@ -659,6 +707,8 @@ const renderPokemonDetailBlock = (pokemon) => {
         `;
     }
 
+    const extra = getPokemonExtraStats(pokemon);
+
     return `
         <section class="detail">
             <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
@@ -666,10 +716,17 @@ const renderPokemonDetailBlock = (pokemon) => {
                 <div class="detail-badge">Pokémon n°${pokemon.id}</div>
                 <h1 class="detail-name">${escapeHtml(pokemon.name)}</h1>
                 <p class="muted">Pokemon n°${pokemon.id}</p>
+                <div class="detail-tags">
+                    <span class="detail-tag">Rareté: ${extra.rarity}</span>
+                    <span class="detail-tag">Étoiles: ${getPowerStars(pokemon.power)}</span>
+                </div>
                 <div class="stats">
                     <div class="stat"><small>HP</small><strong>${pokemon.hp}</strong></div>
                     <div class="stat"><small>CP</small><strong>${pokemon.cp}</strong></div>
                     <div class="stat"><small>Puissance</small><strong>${pokemon.power}</strong></div>
+                    <div class="stat"><small>Attaque</small><strong>${extra.attack}</strong></div>
+                    <div class="stat"><small>Défense</small><strong>${extra.defense}</strong></div>
+                    <div class="stat"><small>Vitesse</small><strong>${extra.speed}</strong></div>
                     <div class="stat"><small>Types</small><strong>${pokemon.types.join(' / ')}</strong></div>
                     <div class="stat"><small>Créé le</small><strong>${formatDate(pokemon.created)}</strong></div>
                 </div>
