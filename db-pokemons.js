@@ -4,7 +4,8 @@ const pokemons = [
   name: "Bulbizarre",
   hp: 25,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+  power: 30,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
   types: ["Plante", "Poison"],
   created: new Date()
  },
@@ -13,7 +14,8 @@ const pokemons = [
   name: "Salamèche",
   hp: 28,
   cp: 6,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+  power: 34,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
   types: ["Feu"],
   created: new Date()
  },
@@ -22,7 +24,8 @@ const pokemons = [
   name: "Carapuce",
   hp: 21,
   cp: 4,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+  power: 25,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
   types: ["Eau"],
   created: new Date()
  },
@@ -31,7 +34,8 @@ const pokemons = [
   name: "Aspicot",
   hp: 16,
   cp: 2,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png",
+  power: 18,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png",
   types: ["Insecte", "Poison"],
   created: new Date()
  },
@@ -40,7 +44,8 @@ const pokemons = [
   name: "Roucool",
   hp: 30,
   cp: 7,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png",
+  power: 37,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png",
   types: ["Normal", "Vol"],
   created: new Date()
  },
@@ -49,7 +54,8 @@ const pokemons = [
   name: "Rattata",
   hp: 18,
   cp: 6,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png",
+  power: 24,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png",
   types: ["Normal"],
   created: new Date()
  },
@@ -58,7 +64,8 @@ const pokemons = [
   name: "Piafabec",
   hp: 14,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png",
+  power: 19,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png",
   types: ["Normal", "Vol"],
   created: new Date()
  },
@@ -67,7 +74,8 @@ const pokemons = [
   name: "Abo",
   hp: 16,
   cp: 4,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png",
+  power: 20,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png",
   types: ["Poison"],
   created: new Date()
  },
@@ -76,7 +84,8 @@ const pokemons = [
   name: "Pikachu",
   hp: 21,
   cp: 7,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+  power: 28,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
   types: ["Electrik"],
   created: new Date()
  },
@@ -85,7 +94,8 @@ const pokemons = [
   name: "Sabelette",
   hp: 19,
   cp: 3,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/27.png",
+  power: 22,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/27.png",
   types: ["Normal"],
   created: new Date()
  },
@@ -94,7 +104,8 @@ const pokemons = [
   name: "Mélofée",
   hp: 25,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
+  power: 30,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
   types: ["Fée"],
   created: new Date()
  },
@@ -103,7 +114,8 @@ const pokemons = [
   name: "Groupix",
   hp: 17,
   cp: 8,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png",
+  power: 25,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png",
   types: ["Feu"],
   created: new Date()
  },
@@ -112,7 +124,8 @@ const pokemons = [
   name: "Nosferapti",
   hp: 20,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/41.png",
+  power: 25,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/41.png",
   types: ["Poison", "Vol"],
   created: new Date()
  },
@@ -121,7 +134,8 @@ const pokemons = [
   name: "Miaouss",
   hp: 22,
   cp: 6,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png",
+  power: 28,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png",
   types: ["Normal"],
   created: new Date()
  },
@@ -130,7 +144,8 @@ const pokemons = [
   name: "Psykokwak",
   hp: 24,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+  power: 29,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
   types: ["Eau"],
   created: new Date()
  },
@@ -139,7 +154,8 @@ const pokemons = [
   name: "Caninos",
   hp: 23,
   cp: 7,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/58.png",
+  power: 30,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/58.png",
   types: ["Feu"],
   created: new Date()
  },
@@ -148,7 +164,8 @@ const pokemons = [
   name: "Ptitard",
   hp: 20,
   cp: 4,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png",
+  power: 24,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png",
   types: ["Eau"],
   created: new Date()
  },
@@ -157,7 +174,8 @@ const pokemons = [
   name: "Abra",
   hp: 16,
   cp: 9,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png",
+  power: 25,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png",
   types: ["Psy"],
   created: new Date()
  },
@@ -166,7 +184,8 @@ const pokemons = [
   name: "Machoc",
   hp: 28,
   cp: 6,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png",
+  power: 34,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png",
   types: ["Combat"],
   created: new Date()
  },
@@ -175,7 +194,8 @@ const pokemons = [
   name: "Chétiflor",
   hp: 19,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/69.png",
+  power: 24,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/69.png",
   types: ["Plante", "Poison"],
   created: new Date()
  },
@@ -184,7 +204,8 @@ const pokemons = [
   name: "Tentacool",
   hp: 21,
   cp: 4,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/72.png",
+  power: 25,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/72.png",
   types: ["Eau", "Poison"],
   created: new Date()
  },
@@ -193,7 +214,8 @@ const pokemons = [
   name: "Racaillou",
   hp: 30,
   cp: 3,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png",
+  power: 33,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png",
   types: ["Roche", "Sol"],
   created: new Date()
  },
@@ -202,7 +224,8 @@ const pokemons = [
   name: "Ponyta",
   hp: 26,
   cp: 7,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/77.png",
+  power: 33,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/77.png",
   types: ["Feu"],
   created: new Date()
  },
@@ -211,7 +234,8 @@ const pokemons = [
   name: "Ramoloss",
   hp: 31,
   cp: 4,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png",
+  power: 35,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png",
   types: ["Eau", "Psy"],
   created: new Date()
  },
@@ -220,7 +244,8 @@ const pokemons = [
   name: "Magnéti",
   hp: 18,
   cp: 8,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/81.png",
+  power: 26,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/81.png",
   types: ["Electrik", "Acier"],
   created: new Date()
  },
@@ -229,7 +254,8 @@ const pokemons = [
   name: "Canarticho",
   hp: 19,
   cp: 6,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png",
+  power: 25,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png",
   types: ["Normal", "Vol"],
   created: new Date()
  },
@@ -238,7 +264,8 @@ const pokemons = [
   name: "Otaria",
   hp: 24,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png",
+  power: 29,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png",
   types: ["Eau"],
   created: new Date()
  },
@@ -247,7 +274,8 @@ const pokemons = [
   name: "Krabby",
   hp: 21,
   cp: 5,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/98.png",
+  power: 26,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/98.png",
   types: ["Eau"],
   created: new Date()
  },
@@ -256,7 +284,8 @@ const pokemons = [
   name: "Voltorbe",
   hp: 17,
   cp: 7,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/100.png",
+  power: 24,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/100.png",
   types: ["Electrik"],
   created: new Date()
  },
@@ -265,7 +294,8 @@ const pokemons = [
   name: "Kokiyas",
   hp: 18,
   cp: 4,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png",
+  power: 22,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png",
   types: ["Eau"],
   created: new Date()
  },
@@ -274,7 +304,8 @@ const pokemons = [
   name: "Evoli",
   hp: 23,
   cp: 8,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
+  power: 31,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
   types: ["Normal"],
   created: new Date()
  },
@@ -283,7 +314,8 @@ const pokemons = [
   name: "Minidraco",
   hp: 20,
   cp: 9,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png",
+  power: 29,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png",
   types: ["Dragon"],
   created: new Date()
  },
@@ -292,7 +324,8 @@ const pokemons = [
   name: "Mew",
   hp: 35,
   cp: 10,
-    picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png",
+  power: 45,
+  picture: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png",
   types: ["Psy"],
   created: new Date()
  }

@@ -162,9 +162,15 @@ const renderLayout = (title, body) => `
             gap: 14px;
             margin-bottom: 8px;
         }
+        .card-meta {
+            margin: 10px 0 0;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
         .search-panel {
             display: grid;
-            grid-template-columns: 1.5fr 1fr auto auto;
+            grid-template-columns: 1.5fr 1fr 1fr auto auto;
             gap: 12px;
             margin-bottom: 20px;
             padding: 16px;
@@ -303,6 +309,7 @@ const renderHomePage = () => {
         <a class="card" href="/api/pokemons?id=${pokemon.id}">
             <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
             <p class="name">${escapeHtml(pokemon.name)}</p>
+            <p class="card-meta">Puissance ${pokemon.power}</p>
         </a>
     `).join('');
 
@@ -333,7 +340,7 @@ const renderHomePage = () => {
             </article>
             <article class="feature">
                 <h3>Infos complètes</h3>
-                <p>Image, HP, CP, types et date de création.</p>
+                <p>Image, HP, CP, puissance, types et date de création.</p>
             </article>
         </section>
 
@@ -346,7 +353,7 @@ const renderHomePage = () => {
     `);
 };
 
-const renderSearchPanel = (query, selectedId) => `
+const renderSearchPanel = (query, selectedId, sortBy) => `
     <form class="search-panel" method="get" action="/api/pokemons">
         <input type="text" name="q" placeholder="Chercher un pokemon par nom" value="${escapeHtml(query)}" />
         <select name="id">
@@ -355,16 +362,36 @@ const renderSearchPanel = (query, selectedId) => `
                 <option value="${pokemon.id}" ${String(selectedId) === String(pokemon.id) ? 'selected' : ''}>${escapeHtml(pokemon.name)}</option>
             `).join('')}
         </select>
+        <select name="sort">
+            <option value="power-desc" ${sortBy === 'power-desc' ? 'selected' : ''}>Puissance décroissante</option>
+            <option value="power-asc" ${sortBy === 'power-asc' ? 'selected' : ''}>Puissance croissante</option>
+            <option value="hp-desc" ${sortBy === 'hp-desc' ? 'selected' : ''}>HP décroissants</option>
+        </select>
         <button type="submit">Voir</button>
         <a class="card secondary" href="/api/pokemons" style="display:flex;align-items:center;justify-content:center;padding:12px 14px;text-decoration:none;font-weight:700;">Réinitialiser</a>
     </form>
 `;
 
-const renderGallery = (items, query = '', selectedId = '') => {
+const sortPokemons = (items, sortBy) => {
+    const list = [...items];
+
+    if (sortBy === 'power-asc') {
+        return list.sort((left, right) => (left.power || 0) - (right.power || 0));
+    }
+
+    if (sortBy === 'hp-desc') {
+        return list.sort((left, right) => (right.hp || 0) - (left.hp || 0));
+    }
+
+    return list.sort((left, right) => (right.power || 0) - (left.power || 0));
+};
+
+const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc') => {
     const cards = items.map((pokemon) => `
         <a class="card" href="/api/pokemons?id=${pokemon.id}">
             <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
             <p class="name">${escapeHtml(pokemon.name)}</p>
+            <p class="card-meta">Puissance ${pokemon.power}</p>
         </a>
     `).join('');
 
@@ -379,7 +406,7 @@ const renderGallery = (items, query = '', selectedId = '') => {
                 <div class="muted">Pokemons</div>
             </div>
         </section>
-        ${renderSearchPanel(query, selectedId)}
+        ${renderSearchPanel(query, selectedId, sortBy)}
         <main class="grid">
             ${cards.length ? cards : '<div class="empty">Aucun pokemon trouvé.</div>'}
         </main>
@@ -407,6 +434,7 @@ const renderPokemonDetailBlock = (pokemon) => {
                 <div class="stats">
                     <div class="stat"><small>HP</small><strong>${pokemon.hp}</strong></div>
                     <div class="stat"><small>CP</small><strong>${pokemon.cp}</strong></div>
+                    <div class="stat"><small>Puissance</small><strong>${pokemon.power}</strong></div>
                     <div class="stat"><small>Types</small><strong>${pokemon.types.join(' / ')}</strong></div>
                     <div class="stat"><small>Créé le</small><strong>${formatDate(pokemon.created)}</strong></div>
                 </div>
@@ -445,10 +473,12 @@ app.get('/api/pokemons/:id/:name', (req, res) => {
 */
 app.get('/api/pokemons', (req, res) => {
     const query = String(req.query.q || '').trim();
+    const sortBy = String(req.query.sort || 'power-desc');
     const selectedId = parseInt(req.query.id, 10);
     const filteredPokemons = query
         ? pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(query.toLowerCase()))
         : pokemons;
+    const visiblePokemons = sortPokemons(filteredPokemons, sortBy);
     const selectedPokemon = Number.isInteger(selectedId)
         ? pokemons.find((pokemon) => pokemon.id === selectedId)
         : null;
@@ -456,12 +486,12 @@ app.get('/api/pokemons', (req, res) => {
     if (selectedPokemon) {
         return res.send(renderLayout('Pokemon sélectionné', `
             <a class="back" href="/api/pokemons">← Retour à la recherche</a>
-            ${renderSearchPanel(query, selectedId)}
+            ${renderSearchPanel(query, selectedId, sortBy)}
             ${renderPokemonDetailBlock(selectedPokemon)}
         `));
     }
 
-    res.send(renderGallery(filteredPokemons, query, ''));
+    res.send(renderGallery(visiblePokemons, query, '', sortBy));
 });
 app.get('/api/pokemons/:id', (req, res) => {
     const id = parseInt(req.params.id);
@@ -469,7 +499,7 @@ app.get('/api/pokemons/:id', (req, res) => {
     const pokemon = pokemons.find( pokemon=> pokemon.id === id );
     res.send(renderLayout('Pokemon sélectionné', `
         <a class="back" href="/api/pokemons">← Retour à la recherche</a>
-        ${renderSearchPanel('', pokemon ? pokemon.id : '')}
+        ${renderSearchPanel('', pokemon ? pokemon.id : '', 'power-desc')}
         ${renderPokemonDetailBlock(pokemon)}
     `));
 });
