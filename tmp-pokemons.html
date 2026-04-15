@@ -1,0 +1,1707 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pokemons</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --text: #102033;
+            --text-soft: #3e536b;
+            --brand: #0f766e;
+            --brand-strong: #115e59;
+            --card-shadow: 0 24px 46px rgba(27, 41, 67, 0.14);
+            --surface: rgba(255, 255, 255, 0.9);
+            --surface-strong: rgba(255, 255, 255, 0.97);
+            --outline: rgba(112, 139, 168, 0.22);
+            --type-plante: #78c850;
+            --type-feu: #f08030;
+            --type-eau: #6890f0;
+            --type-electrik: #f8d030;
+            --type-psy: #f85888;
+            --type-glace: #98d8d8;
+            --type-roche: #b8a038;
+            --type-sol: #e0c068;
+            --type-vol: #a890f0;
+            --type-insecte: #a8b820;
+            --type-poison: #a040a0;
+            --type-combat: #c03028;
+            --type-fee: #ee99ac;
+            --type-acier: #b8b8d0;
+        }
+        body {
+            margin: 0;
+            font-family: 'Manrope', 'Segoe UI', sans-serif;
+            background:
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0 2px, rgba(255, 255, 255, 0) 2px 18px),
+                radial-gradient(circle at 10% 18%, rgba(16, 185, 129, 0.22) 0, rgba(16, 185, 129, 0.08) 24%, transparent 45%),
+                radial-gradient(circle at 88% 16%, rgba(14, 165, 233, 0.18) 0, rgba(14, 165, 233, 0.06) 22%, transparent 44%),
+                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.14) 0, rgba(251, 191, 36, 0.04) 20%, transparent 40%),
+                linear-gradient(180deg, #f7fffc 0%, #ecf9f4 52%, #e8f4ff 100%);
+            color: var(--text);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            background-size: auto, auto, auto, auto, auto;
+        }
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            inset: auto;
+            border-radius: 999px;
+            pointer-events: none;
+            filter: blur(8px);
+            z-index: 0;
+        }
+        body::before {
+            width: 320px;
+            height: 320px;
+            left: -120px;
+            top: 120px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.18) 55%, transparent 72%);
+            opacity: 0.6;
+            animation: orbLeft 11s ease-in-out infinite;
+        }
+        body::after {
+            width: 420px;
+            height: 420px;
+            right: -150px;
+            bottom: -120px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.55) 0%, rgba(96, 165, 250, 0.12) 45%, transparent 72%);
+            opacity: 0.45;
+            animation: orbRight 13s ease-in-out infinite;
+        }
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .site-nav {
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 255, 252, 0.9));
+            border: 1px solid var(--outline);
+            box-shadow: 0 12px 24px rgba(17, 94, 89, 0.16);
+            backdrop-filter: blur(10px);
+            animation: fadeDown 0.45s ease both;
+        }
+        .site-brand {
+            font-weight: 800;
+            font-size: 15px;
+            color: #12303f;
+            letter-spacing: -0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
+        }
+        .site-brand::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 35% 35%, #6ee7b7 0%, #14b8a6 55%, #0f766e 100%);
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
+        }
+        .site-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .site-link {
+            text-decoration: none;
+            border-radius: 10px;
+            padding: 8px 11px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #115e59;
+            background: #ecfeff;
+            border: 1px solid #a7f3d0;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .site-link::after {
+            content: '';
+            position: absolute;
+            left: -120%;
+            top: 0;
+            width: 70%;
+            height: 100%;
+            transform: skewX(-20deg);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transition: left 0.35s ease;
+        }
+        .site-link:hover {
+            background: #ccfbf1;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(15, 118, 110, 0.18);
+        }
+        .site-link:hover::after {
+            left: 140%;
+        }
+        .site-link.active {
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: #ffffff;
+            border-color: #14b8a6;
+            box-shadow: 0 8px 18px rgba(15, 118, 110, 0.28);
+        }
+        .site-link.active::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 3px;
+            height: 2px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 20px 24px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.82));
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--outline);
+            backdrop-filter: blur(8px);
+            animation: fadeUp 0.55s ease both;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            right: -120px;
+            top: -130px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.06) 48%, transparent 72%);
+            pointer-events: none;
+        }
+        .hero h1, .hero p {
+            margin: 0;
+        }
+        .hero strong {
+            font-size: 28px;
+            letter-spacing: -0.04em;
+        }
+        .list-hero {
+            background:
+                radial-gradient(circle at 86% 24%, rgba(34, 211, 238, 0.16) 0, transparent 44%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 254, 252, 0.9));
+            border-color: rgba(45, 212, 191, 0.22);
+            box-shadow: 0 22px 48px rgba(15, 118, 110, 0.12);
+        }
+        .list-hero-main {
+            max-width: 660px;
+        }
+        .list-hero-main h1 {
+            font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
+            font-size: clamp(34px, 5vw, 48px);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            margin-bottom: 8px;
+        }
+        .list-hero-main .muted {
+            font-size: 22px;
+            color: #245068;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+        .list-hero-note {
+            margin-top: 10px;
+            color: #41627a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .list-hero-aside {
+            min-width: 190px;
+            border-radius: 18px;
+            padding: 14px 16px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(220, 252, 244, 0.72));
+            border: 1px solid rgba(94, 234, 212, 0.42);
+            box-shadow: 0 14px 24px rgba(15, 118, 110, 0.14);
+            text-align: right;
+        }
+        .list-hero-count {
+            display: block;
+            font-size: 42px;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #0f172a;
+        }
+        .list-hero-label {
+            margin-top: 4px;
+            color: #1f3f52;
+            font-weight: 700;
+        }
+        .list-hero-sub {
+            margin-top: 8px;
+            color: #0f766e;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .hero-metrics {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .metric-pill {
+            background: #ecfeff;
+            color: #115e59;
+            border: 1px solid #99f6e4;
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .metric-pill strong {
+            font-weight: 800;
+            color: #0f766e;
+        }
+        .home-hero {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+            padding: 34px;
+            border-radius: 30px;
+            background:
+                linear-gradient(114deg, rgba(7, 38, 61, 0.9) 0%, rgba(15, 89, 102, 0.78) 42%, rgba(22, 78, 99, 0.84) 100%),
+                url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'),
+                url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'),
+                url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png');
+            background-size: cover, 320px, 210px, 240px;
+            background-repeat: no-repeat;
+            background-position: center, 96% 108%, 78% 14%, 62% 88%;
+            color: #f8fbff;
+            box-shadow: 0 28px 54px rgba(8, 47, 73, 0.34);
+            overflow: hidden;
+            isolation: isolate;
+            border: 1px solid rgba(167, 243, 208, 0.3);
+            animation: fadeUp 0.62s ease both;
+        }
+        .home-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.18) 0, transparent 26%),
+                radial-gradient(circle at 82% 72%, rgba(255, 255, 255, 0.14) 0, transparent 20%);
+            pointer-events: none;
+        }
+        .home-hero::after {
+            content: '';
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 999px;
+            right: -70px;
+            top: -70px;
+            background: rgba(255, 255, 255, 0.18);
+        }
+        .home-title {
+            margin: 0 0 12px;
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.04;
+            letter-spacing: -0.04em;
+            font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
+        }
+        .home-lead {
+            margin: 0 0 18px;
+            color: #d1fae5;
+            font-size: 18px;
+        }
+        .home-cta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 11px 16px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            left: -120%;
+            top: 0;
+            width: 70%;
+            height: 100%;
+            transform: skewX(-20deg);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+            transition: left 0.35s ease;
+        }
+        .btn.primary {
+            background: linear-gradient(135deg, #ecfeff, #bbf7d0);
+            color: #0f3f3b;
+            box-shadow: 0 10px 22px rgba(15, 118, 110, 0.22);
+        }
+        .btn.secondary {
+            color: #ecfeff;
+            border-color: rgba(153, 246, 228, 0.7);
+            background: rgba(20, 184, 166, 0.2);
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            filter: saturate(1.1);
+        }
+        .btn:hover::after {
+            left: 140%;
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .home-hero-right {
+            z-index: 1;
+            display: grid;
+            align-content: end;
+            gap: 10px;
+        }
+        .badge {
+            justify-self: end;
+            width: fit-content;
+            border-radius: 999px;
+            padding: 7px 12px;
+            background: rgba(236, 254, 255, 0.2);
+            border: 1px solid rgba(167, 243, 208, 0.5);
+            font-size: 13px;
+            font-weight: 700;
+            backdrop-filter: blur(8px);
+        }
+        .home-panels {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .feature {
+            background: var(--surface-strong);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 12px 26px rgba(28, 66, 152, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            animation: fadeUp 0.6s ease both;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto;
+            height: 4px;
+            background: linear-gradient(90deg, #0f766e, #22d3ee);
+            opacity: 0.95;
+        }
+        .feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 30px rgba(15, 118, 110, 0.14);
+            border-color: rgba(20, 184, 166, 0.28);
+        }
+        .feature-kicker {
+            margin: 0 0 8px;
+            color: #0f766e;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .feature h3 {
+            margin: 0 0 6px;
+        }
+        .feature p {
+            margin: 0;
+            color: var(--muted);
+        }
+        .section-title {
+            margin: 0 0 12px;
+            font-size: 24px;
+            letter-spacing: -0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::after {
+            content: '';
+            width: 54px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #0f766e, #22d3ee);
+        }
+        .home-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin: 18px 0 0;
+        }
+        .home-stat {
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(10px);
+        }
+        .home-stat small {
+            display: block;
+            margin-bottom: 4px;
+            color: rgba(255, 247, 237, 0.82);
+            font-weight: 600;
+        }
+        .home-stat strong {
+            font-size: 20px;
+            letter-spacing: -0.03em;
+        }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        .card-meta {
+            margin: 10px 0 0;
+            text-align: left;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .card-name-section {
+            min-width: 0;
+            flex: 1;
+        }
+        .power-badge {
+            background: #ccfbf1;
+            color: #115e59;
+            border-radius: 10px;
+            padding: 6px 8px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.18);
+        }
+        .card-types {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 10px 0 0;
+            justify-content: flex-start;
+        }
+        .type-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+        }
+        .type-plante { background: var(--type-plante); }
+        .type-feu { background: var(--type-feu); }
+        .type-eau { background: var(--type-eau); }
+        .type-electrik { background: var(--type-electrik); color: #3f3f46; }
+        .type-psy { background: var(--type-psy); }
+        .type-glace { background: var(--type-glace); color: #3f3f46; }
+        .type-roche { background: var(--type-roche); }
+        .type-sol { background: var(--type-sol); color: #3f3f46; }
+        .type-vol { background: var(--type-vol); }
+        .type-insecte { background: var(--type-insecte); }
+        .type-poison { background: var(--type-poison); }
+        .type-combat { background: var(--type-combat); }
+        .type-fee { background: var(--type-fee); color: #3f3f46; }
+        .type-acier { background: var(--type-acier); color: #3f3f46; }
+        .card-substats {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #334155;
+            text-align: left;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .list-grid .card-foot {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.26);
+        }
+        .search-panel {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr auto auto;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 255, 0.86));
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--outline);
+            animation: fadeUp 0.5s ease both;
+        }
+        .list-toolbar {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(236, 254, 255, 0.82));
+            border-color: rgba(94, 234, 212, 0.28);
+            box-shadow: 0 14px 28px rgba(15, 118, 110, 0.12);
+            position: sticky;
+            top: 84px;
+            z-index: 12;
+        }
+        .search-panel input,
+        .search-panel select,
+        .search-panel button {
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 16px;
+        }
+        .search-panel input:focus,
+        .search-panel select:focus,
+        .search-panel button:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .search-panel input,
+        .search-panel select {
+            width: 100%;
+            background: white;
+            color: var(--text);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+        .search-panel button {
+            cursor: pointer;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            font-weight: 700;
+            border: 0;
+            box-shadow: 0 10px 18px rgba(15, 118, 110, 0.28);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .search-panel button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px rgba(15, 118, 110, 0.34);
+        }
+        .search-panel button:active {
+            transform: translateY(0);
+        }
+        .search-panel .secondary {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .filter-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 12px 14px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid #99f6e4;
+            color: #134e4a;
+            background: linear-gradient(180deg, #ecfeff, #ccfbf1);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .filter-reset:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.12);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+        }
+        .list-grid {
+            grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(247,250,255,0.98));
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 14px 34px rgba(27, 67, 157, 0.12);
+            transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+            border: 1px solid var(--outline);
+            overflow: hidden;
+            animation: fadeUp 0.6s ease both;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto;
+            height: 5px;
+            background: linear-gradient(90deg, #0f766e, #14b8a6, #22d3ee);
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+            opacity: 0;
+            transform: translateX(-110%);
+            transition: transform 0.4s ease, opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 22px 42px rgba(27, 67, 157, 0.2);
+            border-color: rgba(59, 130, 246, 0.34);
+        }
+        .list-grid .card {
+            border-radius: 22px;
+            box-shadow: 0 16px 32px rgba(11, 54, 84, 0.14);
+            border-color: rgba(94, 234, 212, 0.24);
+        }
+        .list-grid .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 42px rgba(15, 118, 110, 0.2);
+            border-color: rgba(20, 184, 166, 0.38);
+        }
+        .card:hover::after {
+            opacity: 1;
+            transform: translateX(110%);
+        }
+        .card img, .detail img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .card img {
+            background: linear-gradient(145deg, #eff6ff 0%, #f8fafc 100%);
+            border-radius: 14px;
+            padding: 8px;
+            box-sizing: border-box;
+            transition: transform 0.26s ease;
+        }
+        .card:hover img {
+            transform: scale(1.04);
+        }
+        .name {
+            margin: 12px 0 0;
+            font-weight: 800;
+            text-align: left;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            font-size: 20px;
+        }
+        .power-bar {
+            margin-top: auto;
+            height: 6px;
+            border-radius: 999px;
+            background: #e0e7ff;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+        .power-bar span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #99f6e4 0%, #14b8a6 50%, #0f766e 100%);
+        }
+        .detail {
+            display: grid;
+            grid-template-columns: minmax(260px, 360px) 1fr;
+            gap: 24px;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 248, 255, 0.93));
+            padding: 24px;
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--outline);
+            animation: fadeUp 0.58s ease both;
+        }
+        .grid .card:nth-child(2n) { animation-delay: 0.04s; }
+        .grid .card:nth-child(3n) { animation-delay: 0.08s; }
+        .grid .card:nth-child(4n) { animation-delay: 0.12s; }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes orbLeft {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(28px, -22px) scale(1.04); }
+        }
+        @keyframes orbRight {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-22px, 18px) scale(0.98); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .site-nav,
+            .hero,
+            .home-hero,
+            .feature,
+            .search-panel,
+            .card,
+            .detail {
+                animation: none !important;
+                transition: none !important;
+            }
+            body::before,
+            body::after,
+            .card::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+        .panel {
+            display: grid;
+            gap: 12px;
+        }
+        .detail-badge {
+            width: fit-content;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(37, 99, 235, 0.10);
+            color: #1d4ed8;
+            font-weight: 700;
+        }
+        .detail-name {
+            margin: 0;
+            font-size: clamp(30px, 4vw, 42px);
+            letter-spacing: -0.05em;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .detail-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .detail-tag {
+            background: #dbeafe;
+            color: #1e3a8a;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .info-grid {
+            margin-top: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+        }
+        .info-item {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 10px 12px;
+        }
+        .info-item small {
+            display: block;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.04em;
+            color: #475569;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .info-item strong {
+            font-size: 13px;
+            color: #0f172a;
+        }
+        .stat {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+        .stat small {
+            display: block;
+            color: #64748b;
+            margin-bottom: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-size: 11px;
+        }
+        .back {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .muted {
+            color: var(--muted);
+        }
+        .empty {
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+        .home-section {
+            position: relative;
+            margin-bottom: 32px;
+        }
+        .home-section::before {
+            content: '';
+            position: absolute;
+            inset: -40px;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: 32px;
+            background:
+                radial-gradient(circle 280px at 12% 35%, rgba(59, 130, 246, 0.18) 0%, transparent 58%),
+                radial-gradient(circle 320px at 88% 8%, rgba(30, 144, 255, 0.14) 0%, transparent 55%),
+                radial-gradient(circle 360px at 75% 92%, rgba(100, 150, 255, 0.12) 0%, transparent 50%);
+            filter: blur(1px);
+        }
+        .home-section-features {
+            position: relative;
+            margin-top: 40px;
+            padding: 32px 0;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+        }
+        .home-section-features::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background:
+                radial-gradient(circle 280px at 18% 22%, rgba(37, 99, 235, 0.14) 0%, transparent 60%),
+                radial-gradient(circle 320px at 92% 75%, rgba(59, 130, 246, 0.12) 0%, transparent 58%),
+                linear-gradient(135deg, rgba(219, 234, 254, 0.08) 0%, rgba(240, 249, 255, 0.05) 100%);
+        }
+        .home-team {
+            position: relative;
+        }
+        .home-team::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle 260px at 22% 50%, rgba(59, 130, 246, 0.16) 0%, transparent 58%),
+                radial-gradient(circle 300px at 85% 15%, rgba(30, 144, 255, 0.12) 0%, transparent 56%);
+        }
+        @media (max-width: 720px) {
+            .hero, .detail, .home-hero {
+                grid-template-columns: 1fr;
+                display: grid;
+            }
+            .home-hero {
+                background-size: cover, 180px, 140px, 150px;
+                background-position: center, 102% 104%, 88% 10%, 62% 100%;
+                padding: 26px;
+            }
+            .site-nav {
+                top: 8px;
+                padding: 9px 10px;
+            }
+            .site-brand {
+                font-size: 14px;
+            }
+            .search-panel {
+                grid-template-columns: 1fr;
+            }
+            .list-toolbar {
+                position: static;
+            }
+            .list-hero-aside {
+                text-align: left;
+                min-width: 0;
+                width: 100%;
+            }
+            .list-hero-main .muted {
+                font-size: 18px;
+            }
+            .home-panels {
+                grid-template-columns: 1fr;
+            }
+            .home-stats {
+                grid-template-columns: 1fr;
+            }
+            .badge {
+                justify-self: start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <nav class="site-nav">
+            <div class="site-brand">YBoost Pokedex</div>
+            <div class="site-links">
+                <a class="site-link " href="/" >Accueil</a>
+                <a class="site-link " href="/api/pokemons" >Pokemons</a>
+                <a class="site-link active" href="/api/pokemons?sort=power-desc" aria-current="page">Top puissance</a>
+            </div>
+        </nav>
+        
+        <section class="hero list-hero">
+            <div class="list-hero-main">
+                <h1>Pokemons en images</h1>
+                <p class="muted">Recherche rapide et tri intelligent.</p>
+                <div class="hero-metrics">
+                    <span class="metric-pill">Moyenne <strong>28</strong></span>
+                    <span class="metric-pill">Attaque max <strong>97</strong></span>
+                    <span class="metric-pill">Tri <strong>Puissance décroissante</strong></span>
+                </div>
+                <p class="list-hero-note">Sélectionne un Pokémon pour ouvrir sa fiche complète avec talents, faiblesses et évolution.</p>
+            </div>
+            <div class="list-hero-aside">
+                <span class="list-hero-count">33</span>
+                <div class="list-hero-label">Pokemons disponibles</div>
+                <div class="list-hero-sub">Pokedex YBoost</div>
+            </div>
+        </section>
+        
+    <form class="search-panel list-toolbar" method="get" action="/api/pokemons">
+        <input type="text" name="q" placeholder="Chercher un pokemon par nom" value="" />
+        <select name="id">
+            <option value="">Choisir un pokemon</option>
+            
+                <option value="1" >Bulbizarre</option>
+            
+                <option value="2" >Salamèche</option>
+            
+                <option value="3" >Carapuce</option>
+            
+                <option value="4" >Aspicot</option>
+            
+                <option value="5" >Roucool</option>
+            
+                <option value="6" >Rattata</option>
+            
+                <option value="7" >Piafabec</option>
+            
+                <option value="8" >Abo</option>
+            
+                <option value="9" >Pikachu</option>
+            
+                <option value="10" >Sabelette</option>
+            
+                <option value="11" >Mélofée</option>
+            
+                <option value="12" >Groupix</option>
+            
+                <option value="13" >Nosferapti</option>
+            
+                <option value="14" >Miaouss</option>
+            
+                <option value="15" >Psykokwak</option>
+            
+                <option value="16" >Caninos</option>
+            
+                <option value="17" >Ptitard</option>
+            
+                <option value="18" >Abra</option>
+            
+                <option value="19" >Machoc</option>
+            
+                <option value="20" >Chétiflor</option>
+            
+                <option value="21" >Tentacool</option>
+            
+                <option value="22" >Racaillou</option>
+            
+                <option value="23" >Ponyta</option>
+            
+                <option value="24" >Ramoloss</option>
+            
+                <option value="25" >Magnéti</option>
+            
+                <option value="26" >Canarticho</option>
+            
+                <option value="27" >Otaria</option>
+            
+                <option value="28" >Krabby</option>
+            
+                <option value="29" >Voltorbe</option>
+            
+                <option value="30" >Kokiyas</option>
+            
+                <option value="31" >Evoli</option>
+            
+                <option value="32" >Minidraco</option>
+            
+                <option value="33" >Mew</option>
+            
+        </select>
+        <select name="sort">
+            <option value="power-desc" selected>Puissance décroissante</option>
+            <option value="power-asc" >Puissance croissante</option>
+            <option value="hp-desc" >HP décroissants</option>
+            <option value="attack-desc" >Attaque décroissante</option>
+        </select>
+        <button type="submit">Voir</button>
+        <a class="filter-reset" href="/api/pokemons">Réinitialiser</a>
+    </form>
+
+        <main class="grid list-grid">
+            
+    <a class="card" href="/api/pokemons?id=33">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png" alt="Mew" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Mew</p>
+                <p class="card-meta">n°33 • Légendaire</p>
+            </div>
+            <div class="power-badge">PWR 45</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-psy">Psy</span></div>
+        <p class="card-substats">ATK 97 • DEF 66 • VIT 82</p>
+        <div class="card-foot">
+            <span>★★★★★</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:99.00000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=5">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png" alt="Roucool" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Roucool</p>
+                <p class="card-meta">n°5 • Épique</p>
+            </div>
+            <div class="power-badge">PWR 37</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-normal">Normal</span><span class="type-badge type-vol">Vol</span></div>
+        <p class="card-substats">ATK 77 • DEF 56 • VIT 74</p>
+        <div class="card-foot">
+            <span>★★★★★</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:81.4%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=24">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png" alt="Ramoloss" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Ramoloss</p>
+                <p class="card-meta">n°24 • Épique</p>
+            </div>
+            <div class="power-badge">PWR 35</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span><span class="type-badge type-psy">Psy</span></div>
+        <p class="card-substats">ATK 66 • DEF 51 • VIT 71</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:77%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=2">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="Salamèche" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Salamèche</p>
+                <p class="card-meta">n°2 • Épique</p>
+            </div>
+            <div class="power-badge">PWR 34</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
+        <p class="card-substats">ATK 69 • DEF 49 • VIT 71</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:74.80000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=19">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png" alt="Machoc" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Machoc</p>
+                <p class="card-meta">n°19 • Épique</p>
+            </div>
+            <div class="power-badge">PWR 34</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-combat">Combat</span></div>
+        <p class="card-substats">ATK 69 • DEF 49 • VIT 71</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:74.80000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=22">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png" alt="Racaillou" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Racaillou</p>
+                <p class="card-meta">n°22 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 33</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-roche">Roche</span><span class="type-badge type-sol">Sol</span></div>
+        <p class="card-substats">ATK 60 • DEF 48 • VIT 69</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:72.60000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=23">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/77.png" alt="Ponyta" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Ponyta</p>
+                <p class="card-meta">n°23 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 33</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
+        <p class="card-substats">ATK 70 • DEF 49 • VIT 71</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:72.60000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=31">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" alt="Evoli" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Evoli</p>
+                <p class="card-meta">n°31 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 31</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
+        <p class="card-substats">ATK 70 • DEF 47 • VIT 69</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:68.2%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=1">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="Bulbizarre" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Bulbizarre</p>
+                <p class="card-meta">n°1 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 30</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-plante">Plante</span><span class="type-badge type-poison">Poison</span></div>
+        <p class="card-substats">ATK 61 • DEF 45 • VIT 67</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:66%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=11">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png" alt="Mélofée" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Mélofée</p>
+                <p class="card-meta">n°11 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 30</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-fee">Fée</span></div>
+        <p class="card-substats">ATK 61 • DEF 43 • VIT 67</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:66%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=16">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/58.png" alt="Caninos" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Caninos</p>
+                <p class="card-meta">n°16 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 30</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
+        <p class="card-substats">ATK 66 • DEF 45 • VIT 68</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:66%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=15">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png" alt="Psykokwak" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Psykokwak</p>
+                <p class="card-meta">n°15 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 29</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
+        <p class="card-substats">ATK 59 • DEF 42 • VIT 66</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:63.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=27">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png" alt="Otaria" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Otaria</p>
+                <p class="card-meta">n°27 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 29</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
+        <p class="card-substats">ATK 59 • DEF 42 • VIT 66</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:63.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=32">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png" alt="Minidraco" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Minidraco</p>
+                <p class="card-meta">n°32 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 29</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-dragon">Dragon</span></div>
+        <p class="card-substats">ATK 69 • DEF 45 • VIT 68</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:63.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=9">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Pikachu" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Pikachu</p>
+                <p class="card-meta">n°9 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 28</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-electrik">Electrik</span></div>
+        <p class="card-substats">ATK 62 • DEF 42 • VIT 66</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:61.60000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=14">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png" alt="Miaouss" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Miaouss</p>
+                <p class="card-meta">n°14 • Rare</p>
+            </div>
+            <div class="power-badge">PWR 28</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
+        <p class="card-substats">ATK 60 • DEF 42 • VIT 66</p>
+        <div class="card-foot">
+            <span>★★★★☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:61.60000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=25">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/81.png" alt="Magnéti" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Magnéti</p>
+                <p class="card-meta">n°25 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 26</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-electrik">Electrik</span><span class="type-badge type-acier">Acier</span></div>
+        <p class="card-substats">ATK 62 • DEF 43 • VIT 65</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:57.2%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=28">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/98.png" alt="Krabby" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Krabby</p>
+                <p class="card-meta">n°28 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 26</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
+        <p class="card-substats">ATK 54 • DEF 38 • VIT 64</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:57.2%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=3">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" alt="Carapuce" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Carapuce</p>
+                <p class="card-meta">n°3 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 25</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
+        <p class="card-substats">ATK 50 • DEF 36 • VIT 63</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:55.00000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=12">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png" alt="Groupix" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Groupix</p>
+                <p class="card-meta">n°12 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 25</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
+        <p class="card-substats">ATK 60 • DEF 39 • VIT 64</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:55.00000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=13">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/41.png" alt="Nosferapti" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Nosferapti</p>
+                <p class="card-meta">n°13 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 25</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-poison">Poison</span><span class="type-badge type-vol">Vol</span></div>
+        <p class="card-substats">ATK 53 • DEF 39 • VIT 63</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:55.00000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=18">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png" alt="Abra" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Abra</p>
+                <p class="card-meta">n°18 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 25</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-psy">Psy</span></div>
+        <p class="card-substats">ATK 63 • DEF 40 • VIT 64</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:55.00000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=21">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/72.png" alt="Tentacool" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Tentacool</p>
+                <p class="card-meta">n°21 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 25</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span><span class="type-badge type-poison">Poison</span></div>
+        <p class="card-substats">ATK 50 • DEF 38 • VIT 63</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:55.00000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=26">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png" alt="Canarticho" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Canarticho</p>
+                <p class="card-meta">n°26 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 25</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-normal">Normal</span><span class="type-badge type-vol">Vol</span></div>
+        <p class="card-substats">ATK 55 • DEF 40 • VIT 63</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:55.00000000000001%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=6">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png" alt="Rattata" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Rattata</p>
+                <p class="card-meta">n°6 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 24</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
+        <p class="card-substats">ATK 53 • DEF 37 • VIT 63</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:52.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=17">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png" alt="Ptitard" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Ptitard</p>
+                <p class="card-meta">n°17 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 24</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
+        <p class="card-substats">ATK 48 • DEF 35 • VIT 62</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:52.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=20">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/69.png" alt="Chétiflor" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Chétiflor</p>
+                <p class="card-meta">n°20 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 24</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-plante">Plante</span><span class="type-badge type-poison">Poison</span></div>
+        <p class="card-substats">ATK 51 • DEF 38 • VIT 62</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:52.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=29">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/100.png" alt="Voltorbe" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Voltorbe</p>
+                <p class="card-meta">n°29 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 24</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-electrik">Electrik</span></div>
+        <p class="card-substats">ATK 56 • DEF 37 • VIT 63</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:52.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=10">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/27.png" alt="Sabelette" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Sabelette</p>
+                <p class="card-meta">n°10 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 22</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
+        <p class="card-substats">ATK 43 • DEF 32 • VIT 60</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:48.400000000000006%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=30">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png" alt="Kokiyas" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Kokiyas</p>
+                <p class="card-meta">n°30 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 22</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
+        <p class="card-substats">ATK 45 • DEF 33 • VIT 60</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:48.400000000000006%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=8">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png" alt="Abo" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Abo</p>
+                <p class="card-meta">n°8 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 20</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-poison">Poison</span></div>
+        <p class="card-substats">ATK 42 • DEF 30 • VIT 58</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>1 type</span>
+        </div>
+        <div class="power-bar"><span style="width:44%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=7">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png" alt="Piafabec" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Piafabec</p>
+                <p class="card-meta">n°7 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 19</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-normal">Normal</span><span class="type-badge type-vol">Vol</span></div>
+        <p class="card-substats">ATK 43 • DEF 32 • VIT 58</p>
+        <div class="card-foot">
+            <span>★★★☆☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:41.800000000000004%;"></span></div>
+    </a>
+
+    <a class="card" href="/api/pokemons?id=4">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png" alt="Aspicot" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">Aspicot</p>
+                <p class="card-meta">n°4 • Commun</p>
+            </div>
+            <div class="power-badge">PWR 18</div>
+        </div>
+        <div class="card-types"><span class="type-badge type-insecte">Insecte</span><span class="type-badge type-poison">Poison</span></div>
+        <p class="card-substats">ATK 34 • DEF 28 • VIT 56</p>
+        <div class="card-foot">
+            <span>★★☆☆☆</span>
+            <span>2 types</span>
+        </div>
+        <div class="power-bar"><span style="width:39.6%;"></span></div>
+    </a>
+
+        </main>
+    
+    </div>
+</body>
+</html>

@@ -167,17 +167,17 @@ const renderLayout = (title, body, activePage = 'home') => `
     <title>${title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <style>
         :root {
-            --text: #0f1b3d;
-            --text-soft: #334155;
-            --brand: #1d4ed8;
-            --brand-strong: #1e40af;
-            --card-shadow: 0 22px 44px rgba(13, 24, 57, 0.14);
-            --surface: rgba(255, 255, 255, 0.88);
-            --surface-strong: rgba(255, 255, 255, 0.95);
-            --outline: rgba(148, 163, 184, 0.22);
+            --text: #102033;
+            --text-soft: #3e536b;
+            --brand: #0f766e;
+            --brand-strong: #115e59;
+            --card-shadow: 0 24px 46px rgba(27, 41, 67, 0.14);
+            --surface: rgba(255, 255, 255, 0.9);
+            --surface-strong: rgba(255, 255, 255, 0.97);
+            --outline: rgba(112, 139, 168, 0.22);
             --type-plante: #78c850;
             --type-feu: #f08030;
             --type-eau: #6890f0;
@@ -197,11 +197,11 @@ const renderLayout = (title, body, activePage = 'home') => `
             margin: 0;
             font-family: 'Manrope', 'Segoe UI', sans-serif;
             background:
-                repeating-linear-gradient(125deg, rgba(255, 255, 255, 0.12) 0 2px, rgba(255, 255, 255, 0) 2px 16px),
-                radial-gradient(circle at 8% 22%, rgba(148, 187, 255, 0.34) 0, rgba(148, 187, 255, 0.1) 22%, transparent 45%),
-                radial-gradient(circle at 92% 14%, rgba(109, 167, 255, 0.28) 0, rgba(109, 167, 255, 0.08) 18%, transparent 42%),
-                radial-gradient(circle at 85% 82%, rgba(253, 224, 71, 0.18) 0, rgba(253, 224, 71, 0.04) 20%, transparent 44%),
-                linear-gradient(180deg, #f8fbff 0%, #eaf2ff 54%, #e6efff 100%);
+                repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0 2px, rgba(255, 255, 255, 0) 2px 18px),
+                radial-gradient(circle at 10% 18%, rgba(16, 185, 129, 0.22) 0, rgba(16, 185, 129, 0.08) 24%, transparent 45%),
+                radial-gradient(circle at 88% 16%, rgba(14, 165, 233, 0.18) 0, rgba(14, 165, 233, 0.06) 22%, transparent 44%),
+                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.14) 0, rgba(251, 191, 36, 0.04) 20%, transparent 40%),
+                linear-gradient(180deg, #f7fffc 0%, #ecf9f4 52%, #e8f4ff 100%);
             color: var(--text);
             min-height: 100vh;
             position: relative;
@@ -254,28 +254,29 @@ const renderLayout = (title, body, activePage = 'home') => `
             gap: 10px;
             padding: 10px 12px;
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 251, 255, 0.82));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 255, 252, 0.9));
             border: 1px solid var(--outline);
-            box-shadow: 0 10px 24px rgba(27, 67, 157, 0.14);
+            box-shadow: 0 12px 24px rgba(17, 94, 89, 0.16);
             backdrop-filter: blur(10px);
             animation: fadeDown 0.45s ease both;
         }
         .site-brand {
             font-weight: 800;
             font-size: 15px;
-            color: #0f1b3d;
+            color: #12303f;
             letter-spacing: -0.02em;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
         }
         .site-brand::before {
             content: '';
             width: 10px;
             height: 10px;
             border-radius: 999px;
-            background: radial-gradient(circle at 35% 35%, #93c5fd 0%, #3b82f6 55%, #1e40af 100%);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: radial-gradient(circle at 35% 35%, #6ee7b7 0%, #14b8a6 55%, #0f766e 100%);
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
         }
         .site-links {
             display: flex;
@@ -288,9 +289,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 8px 11px;
             font-size: 13px;
             font-weight: 700;
-            color: #1e3a8a;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
+            color: #115e59;
+            background: #ecfeff;
+            border: 1px solid #a7f3d0;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
             position: relative;
             overflow: hidden;
@@ -307,18 +308,18 @@ const renderLayout = (title, body, activePage = 'home') => `
             transition: left 0.35s ease;
         }
         .site-link:hover {
-            background: #dbeafe;
+            background: #ccfbf1;
             transform: translateY(-1px);
-            box-shadow: 0 6px 14px rgba(29, 78, 216, 0.18);
+            box-shadow: 0 8px 16px rgba(15, 118, 110, 0.18);
         }
         .site-link:hover::after {
             left: 140%;
         }
         .site-link.active {
-            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
             color: #ffffff;
-            border-color: #3b82f6;
-            box-shadow: 0 8px 18px rgba(29, 78, 216, 0.28);
+            border-color: #14b8a6;
+            box-shadow: 0 8px 18px rgba(15, 118, 110, 0.28);
         }
         .site-link.active::before {
             content: '';
@@ -364,6 +365,65 @@ const renderLayout = (title, body, activePage = 'home') => `
             font-size: 28px;
             letter-spacing: -0.04em;
         }
+        .list-hero {
+            background:
+                radial-gradient(circle at 86% 24%, rgba(34, 211, 238, 0.16) 0, transparent 44%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 254, 252, 0.9));
+            border-color: rgba(45, 212, 191, 0.22);
+            box-shadow: 0 22px 48px rgba(15, 118, 110, 0.12);
+        }
+        .list-hero-main {
+            max-width: 660px;
+        }
+        .list-hero-main h1 {
+            font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
+            font-size: clamp(34px, 5vw, 48px);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            margin-bottom: 8px;
+        }
+        .list-hero-main .muted {
+            font-size: 22px;
+            color: #245068;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+        .list-hero-note {
+            margin-top: 10px;
+            color: #41627a;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .list-hero-aside {
+            min-width: 190px;
+            border-radius: 18px;
+            padding: 14px 16px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(220, 252, 244, 0.72));
+            border: 1px solid rgba(94, 234, 212, 0.42);
+            box-shadow: 0 14px 24px rgba(15, 118, 110, 0.14);
+            text-align: right;
+        }
+        .list-hero-count {
+            display: block;
+            font-size: 42px;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #0f172a;
+        }
+        .list-hero-label {
+            margin-top: 4px;
+            color: #1f3f52;
+            font-weight: 700;
+        }
+        .list-hero-sub {
+            margin-top: 8px;
+            color: #0f766e;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
         .hero-metrics {
             display: flex;
             gap: 8px;
@@ -371,13 +431,17 @@ const renderLayout = (title, body, activePage = 'home') => `
             margin-top: 10px;
         }
         .metric-pill {
-            background: #eff6ff;
-            color: #1e3a8a;
-            border: 1px solid #bfdbfe;
+            background: #ecfeff;
+            color: #115e59;
+            border: 1px solid #99f6e4;
             border-radius: 999px;
             padding: 5px 10px;
             font-size: 12px;
             font-weight: 700;
+        }
+        .metric-pill strong {
+            font-weight: 800;
+            color: #0f766e;
         }
         .home-hero {
             position: relative;
@@ -388,7 +452,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 34px;
             border-radius: 30px;
             background:
-                linear-gradient(110deg, rgba(7, 19, 56, 0.84) 0%, rgba(10, 33, 93, 0.72) 42%, rgba(8, 24, 72, 0.8) 100%),
+                linear-gradient(114deg, rgba(7, 38, 61, 0.9) 0%, rgba(15, 89, 102, 0.78) 42%, rgba(22, 78, 99, 0.84) 100%),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png');
@@ -396,10 +460,10 @@ const renderLayout = (title, body, activePage = 'home') => `
             background-repeat: no-repeat;
             background-position: center, 96% 108%, 78% 14%, 62% 88%;
             color: #f8fbff;
-            box-shadow: 0 26px 52px rgba(9, 24, 67, 0.36);
+            box-shadow: 0 28px 54px rgba(8, 47, 73, 0.34);
             overflow: hidden;
             isolation: isolate;
-            border: 1px solid rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(167, 243, 208, 0.3);
             animation: fadeUp 0.62s ease both;
         }
         .home-hero::before {
@@ -426,10 +490,11 @@ const renderLayout = (title, body, activePage = 'home') => `
             font-size: clamp(32px, 5vw, 52px);
             line-height: 1.04;
             letter-spacing: -0.04em;
+            font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
         }
         .home-lead {
             margin: 0 0 18px;
-            color: #dbeafe;
+            color: #d1fae5;
             font-size: 18px;
         }
         .home-cta {
@@ -462,14 +527,14 @@ const renderLayout = (title, body, activePage = 'home') => `
             transition: left 0.35s ease;
         }
         .btn.primary {
-            background: linear-gradient(135deg, #f8fafc, #dbeafe);
-            color: #0f1b3d;
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.20);
+            background: linear-gradient(135deg, #ecfeff, #bbf7d0);
+            color: #0f3f3b;
+            box-shadow: 0 10px 22px rgba(15, 118, 110, 0.22);
         }
         .btn.secondary {
-            color: #eff6ff;
-            border-color: rgba(219, 234, 254, 0.72);
-            background: rgba(37, 99, 235, 0.24);
+            color: #ecfeff;
+            border-color: rgba(153, 246, 228, 0.7);
+            background: rgba(20, 184, 166, 0.2);
         }
         .btn:hover {
             transform: translateY(-1px);
@@ -492,8 +557,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             width: fit-content;
             border-radius: 999px;
             padding: 7px 12px;
-            background: rgba(239, 246, 255, 0.22);
-            border: 1px solid rgba(191, 219, 254, 0.44);
+            background: rgba(236, 254, 255, 0.2);
+            border: 1px solid rgba(167, 243, 208, 0.5);
             font-size: 13px;
             font-weight: 700;
             backdrop-filter: blur(8px);
@@ -520,17 +585,17 @@ const renderLayout = (title, body, activePage = 'home') => `
             position: absolute;
             inset: 0 0 auto;
             height: 4px;
-            background: linear-gradient(90deg, #1d4ed8, #60a5fa);
+            background: linear-gradient(90deg, #0f766e, #22d3ee);
             opacity: 0.95;
         }
         .feature:hover {
             transform: translateY(-3px);
-            box-shadow: 0 18px 30px rgba(28, 66, 152, 0.15);
-            border-color: rgba(59, 130, 246, 0.28);
+            box-shadow: 0 18px 30px rgba(15, 118, 110, 0.14);
+            border-color: rgba(20, 184, 166, 0.28);
         }
         .feature-kicker {
             margin: 0 0 8px;
-            color: #1d4ed8;
+            color: #0f766e;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.08em;
@@ -556,7 +621,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             width: 54px;
             height: 4px;
             border-radius: 999px;
-            background: linear-gradient(90deg, #2563eb, #93c5fd);
+            background: linear-gradient(90deg, #0f766e, #22d3ee);
         }
         .home-stats {
             display: grid;
@@ -606,15 +671,15 @@ const renderLayout = (title, body, activePage = 'home') => `
             flex: 1;
         }
         .power-badge {
-            background: #dbeafe;
-            color: #1e3a8a;
+            background: #ccfbf1;
+            color: #115e59;
             border-radius: 10px;
             padding: 6px 8px;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.03em;
             white-space: nowrap;
-            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.16);
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.18);
         }
         .card-types {
             display: flex;
@@ -663,6 +728,11 @@ const renderLayout = (title, body, activePage = 'home') => `
             font-size: 12px;
             font-weight: 700;
         }
+        .list-grid .card-foot {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.26);
+        }
         .search-panel {
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr auto auto;
@@ -674,6 +744,14 @@ const renderLayout = (title, body, activePage = 'home') => `
             box-shadow: var(--card-shadow);
             border: 1px solid var(--outline);
             animation: fadeUp 0.5s ease both;
+        }
+        .list-toolbar {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(236, 254, 255, 0.82));
+            border-color: rgba(94, 234, 212, 0.28);
+            box-shadow: 0 14px 28px rgba(15, 118, 110, 0.12);
+            position: sticky;
+            top: 84px;
+            z-index: 12;
         }
         .search-panel input,
         .search-panel select,
@@ -699,16 +777,16 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .search-panel button {
             cursor: pointer;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
             color: white;
             font-weight: 700;
             border: 0;
-            box-shadow: 0 10px 18px rgba(37, 99, 235, 0.28);
+            box-shadow: 0 10px 18px rgba(15, 118, 110, 0.28);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .search-panel button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 12px 22px rgba(37, 99, 235, 0.34);
+            box-shadow: 0 12px 22px rgba(15, 118, 110, 0.34);
         }
         .search-panel button:active {
             transform: translateY(0);
@@ -725,9 +803,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 12px 14px;
             text-decoration: none;
             font-weight: 700;
-            border: 1px solid #cbd5e1;
-            color: #0f172a;
-            background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+            border: 1px solid #99f6e4;
+            color: #134e4a;
+            background: linear-gradient(180deg, #ecfeff, #ccfbf1);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .filter-reset:hover {
@@ -738,6 +816,10 @@ const renderLayout = (title, body, activePage = 'home') => `
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 18px;
+        }
+        .list-grid {
+            grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+            gap: 20px;
         }
         .card {
             position: relative;
@@ -757,7 +839,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             position: absolute;
             inset: 0 0 auto;
             height: 5px;
-            background: linear-gradient(90deg, #1d4ed8, #3b82f6, #60a5fa);
+            background: linear-gradient(90deg, #0f766e, #14b8a6, #22d3ee);
         }
         .card::after {
             content: '';
@@ -773,6 +855,16 @@ const renderLayout = (title, body, activePage = 'home') => `
             transform: translateY(-6px);
             box-shadow: 0 22px 42px rgba(27, 67, 157, 0.2);
             border-color: rgba(59, 130, 246, 0.34);
+        }
+        .list-grid .card {
+            border-radius: 22px;
+            box-shadow: 0 16px 32px rgba(11, 54, 84, 0.14);
+            border-color: rgba(94, 234, 212, 0.24);
+        }
+        .list-grid .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 42px rgba(15, 118, 110, 0.2);
+            border-color: rgba(20, 184, 166, 0.38);
         }
         .card:hover::after {
             opacity: 1;
@@ -813,7 +905,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             display: block;
             height: 100%;
             border-radius: inherit;
-            background: linear-gradient(90deg, #dbeafe 0%, #3b82f6 50%, #1d4ed8 100%);
+            background: linear-gradient(90deg, #99f6e4 0%, #14b8a6 50%, #0f766e 100%);
         }
         .detail {
             display: grid;
@@ -1038,6 +1130,17 @@ const renderLayout = (title, body, activePage = 'home') => `
             .search-panel {
                 grid-template-columns: 1fr;
             }
+            .list-toolbar {
+                position: static;
+            }
+            .list-hero-aside {
+                text-align: left;
+                min-width: 0;
+                width: 100%;
+            }
+            .list-hero-main .muted {
+                font-size: 18px;
+            }
             .home-panels {
                 grid-template-columns: 1fr;
             }
@@ -1122,7 +1225,7 @@ const renderHomePage = () => {
 };
 
 const renderSearchPanel = (query, selectedId, sortBy) => `
-    <form class="search-panel" method="get" action="/api/pokemons">
+    <form class="search-panel list-toolbar" method="get" action="/api/pokemons">
         <input type="text" name="q" placeholder="Chercher un pokemon par nom" value="${escapeHtml(query)}" />
         <select name="id">
             <option value="">Choisir un pokemon</option>
@@ -1200,27 +1303,35 @@ const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc'
     const cards = items.map((pokemon) => renderCardFull(pokemon)).join('');
     const avgPower = items.length ? Math.round(items.reduce((total, pokemon) => total + (pokemon.power || 0), 0) / items.length) : 0;
     const topAttack = items.length ? Math.max(...items.map((pokemon) => getPokemonExtraStats(pokemon).attack)) : 0;
+    const sortLabel = {
+        'power-desc': 'Puissance décroissante',
+        'power-asc': 'Puissance croissante',
+        'hp-desc': 'HP décroissants',
+        'attack-desc': 'Attaque décroissante'
+    }[sortBy] || sortBy;
 
     const activePage = sortBy === 'power-desc' ? 'top' : 'pokemons';
 
     return renderLayout('Pokemons', `
-        <section class="hero">
-            <div>
+        <section class="hero list-hero">
+            <div class="list-hero-main">
                 <h1>Pokemons en images</h1>
-                <p class="muted">Recherche un nom ou choisis un pokemon dans la liste.</p>
+                <p class="muted">Recherche rapide et tri intelligent.</p>
                 <div class="hero-metrics">
-                    <span class="metric-pill">Puissance moy. ${avgPower}</span>
-                    <span class="metric-pill">Top attaque ${topAttack}</span>
-                    <span class="metric-pill">Tri: ${escapeHtml(sortBy)}</span>
+                    <span class="metric-pill">Moyenne <strong>${avgPower}</strong></span>
+                    <span class="metric-pill">Attaque max <strong>${topAttack}</strong></span>
+                    <span class="metric-pill">Tri <strong>${escapeHtml(sortLabel)}</strong></span>
                 </div>
+                <p class="list-hero-note">Sélectionne un Pokémon pour ouvrir sa fiche complète avec talents, faiblesses et évolution.</p>
             </div>
-            <div>
-                <strong>${items.length}</strong>
-                <div class="muted">Pokemons</div>
+            <div class="list-hero-aside">
+                <span class="list-hero-count">${items.length}</span>
+                <div class="list-hero-label">Pokemons disponibles</div>
+                <div class="list-hero-sub">Pokedex YBoost</div>
             </div>
         </section>
         ${renderSearchPanel(query, selectedId, sortBy)}
-        <main class="grid">
+        <main class="grid list-grid">
             ${cards.length ? cards : '<div class="empty">Aucun pokemon trouvé.</div>'}
         </main>
     `, activePage);
