@@ -905,6 +905,69 @@ const renderLayout = (title, body, activePage = 'home') => `
             border: 1px solid var(--outline);
             animation: fadeUp 0.5s ease both;
         }
+        .search-panel-header {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 14px;
+            padding-bottom: 4px;
+        }
+        .search-panel-title {
+            display: grid;
+            gap: 4px;
+        }
+        .search-panel-kicker {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #0f766e;
+        }
+        .search-panel-title strong {
+            font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
+            font-size: 22px;
+            letter-spacing: -0.04em;
+            color: #0f172a;
+        }
+        .search-panel-note {
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            max-width: 500px;
+        }
+        .search-chip-row {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 2px;
+        }
+        .search-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            color: #0f766e;
+            background: rgba(236, 254, 255, 0.92);
+            border: 1px solid rgba(125, 211, 252, 0.35);
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.06);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+        .search-chip:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.1);
+            background: rgba(224, 242, 254, 0.98);
+        }
+        .search-chip.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, #0f766e, #0ea5e9);
+            border-color: transparent;
+        }
         .list-toolbar {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.94));
             border-color: rgba(125, 211, 252, 0.42);
@@ -918,9 +981,9 @@ const renderLayout = (title, body, activePage = 'home') => `
         .search-panel input,
         .search-panel select,
         .search-panel button {
-            border: 1px solid #cbd5e1;
-            border-radius: 12px;
-            padding: 12px 14px;
+            border: 1px solid #bfd7ea;
+            border-radius: 14px;
+            padding: 14px 16px;
             font-size: 16px;
         }
         .search-panel input:focus,
@@ -933,22 +996,22 @@ const renderLayout = (title, body, activePage = 'home') => `
         .search-panel input,
         .search-panel select {
             width: 100%;
-            background: #f8fbff;
+            background: #fbfdff;
             color: var(--text);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
         .search-panel button {
             cursor: pointer;
-            background: linear-gradient(135deg, var(--brand), var(--brand-alt));
+            background: linear-gradient(135deg, #0f766e, #0ea5e9);
             color: white;
             font-weight: 700;
             border: 0;
-            box-shadow: 0 10px 18px rgba(67, 56, 202, 0.28);
+            box-shadow: 0 10px 18px rgba(14, 165, 233, 0.28);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .search-panel button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 12px 22px rgba(67, 56, 202, 0.34);
+            box-shadow: 0 12px 22px rgba(14, 165, 233, 0.34);
         }
         .search-panel button:active {
             transform: translateY(0);
@@ -965,9 +1028,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 12px 14px;
             text-decoration: none;
             font-weight: 700;
-            border: 1px solid #99f6e4;
-            color: #115e59;
-            background: linear-gradient(180deg, #ecfeff, #ccfbf1);
+            border: 1px solid #bae6fd;
+            color: #0f766e;
+            background: linear-gradient(180deg, #f0fdfa, #e0f2fe);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .filter-reset:hover {
@@ -1294,6 +1357,13 @@ const renderLayout = (title, body, activePage = 'home') => `
             .search-panel {
                 grid-template-columns: 1fr;
             }
+            .search-panel-header {
+                flex-direction: column;
+                align-items: start;
+            }
+            .search-panel-note {
+                max-width: none;
+            }
             .list-stage {
                 padding: 12px;
                 border-radius: 22px;
@@ -1394,6 +1464,19 @@ const renderHomePage = () => {
 
 const renderSearchPanel = (query, selectedId, sortBy) => `
     <form class="search-panel list-toolbar" method="get" action="/api/pokemons">
+        <div class="search-panel-header">
+            <div class="search-panel-title">
+                <span class="search-panel-kicker">Recherche / tri</span>
+                <strong>Affiner la collection</strong>
+            </div>
+            <div class="search-panel-note">Recherche par nom, choix direct dans la liste ou tri par puissance et attaque.</div>
+        </div>
+        <div class="search-chip-row">
+            <a class="search-chip ${sortBy === 'power-desc' ? 'active' : ''}" href="/api/pokemons?sort=power-desc">Top puissance</a>
+            <a class="search-chip ${sortBy === 'attack-desc' ? 'active' : ''}" href="/api/pokemons?sort=attack-desc">Top attaque</a>
+            <a class="search-chip ${sortBy === 'hp-desc' ? 'active' : ''}" href="/api/pokemons?sort=hp-desc">Top HP</a>
+            <a class="search-chip ${sortBy === 'power-asc' ? 'active' : ''}" href="/api/pokemons?sort=power-asc">Faible puissance</a>
+        </div>
         <input type="text" name="q" placeholder="Chercher un pokemon par nom" value="${escapeHtml(query)}" />
         <select name="id">
             <option value="">Choisir un pokemon</option>
