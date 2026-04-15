@@ -43,6 +43,20 @@ const renderLayout = (title, body) => `
             --card-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
             --surface: rgba(255, 255, 255, 0.90);
             --surface-strong: rgba(255, 255, 255, 0.96);
+            --type-plante: #78c850;
+            --type-feu: #f08030;
+            --type-eau: #6890f0;
+            --type-electrik: #f8d030;
+            --type-psy: #f85888;
+            --type-glace: #98d8d8;
+            --type-roche: #b8a038;
+            --type-sol: #e0c068;
+            --type-vol: #a890f0;
+            --type-insecte: #a8b820;
+            --type-poison: #a040a0;
+            --type-combat: #c03028;
+            --type-fee: #ee99ac;
+            --type-acier: #b8b8d0;
         }
         body {
             margin: 0;
@@ -117,9 +131,13 @@ const renderLayout = (title, body) => `
             margin-bottom: 24px;
             padding: 28px;
             border-radius: 28px;
-            background: radial-gradient(circle at top right, #fde68a 0%, #f97316 26%, #ea580c 56%, #7c2d12 100%);
+            background:
+                linear-gradient(135deg, rgba(30, 144, 255, 0.85) 0%, rgba(59, 130, 246, 0.75) 50%, rgba(30, 61, 124, 0.80) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><radialGradient id="g1" cx="20%" cy="30%" r="40%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.3);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient><radialGradient id="g2" cx="80%" cy="70%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.2);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient></defs><circle cx="200" cy="100" r="180" fill="url(%23g1)" /><circle cx="1000" cy="350" r="220" fill="url(%23g2)" /><path d="M 600 300 Q 700 250 800 300 Q 850 320 900 300" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none" /></svg>');
+            background-size: cover, 400px 400px;
+            background-position: center, 0 0;
             color: #fff7ed;
-            box-shadow: 0 18px 44px rgba(124, 45, 18, 0.34);
+            box-shadow: 0 18px 44px rgba(30, 61, 124, 0.34);
             overflow: hidden;
             isolation: isolate;
         }
@@ -340,17 +358,18 @@ const renderLayout = (title, body) => `
             color: var(--text);
         }
         .power-bar {
-            margin-top: 12px;
-            height: 8px;
+            margin-top: auto;
+            height: 6px;
             border-radius: 999px;
-            background: #e2e8f0;
+            background: #e0e7ff;
             overflow: hidden;
+            margin-bottom: 0;
         }
         .power-bar span {
             display: block;
             height: 100%;
             border-radius: inherit;
-            background: linear-gradient(90deg, #f97316, #facc15 45%, #22c55e 100%);
+            background: linear-gradient(90deg, #dbeafe 0%, #3b82f6 50%, #1d4ed8 100%);
         }
         .detail {
             display: grid;
@@ -496,14 +515,7 @@ const renderLayout = (title, body) => `
 const renderHomePage = () => {
     const averagePower = Math.round(pokemons.reduce((total, pokemon) => total + (pokemon.power || 0), 0) / pokemons.length);
     const strongestPokemon = [...pokemons].sort((left, right) => (right.power || 0) - (left.power || 0))[0];
-    const highlighted = pokemons.slice(0, 4).map((pokemon) => `
-        <a class="card" href="/api/pokemons?id=${pokemon.id}">
-            <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
-            <p class="name">${escapeHtml(pokemon.name)}</p>
-            <p class="card-meta">Puissance ${pokemon.power}</p>
-            <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
-        </a>
-    `).join('');
+    const highlighted = pokemons.slice(0, 4).map((pokemon) => renderCardFull(pokemon)).join('');
 
     return renderLayout('Accueil Pokedex', `
         <section class="home-section home-hero">
@@ -586,15 +598,36 @@ const sortPokemons = (items, sortBy) => {
     return list.sort((left, right) => (right.power || 0) - (left.power || 0));
 };
 
+const getPowerStars = (power) => {
+    const stars = Math.min(5, Math.max(1, Math.ceil((power || 0) / 9)));
+    return '★'.repeat(stars) + '☆'.repeat(5 - stars);
+};
+
+const getTypeClass = (type) => {
+    return 'type-' + (type || 'normal').toLowerCase().replace(/[éè]/g, 'e');
+};
+
+const renderTypesBadges = (types) => {
+    return types.map(type => `<span class="type-badge ${getTypeClass(type)}">${escapeHtml(type)}</span>`).join('');
+};
+
+const renderCardFull = (pokemon) => `
+    <a class="card" href="/api/pokemons?id=${pokemon.id}">
+        <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+        <div class="card-header">
+            <div class="card-name-section">
+                <p class="name">${escapeHtml(pokemon.name)}</p>
+                <p class="card-meta">n°${pokemon.id}</p>
+            </div>
+            <div class="power-badge">${pokemon.power}</div>
+        </div>
+        <div class="card-types">${renderTypesBadges(pokemon.types)}</div>
+        <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
+    </a>
+`;
+
 const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc') => {
-    const cards = items.map((pokemon) => `
-        <a class="card" href="/api/pokemons?id=${pokemon.id}">
-            <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
-            <p class="name">${escapeHtml(pokemon.name)}</p>
-            <p class="card-meta">Puissance ${pokemon.power}</p>
-            <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
-        </a>
-    `).join('');
+    const cards = items.map((pokemon) => renderCardFull(pokemon)).join('');
 
     return renderLayout('Pokemons', `
         <section class="hero">
