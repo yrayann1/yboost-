@@ -418,6 +418,54 @@ const renderLayout = (title, body) => `
             box-shadow: var(--card-shadow);
             border: 1px solid rgba(148, 163, 184, 0.12);
         }
+        .home-section {
+            position: relative;
+            margin-bottom: 32px;
+        }
+        .home-section::before {
+            content: '';
+            position: absolute;
+            inset: -40px;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: 32px;
+            background:
+                radial-gradient(circle 280px at 12% 35%, rgba(99, 102, 241, 0.15) 0%, transparent 58%),
+                radial-gradient(circle 320px at 88% 8%, rgba(244, 114, 182, 0.12) 0%, transparent 55%),
+                radial-gradient(circle 360px at 75% 92%, rgba(34, 197, 94, 0.10) 0%, transparent 50%);
+            filter: blur(1px);
+        }
+        .home-section-features {
+            position: relative;
+            margin-top: 40px;
+            padding: 32px 0;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+        }
+        .home-section-features::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background:
+                radial-gradient(circle 280px at 18% 22%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
+                radial-gradient(circle 320px at 92% 75%, rgba(168, 85, 247, 0.10) 0%, transparent 58%),
+                linear-gradient(135deg, rgba(200, 214, 255, 0.05) 0%, rgba(255, 200, 214, 0.03) 100%);
+        }
+        .home-team {
+            position: relative;
+        }
+        .home-team::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            pointer-events: none;
+            z-index: -1;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle 260px at 22% 50%, rgba(251, 146, 60, 0.12) 0%, transparent 58%),
+                radial-gradient(circle 300px at 85% 15%, rgba(168, 85, 247, 0.14) 0%, transparent 56%);
+        }
         @media (max-width: 720px) {
             .hero, .detail, .home-hero {
                 grid-template-columns: 1fr;
@@ -458,7 +506,7 @@ const renderHomePage = () => {
     `).join('');
 
     return renderLayout('Accueil Pokedex', `
-        <section class="home-hero">
+        <section class="home-section home-hero">
             <div>
                 <h1 class="home-title">Bienvenue dans ton Pokedex</h1>
                 <p class="home-lead">Une interface claire pour rechercher, choisir et consulter tous les détails de tes Pokémon.</p>
@@ -479,7 +527,8 @@ const renderHomePage = () => {
             </div>
         </section>
 
-        <section class="home-panels">
+        <section class="home-section-features">
+            <section class="home-panels">
             <article class="feature">
                 <h3>Recherche rapide</h3>
                 <p>Trouve un pokemon par nom en quelques lettres.</p>
@@ -493,8 +542,9 @@ const renderHomePage = () => {
                 <p>Image, HP, CP, puissance, types et date de création.</p>
             </article>
         </section>
+        </section>
 
-        <section>
+        <section class="home-team">
             <h2 class="section-title">Aperçu de l’équipe</h2>
             <div class="preview-grid">
                 ${highlighted}
