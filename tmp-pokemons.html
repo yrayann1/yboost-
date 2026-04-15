@@ -10,14 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <style>
         :root {
-            --text: #102033;
-            --text-soft: #3e536b;
-            --brand: #0f766e;
-            --brand-strong: #115e59;
-            --card-shadow: 0 24px 46px rgba(27, 41, 67, 0.14);
+            --text: #0f172a;
+            --text-soft: #334155;
+            --muted: #475569;
+            --brand: #4338ca;
+            --brand-strong: #3730a3;
+            --brand-alt: #0284c7;
+            --card-shadow: 0 24px 50px rgba(15, 23, 42, 0.14);
             --surface: rgba(255, 255, 255, 0.9);
-            --surface-strong: rgba(255, 255, 255, 0.97);
-            --outline: rgba(112, 139, 168, 0.22);
+            --surface-strong: rgba(255, 255, 255, 0.98);
+            --outline: rgba(148, 163, 184, 0.28);
             --type-plante: #78c850;
             --type-feu: #f08030;
             --type-eau: #6890f0;
@@ -37,10 +39,10 @@
             margin: 0;
             font-family: 'Manrope', 'Segoe UI', sans-serif;
             background:
-                radial-gradient(circle at 12% 16%, rgba(99, 102, 241, 0.13) 0, rgba(99, 102, 241, 0.04) 28%, transparent 48%),
-                radial-gradient(circle at 90% 14%, rgba(14, 165, 233, 0.12) 0, rgba(14, 165, 233, 0.03) 24%, transparent 44%),
-                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.1) 0, rgba(251, 191, 36, 0.02) 20%, transparent 40%),
-                linear-gradient(180deg, #f8fbff 0%, #f2f7ff 52%, #edf3ff 100%);
+                radial-gradient(circle at 12% 16%, rgba(67, 56, 202, 0.16) 0, rgba(67, 56, 202, 0.05) 28%, transparent 48%),
+                radial-gradient(circle at 90% 14%, rgba(2, 132, 199, 0.14) 0, rgba(2, 132, 199, 0.03) 24%, transparent 44%),
+                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.12) 0, rgba(251, 191, 36, 0.02) 20%, transparent 40%),
+                linear-gradient(180deg, #f8faff 0%, #f2f6ff 52%, #edf2ff 100%);
             color: var(--text);
             min-height: 100vh;
             position: relative;
@@ -93,16 +95,16 @@
             gap: 10px;
             padding: 10px 12px;
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 255, 252, 0.9));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 246, 255, 0.92));
             border: 1px solid var(--outline);
-            box-shadow: 0 12px 24px rgba(17, 94, 89, 0.16);
+            box-shadow: 0 12px 24px rgba(51, 65, 85, 0.14);
             backdrop-filter: blur(10px);
             animation: fadeDown 0.45s ease both;
         }
         .site-brand {
             font-weight: 800;
             font-size: 15px;
-            color: #12303f;
+            color: #0f172a;
             letter-spacing: -0.02em;
             display: inline-flex;
             align-items: center;
@@ -114,8 +116,8 @@
             width: 10px;
             height: 10px;
             border-radius: 999px;
-            background: radial-gradient(circle at 35% 35%, #6ee7b7 0%, #14b8a6 55%, #0f766e 100%);
-            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
+            background: radial-gradient(circle at 35% 35%, #a5b4fc 0%, #6366f1 55%, #3730a3 100%);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
         }
         .site-links {
             display: flex;
@@ -128,9 +130,9 @@
             padding: 8px 11px;
             font-size: 13px;
             font-weight: 700;
-            color: #115e59;
-            background: #ecfeff;
-            border: 1px solid #a7f3d0;
+            color: #312e81;
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
             position: relative;
             overflow: hidden;
@@ -147,18 +149,18 @@
             transition: left 0.35s ease;
         }
         .site-link:hover {
-            background: #ccfbf1;
+            background: #e0e7ff;
             transform: translateY(-1px);
-            box-shadow: 0 8px 16px rgba(15, 118, 110, 0.18);
+            box-shadow: 0 8px 16px rgba(67, 56, 202, 0.18);
         }
         .site-link:hover::after {
             left: 140%;
         }
         .site-link.active {
-            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            background: linear-gradient(135deg, var(--brand), var(--brand-alt));
             color: #ffffff;
-            border-color: #14b8a6;
-            box-shadow: 0 8px 18px rgba(15, 118, 110, 0.28);
+            border-color: var(--brand-alt);
+            box-shadow: 0 8px 18px rgba(67, 56, 202, 0.28);
         }
         .site-link.active::before {
             content: '';
@@ -206,10 +208,10 @@
         }
         .list-hero {
             background:
-                radial-gradient(circle at 86% 24%, rgba(99, 102, 241, 0.12) 0, transparent 44%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(243, 248, 255, 0.94));
-            border-color: rgba(99, 102, 241, 0.18);
-            box-shadow: 0 24px 50px rgba(30, 41, 59, 0.12);
+                radial-gradient(circle at 86% 24%, rgba(79, 70, 229, 0.14) 0, transparent 44%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 246, 255, 0.95));
+            border-color: rgba(99, 102, 241, 0.22);
+            box-shadow: 0 24px 50px rgba(30, 41, 59, 0.11);
         }
         .list-hero::before {
             content: '';
@@ -218,7 +220,7 @@
             top: 0;
             bottom: 0;
             width: 8px;
-            background: linear-gradient(180deg, #4f46e5, #0ea5e9);
+            background: linear-gradient(180deg, var(--brand), var(--brand-alt));
             border-radius: 20px 0 0 20px;
         }
         .list-hero-main {
@@ -233,7 +235,7 @@
         }
         .list-hero-main .muted {
             font-size: 20px;
-            color: #1e3a5f;
+            color: #1e293b;
             font-weight: 700;
             margin-top: 6px;
         }
@@ -247,8 +249,8 @@
             min-width: 190px;
             border-radius: 18px;
             padding: 14px 16px;
-            background: linear-gradient(165deg, #1e293b, #334155);
-            border: 1px solid rgba(99, 102, 241, 0.28);
+            background: linear-gradient(165deg, #1e1b4b, #1e3a8a);
+            border: 1px solid rgba(129, 140, 248, 0.32);
             box-shadow: 0 16px 26px rgba(30, 41, 59, 0.28);
             text-align: right;
         }
@@ -267,7 +269,7 @@
         }
         .list-hero-sub {
             margin-top: 8px;
-            color: #7dd3fc;
+            color: #bfdbfe;
             font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
@@ -281,7 +283,7 @@
         }
         .metric-pill {
             background: rgba(255, 255, 255, 0.92);
-            color: #1e3a8a;
+            color: #312e81;
             border: 1px solid #c7d2fe;
             border-radius: 999px;
             padding: 5px 10px;
@@ -301,7 +303,7 @@
             padding: 34px;
             border-radius: 30px;
             background:
-                linear-gradient(114deg, rgba(7, 38, 61, 0.9) 0%, rgba(15, 89, 102, 0.78) 42%, rgba(22, 78, 99, 0.84) 100%),
+                linear-gradient(114deg, rgba(30, 27, 75, 0.92) 0%, rgba(30, 58, 138, 0.82) 42%, rgba(3, 105, 161, 0.86) 100%),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png');
@@ -312,7 +314,7 @@
             box-shadow: 0 28px 54px rgba(8, 47, 73, 0.34);
             overflow: hidden;
             isolation: isolate;
-            border: 1px solid rgba(167, 243, 208, 0.3);
+            border: 1px solid rgba(165, 180, 252, 0.32);
             animation: fadeUp 0.62s ease both;
         }
         .home-hero::before {
@@ -343,7 +345,7 @@
         }
         .home-lead {
             margin: 0 0 18px;
-            color: #d1fae5;
+            color: #dbeafe;
             font-size: 18px;
         }
         .home-cta {
@@ -376,14 +378,14 @@
             transition: left 0.35s ease;
         }
         .btn.primary {
-            background: linear-gradient(135deg, #ecfeff, #bbf7d0);
-            color: #0f3f3b;
-            box-shadow: 0 10px 22px rgba(15, 118, 110, 0.22);
+            background: linear-gradient(135deg, #ffffff, #dbeafe);
+            color: #1e1b4b;
+            box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
         }
         .btn.secondary {
-            color: #ecfeff;
-            border-color: rgba(153, 246, 228, 0.7);
-            background: rgba(20, 184, 166, 0.2);
+            color: #e0e7ff;
+            border-color: rgba(165, 180, 252, 0.7);
+            background: rgba(79, 70, 229, 0.24);
         }
         .btn:hover {
             transform: translateY(-1px);
@@ -406,8 +408,8 @@
             width: fit-content;
             border-radius: 999px;
             padding: 7px 12px;
-            background: rgba(236, 254, 255, 0.2);
-            border: 1px solid rgba(167, 243, 208, 0.5);
+            background: rgba(224, 231, 255, 0.22);
+            border: 1px solid rgba(165, 180, 252, 0.56);
             font-size: 13px;
             font-weight: 700;
             backdrop-filter: blur(8px);
@@ -434,17 +436,17 @@
             position: absolute;
             inset: 0 0 auto;
             height: 4px;
-            background: linear-gradient(90deg, #0f766e, #22d3ee);
+            background: linear-gradient(90deg, var(--brand), var(--brand-alt));
             opacity: 0.95;
         }
         .feature:hover {
             transform: translateY(-3px);
-            box-shadow: 0 18px 30px rgba(15, 118, 110, 0.14);
-            border-color: rgba(20, 184, 166, 0.28);
+            box-shadow: 0 18px 30px rgba(67, 56, 202, 0.14);
+            border-color: rgba(99, 102, 241, 0.3);
         }
         .feature-kicker {
             margin: 0 0 8px;
-            color: #0f766e;
+            color: #4338ca;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.08em;
@@ -470,7 +472,7 @@
             width: 54px;
             height: 4px;
             border-radius: 999px;
-            background: linear-gradient(90deg, #0f766e, #22d3ee);
+            background: linear-gradient(90deg, var(--brand), var(--brand-alt));
         }
         .home-stats {
             display: grid;
@@ -520,15 +522,15 @@
             flex: 1;
         }
         .power-badge {
-            background: #ccfbf1;
-            color: #115e59;
+            background: #e0e7ff;
+            color: #3730a3;
             border-radius: 10px;
             padding: 6px 8px;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.03em;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.18);
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.18);
         }
         .card-types {
             display: flex;
@@ -598,6 +600,9 @@
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 255, 0.9));
             border-color: rgba(129, 140, 248, 0.22);
             box-shadow: 0 14px 28px rgba(51, 65, 85, 0.12);
+            position: sticky;
+            top: 84px;
+            z-index: 12;
         }
         .search-panel input,
         .search-panel select,
@@ -623,7 +628,7 @@
         }
         .search-panel button {
             cursor: pointer;
-            background: linear-gradient(135deg, #4338ca, #0284c7);
+            background: linear-gradient(135deg, var(--brand), var(--brand-alt));
             color: white;
             font-weight: 700;
             border: 0;
@@ -685,7 +690,7 @@
             position: absolute;
             inset: 0 0 auto;
             height: 5px;
-            background: linear-gradient(90deg, #0f766e, #14b8a6, #22d3ee);
+            background: linear-gradient(90deg, var(--brand), #6366f1, var(--brand-alt));
         }
         .card::after {
             content: '';
@@ -751,7 +756,7 @@
             display: block;
             height: 100%;
             border-radius: inherit;
-            background: linear-gradient(90deg, #99f6e4 0%, #14b8a6 50%, #0f766e 100%);
+            background: linear-gradient(90deg, #c7d2fe 0%, #6366f1 50%, #0284c7 100%);
         }
         .detail {
             display: grid;
@@ -1013,7 +1018,7 @@
         <section class="hero list-hero">
             <div class="list-hero-main">
                 <h1>Collection Pokemon</h1>
-                <p class="muted">Un style clair pour explorer les meilleurs.</p>
+                <p class="muted">Une galerie nette pour choisir vite et bien.</p>
                 <div class="hero-metrics">
                     <span class="metric-pill">Moyenne <strong>28</strong></span>
                     <span class="metric-pill">Attaque max <strong>97</strong></span>
