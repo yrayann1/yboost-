@@ -158,7 +158,7 @@ const getPokemonFullInfo = (pokemon) => {
     };
 };
 
-const renderLayout = (title, body) => `
+const renderLayout = (title, body, activePage = 'home') => `
 <!doctype html>
 <html lang="fr">
 <head>
@@ -237,6 +237,82 @@ const renderLayout = (title, body) => `
             position: relative;
             z-index: 1;
         }
+        .site-nav {
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid var(--outline);
+            box-shadow: 0 10px 24px rgba(27, 67, 157, 0.14);
+            backdrop-filter: blur(10px);
+            animation: fadeDown 0.45s ease both;
+        }
+        .site-brand {
+            font-weight: 800;
+            font-size: 15px;
+            color: #0f1b3d;
+            letter-spacing: -0.02em;
+        }
+        .site-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .site-link {
+            text-decoration: none;
+            border-radius: 10px;
+            padding: 8px 11px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3a8a;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .site-link::after {
+            content: '';
+            position: absolute;
+            left: -120%;
+            top: 0;
+            width: 70%;
+            height: 100%;
+            transform: skewX(-20deg);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transition: left 0.35s ease;
+        }
+        .site-link:hover {
+            background: #dbeafe;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(29, 78, 216, 0.18);
+        }
+        .site-link:hover::after {
+            left: 140%;
+        }
+        .site-link.active {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: #ffffff;
+            border-color: #3b82f6;
+            box-shadow: 0 8px 18px rgba(29, 78, 216, 0.28);
+        }
+        .site-link.active::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 3px;
+            height: 2px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+        }
         .hero {
             display: flex;
             align-items: center;
@@ -249,6 +325,7 @@ const renderLayout = (title, body) => `
             box-shadow: var(--card-shadow);
             border: 1px solid var(--outline);
             backdrop-filter: blur(8px);
+            animation: fadeUp 0.55s ease both;
         }
         .hero h1, .hero p {
             margin: 0;
@@ -278,6 +355,7 @@ const renderLayout = (title, body) => `
             overflow: hidden;
             isolation: isolate;
             border: 1px solid rgba(255, 255, 255, 0.22);
+            animation: fadeUp 0.62s ease both;
         }
         .home-hero::before {
             content: '';
@@ -323,6 +401,20 @@ const renderLayout = (title, body) => `
             text-decoration: none;
             font-weight: 700;
             border: 1px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            left: -120%;
+            top: 0;
+            width: 70%;
+            height: 100%;
+            transform: skewX(-20deg);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+            transition: left 0.35s ease;
         }
         .btn.primary {
             background: linear-gradient(135deg, #f8fafc, #dbeafe);
@@ -333,6 +425,16 @@ const renderLayout = (title, body) => `
             color: #eff6ff;
             border-color: rgba(219, 234, 254, 0.72);
             background: rgba(37, 99, 235, 0.24);
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            filter: saturate(1.1);
+        }
+        .btn:hover::after {
+            left: 140%;
+        }
+        .btn:active {
+            transform: translateY(0);
         }
         .home-hero-right {
             z-index: 1;
@@ -363,6 +465,7 @@ const renderLayout = (title, body) => `
             padding: 16px;
             box-shadow: 0 12px 26px rgba(28, 66, 152, 0.1);
             border: 1px solid rgba(148, 163, 184, 0.18);
+            animation: fadeUp 0.6s ease both;
         }
         .feature h3 {
             margin: 0 0 6px;
@@ -481,6 +584,7 @@ const renderLayout = (title, body) => `
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 255, 0.86));
             box-shadow: var(--card-shadow);
             border: 1px solid var(--outline);
+            animation: fadeUp 0.5s ease both;
         }
         .search-panel input,
         .search-panel select,
@@ -504,6 +608,14 @@ const renderLayout = (title, body) => `
             font-weight: 700;
             border: 0;
             box-shadow: 0 10px 18px rgba(37, 99, 235, 0.28);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .search-panel button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px rgba(37, 99, 235, 0.34);
+        }
+        .search-panel button:active {
+            transform: translateY(0);
         }
         .search-panel .secondary {
             background: #e2e8f0;
@@ -525,6 +637,7 @@ const renderLayout = (title, body) => `
             transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
             border: 1px solid var(--outline);
             overflow: hidden;
+            animation: fadeUp 0.6s ease both;
         }
         .card::before {
             content: '';
@@ -578,6 +691,42 @@ const renderLayout = (title, body) => `
             border-radius: 24px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--outline);
+            animation: fadeUp 0.58s ease both;
+        }
+        .grid .card:nth-child(2n) { animation-delay: 0.04s; }
+        .grid .card:nth-child(3n) { animation-delay: 0.08s; }
+        .grid .card:nth-child(4n) { animation-delay: 0.12s; }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .site-nav,
+            .hero,
+            .home-hero,
+            .feature,
+            .search-panel,
+            .card,
+            .detail {
+                animation: none !important;
+                transition: none !important;
+            }
         }
         .panel {
             display: grid;
@@ -731,6 +880,13 @@ const renderLayout = (title, body) => `
                 background-position: center, 102% 104%, 88% 10%, 62% 100%;
                 padding: 26px;
             }
+            .site-nav {
+                top: 8px;
+                padding: 9px 10px;
+            }
+            .site-brand {
+                font-size: 14px;
+            }
             .search-panel {
                 grid-template-columns: 1fr;
             }
@@ -748,6 +904,14 @@ const renderLayout = (title, body) => `
 </head>
 <body>
     <div class="wrap">
+        <nav class="site-nav">
+            <div class="site-brand">YBoost Pokedex</div>
+            <div class="site-links">
+                <a class="site-link ${activePage === 'home' ? 'active' : ''}" href="/" ${activePage === 'home' ? 'aria-current="page"' : ''}>Accueil</a>
+                <a class="site-link ${activePage === 'pokemons' ? 'active' : ''}" href="/api/pokemons" ${activePage === 'pokemons' ? 'aria-current="page"' : ''}>Pokemons</a>
+                <a class="site-link ${activePage === 'top' ? 'active' : ''}" href="/api/pokemons?sort=power-desc" ${activePage === 'top' ? 'aria-current="page"' : ''}>Top puissance</a>
+            </div>
+        </nav>
         ${body}
     </div>
 </body>
@@ -803,7 +967,7 @@ const renderHomePage = () => {
                 ${highlighted}
             </div>
         </section>
-    `);
+    `, 'home');
 };
 
 const renderSearchPanel = (query, selectedId, sortBy) => `
@@ -880,6 +1044,8 @@ const renderCardFull = (pokemon) => {
 const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc') => {
     const cards = items.map((pokemon) => renderCardFull(pokemon)).join('');
 
+    const activePage = sortBy === 'power-desc' ? 'top' : 'pokemons';
+
     return renderLayout('Pokemons', `
         <section class="hero">
             <div>
@@ -895,7 +1061,7 @@ const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc'
         <main class="grid">
             ${cards.length ? cards : '<div class="empty">Aucun pokemon trouvé.</div>'}
         </main>
-    `);
+    `, activePage);
 };
 
 const renderPokemonDetailBlock = (pokemon) => {
@@ -998,7 +1164,7 @@ app.get('/api/pokemons', (req, res) => {
             <a class="back" href="/api/pokemons">← Retour à la recherche</a>
             ${renderSearchPanel(query, selectedId, sortBy)}
             ${renderPokemonDetailBlock(selectedPokemon)}
-        `));
+        `, sortBy === 'power-desc' ? 'top' : 'pokemons'));
     }
 
     res.send(renderGallery(visiblePokemons, query, '', sortBy));
@@ -1011,7 +1177,7 @@ app.get('/api/pokemons/:id', (req, res) => {
         <a class="back" href="/api/pokemons">← Retour à la recherche</a>
         ${renderSearchPanel('', pokemon ? pokemon.id : '', 'power-desc')}
         ${renderPokemonDetailBlock(pokemon)}
-    `));
+    `, 'pokemons'));
 });
 
 
