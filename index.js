@@ -430,9 +430,9 @@ const renderLayout = (title, body) => `
             z-index: -1;
             border-radius: 32px;
             background:
-                radial-gradient(circle 280px at 12% 35%, rgba(99, 102, 241, 0.15) 0%, transparent 58%),
-                radial-gradient(circle 320px at 88% 8%, rgba(244, 114, 182, 0.12) 0%, transparent 55%),
-                radial-gradient(circle 360px at 75% 92%, rgba(34, 197, 94, 0.10) 0%, transparent 50%);
+                radial-gradient(circle 280px at 12% 35%, rgba(59, 130, 246, 0.18) 0%, transparent 58%),
+                radial-gradient(circle 320px at 88% 8%, rgba(30, 144, 255, 0.14) 0%, transparent 55%),
+                radial-gradient(circle 360px at 75% 92%, rgba(100, 150, 255, 0.12) 0%, transparent 50%);
             filter: blur(1px);
         }
         .home-section-features {
@@ -448,9 +448,9 @@ const renderLayout = (title, body) => `
             pointer-events: none;
             z-index: -1;
             background:
-                radial-gradient(circle 280px at 18% 22%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
-                radial-gradient(circle 320px at 92% 75%, rgba(168, 85, 247, 0.10) 0%, transparent 58%),
-                linear-gradient(135deg, rgba(200, 214, 255, 0.05) 0%, rgba(255, 200, 214, 0.03) 100%);
+                radial-gradient(circle 280px at 18% 22%, rgba(37, 99, 235, 0.14) 0%, transparent 60%),
+                radial-gradient(circle 320px at 92% 75%, rgba(59, 130, 246, 0.12) 0%, transparent 58%),
+                linear-gradient(135deg, rgba(219, 234, 254, 0.08) 0%, rgba(240, 249, 255, 0.05) 100%);
         }
         .home-team {
             position: relative;
@@ -463,8 +463,8 @@ const renderLayout = (title, body) => `
             z-index: -1;
             border-radius: 24px;
             background:
-                radial-gradient(circle 260px at 22% 50%, rgba(251, 146, 60, 0.12) 0%, transparent 58%),
-                radial-gradient(circle 300px at 85% 15%, rgba(168, 85, 247, 0.14) 0%, transparent 56%);
+                radial-gradient(circle 260px at 22% 50%, rgba(59, 130, 246, 0.16) 0%, transparent 58%),
+                radial-gradient(circle 300px at 85% 15%, rgba(30, 144, 255, 0.12) 0%, transparent 56%);
         }
         @media (max-width: 720px) {
             .hero, .detail, .home-hero {
