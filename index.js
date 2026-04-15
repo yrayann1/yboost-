@@ -247,10 +247,11 @@ const renderLayout = (title, body, activePage = 'home') => `
             --text: #0f172a;
             --text-soft: #334155;
             --muted: #475569;
-            --brand: #4338ca;
-            --brand-strong: #3730a3;
-            --brand-alt: #0284c7;
-            --card-shadow: 0 24px 50px rgba(15, 23, 42, 0.14);
+            --brand: #0f766e;
+            --brand-strong: #115e59;
+            --brand-alt: #0ea5e9;
+            --accent: #f97316;
+            --card-shadow: 0 24px 50px rgba(15, 23, 42, 0.15);
             --surface: rgba(255, 255, 255, 0.9);
             --surface-strong: rgba(255, 255, 255, 0.98);
             --outline: rgba(148, 163, 184, 0.28);
@@ -273,15 +274,17 @@ const renderLayout = (title, body, activePage = 'home') => `
             margin: 0;
             font-family: 'Manrope', 'Segoe UI', sans-serif;
             background:
-                radial-gradient(circle at 12% 16%, rgba(67, 56, 202, 0.16) 0, rgba(67, 56, 202, 0.05) 28%, transparent 48%),
-                radial-gradient(circle at 90% 14%, rgba(2, 132, 199, 0.14) 0, rgba(2, 132, 199, 0.03) 24%, transparent 44%),
-                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.12) 0, rgba(251, 191, 36, 0.02) 20%, transparent 40%),
-                linear-gradient(180deg, #f8faff 0%, #f2f6ff 52%, #edf2ff 100%);
+                linear-gradient(120deg, rgba(255, 255, 255, 0.42) 1px, transparent 1px),
+                linear-gradient(30deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+                radial-gradient(circle at 10% 12%, rgba(15, 118, 110, 0.2) 0, rgba(15, 118, 110, 0.05) 24%, transparent 46%),
+                radial-gradient(circle at 90% 10%, rgba(14, 165, 233, 0.17) 0, rgba(14, 165, 233, 0.04) 24%, transparent 46%),
+                radial-gradient(circle at 82% 86%, rgba(249, 115, 22, 0.14) 0, rgba(249, 115, 22, 0.03) 26%, transparent 46%),
+                linear-gradient(180deg, #f7fffd 0%, #eef9ff 52%, #eaf3ff 100%);
             color: var(--text);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            background-size: auto, auto, auto, auto;
+            background-size: 60px 60px, 60px 60px, auto, auto, auto, auto;
         }
         body::before,
         body::after {
@@ -298,8 +301,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             height: 320px;
             left: -120px;
             top: 120px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.18) 55%, transparent 72%);
-            opacity: 0.6;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.32) 0%, rgba(14, 165, 233, 0.08) 55%, transparent 72%);
+            opacity: 0.8;
             animation: orbLeft 11s ease-in-out infinite;
         }
         body::after {
@@ -307,8 +310,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             height: 420px;
             right: -150px;
             bottom: -120px;
-            background: radial-gradient(circle, rgba(96, 165, 250, 0.55) 0%, rgba(96, 165, 250, 0.12) 45%, transparent 72%);
-            opacity: 0.45;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.35) 0%, rgba(249, 115, 22, 0.08) 45%, transparent 72%);
+            opacity: 0.62;
             animation: orbRight 13s ease-in-out infinite;
         }
         .wrap {
@@ -317,6 +320,14 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 24px 20px 40px;
             position: relative;
             z-index: 1;
+        }
+        .wrap::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.7), transparent 55%);
+            z-index: -1;
         }
         .site-nav {
             position: sticky;
@@ -329,7 +340,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             gap: 10px;
             padding: 10px 12px;
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 246, 255, 0.92));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 253, 250, 0.92));
             border: 1px solid var(--outline);
             box-shadow: 0 12px 24px rgba(51, 65, 85, 0.14);
             backdrop-filter: blur(10px);
@@ -350,8 +361,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             width: 10px;
             height: 10px;
             border-radius: 999px;
-            background: radial-gradient(circle at 35% 35%, #a5b4fc 0%, #6366f1 55%, #3730a3 100%);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
+            background: radial-gradient(circle at 35% 35%, #67e8f9 0%, #0ea5e9 55%, #0f766e 100%);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.16);
         }
         .site-links {
             display: flex;
@@ -364,9 +375,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 8px 11px;
             font-size: 13px;
             font-weight: 700;
-            color: #312e81;
-            background: #eef2ff;
-            border: 1px solid #c7d2fe;
+            color: #115e59;
+            background: #ecfeff;
+            border: 1px solid #99f6e4;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
             position: relative;
             overflow: hidden;
@@ -383,9 +394,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             transition: left 0.35s ease;
         }
         .site-link:hover {
-            background: #e0e7ff;
+            background: #ccfbf1;
             transform: translateY(-1px);
-            box-shadow: 0 8px 16px rgba(67, 56, 202, 0.18);
+            box-shadow: 0 8px 16px rgba(15, 118, 110, 0.18);
         }
         .site-link:hover::after {
             left: 140%;
@@ -422,6 +433,13 @@ const renderLayout = (title, body, activePage = 'home') => `
             position: relative;
             overflow: hidden;
         }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.34), transparent 52%);
+        }
         .hero::after {
             content: '';
             position: absolute;
@@ -430,7 +448,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             right: -120px;
             top: -130px;
             border-radius: 999px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.06) 48%, transparent 72%);
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.24) 0%, rgba(14, 165, 233, 0.06) 48%, transparent 72%);
             pointer-events: none;
         }
         .hero h1, .hero p {
@@ -442,9 +460,9 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .list-hero {
             background:
-                radial-gradient(circle at 86% 24%, rgba(79, 70, 229, 0.14) 0, transparent 44%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 246, 255, 0.95));
-            border-color: rgba(99, 102, 241, 0.22);
+                radial-gradient(circle at 86% 24%, rgba(14, 165, 233, 0.17) 0, transparent 44%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(236, 254, 255, 0.94));
+            border-color: rgba(14, 165, 233, 0.24);
             box-shadow: 0 24px 50px rgba(30, 41, 59, 0.11);
         }
         .list-hero::before {
@@ -469,7 +487,7 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .list-hero-main .muted {
             font-size: 20px;
-            color: #1e293b;
+            color: #1f3f52;
             font-weight: 700;
             margin-top: 6px;
         }
@@ -483,8 +501,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             min-width: 190px;
             border-radius: 18px;
             padding: 14px 16px;
-            background: linear-gradient(165deg, #1e1b4b, #1e3a8a);
-            border: 1px solid rgba(129, 140, 248, 0.32);
+            background: linear-gradient(165deg, #0f172a, #0f766e);
+            border: 1px solid rgba(45, 212, 191, 0.32);
             box-shadow: 0 16px 26px rgba(30, 41, 59, 0.28);
             text-align: right;
         }
@@ -503,7 +521,7 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .list-hero-sub {
             margin-top: 8px;
-            color: #bfdbfe;
+            color: #99f6e4;
             font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
@@ -517,8 +535,8 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .metric-pill {
             background: rgba(255, 255, 255, 0.92);
-            color: #312e81;
-            border: 1px solid #c7d2fe;
+            color: #115e59;
+            border: 1px solid #99f6e4;
             border-radius: 999px;
             padding: 5px 10px;
             font-size: 12px;
@@ -526,7 +544,7 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .metric-pill strong {
             font-weight: 800;
-            color: #3730a3;
+            color: #0f766e;
         }
         .home-hero {
             position: relative;
@@ -537,7 +555,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 34px;
             border-radius: 30px;
             background:
-                linear-gradient(114deg, rgba(30, 27, 75, 0.92) 0%, rgba(30, 58, 138, 0.82) 42%, rgba(3, 105, 161, 0.86) 100%),
+                linear-gradient(114deg, rgba(6, 45, 57, 0.92) 0%, rgba(15, 118, 110, 0.84) 42%, rgba(14, 165, 233, 0.86) 100%),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png');
@@ -548,7 +566,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             box-shadow: 0 28px 54px rgba(8, 47, 73, 0.34);
             overflow: hidden;
             isolation: isolate;
-            border: 1px solid rgba(165, 180, 252, 0.32);
+            border: 1px solid rgba(103, 232, 249, 0.34);
             animation: fadeUp 0.62s ease both;
         }
         .home-hero::before {
@@ -579,7 +597,7 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .home-lead {
             margin: 0 0 18px;
-            color: #dbeafe;
+            color: #cffafe;
             font-size: 18px;
         }
         .home-cta {
@@ -613,13 +631,13 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .btn.primary {
             background: linear-gradient(135deg, #ffffff, #dbeafe);
-            color: #1e1b4b;
-            box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
+            color: #0b3a4a;
+            box-shadow: 0 10px 22px rgba(14, 165, 233, 0.24);
         }
         .btn.secondary {
-            color: #e0e7ff;
-            border-color: rgba(165, 180, 252, 0.7);
-            background: rgba(79, 70, 229, 0.24);
+            color: #e0f2fe;
+            border-color: rgba(103, 232, 249, 0.72);
+            background: rgba(8, 145, 178, 0.24);
         }
         .btn:hover {
             transform: translateY(-1px);
@@ -642,8 +660,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             width: fit-content;
             border-radius: 999px;
             padding: 7px 12px;
-            background: rgba(224, 231, 255, 0.22);
-            border: 1px solid rgba(165, 180, 252, 0.56);
+            background: rgba(236, 254, 255, 0.24);
+            border: 1px solid rgba(103, 232, 249, 0.56);
             font-size: 13px;
             font-weight: 700;
             backdrop-filter: blur(8px);
@@ -675,12 +693,12 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .feature:hover {
             transform: translateY(-3px);
-            box-shadow: 0 18px 30px rgba(67, 56, 202, 0.14);
-            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 18px 30px rgba(14, 165, 233, 0.14);
+            border-color: rgba(14, 165, 233, 0.32);
         }
         .feature-kicker {
             margin: 0 0 8px;
-            color: #4338ca;
+            color: #0f766e;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.08em;
@@ -757,14 +775,14 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .power-badge {
             background: #e0e7ff;
-            color: #3730a3;
+            color: #0f766e;
             border-radius: 10px;
             padding: 6px 8px;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.03em;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.18);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.18);
         }
         .card-types {
             display: flex;
@@ -839,8 +857,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             animation: fadeUp 0.5s ease both;
         }
         .list-toolbar {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 255, 0.9));
-            border-color: rgba(129, 140, 248, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(236, 254, 255, 0.9));
+            border-color: rgba(14, 165, 233, 0.22);
             box-shadow: 0 14px 28px rgba(51, 65, 85, 0.12);
             position: sticky;
             top: 84px;
@@ -896,9 +914,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 12px 14px;
             text-decoration: none;
             font-weight: 700;
-            border: 1px solid #c7d2fe;
-            color: #312e81;
-            background: linear-gradient(180deg, #f8faff, #e0e7ff);
+            border: 1px solid #99f6e4;
+            color: #115e59;
+            background: linear-gradient(180deg, #ecfeff, #ccfbf1);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .filter-reset:hover {
@@ -1005,11 +1023,13 @@ const renderLayout = (title, body, activePage = 'home') => `
             grid-template-columns: minmax(260px, 360px) 1fr;
             gap: 24px;
             align-items: center;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 248, 255, 0.93));
+            background:
+                radial-gradient(circle at 88% 10%, rgba(14, 165, 233, 0.14), transparent 36%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 252, 251, 0.93));
             padding: 24px;
             border-radius: 24px;
             box-shadow: var(--card-shadow);
-            border: 1px solid var(--outline);
+            border: 1px solid rgba(14, 165, 233, 0.2);
             animation: fadeUp 0.58s ease both;
         }
         .grid .card:nth-child(2n) { animation-delay: 0.04s; }
@@ -1069,8 +1089,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             width: fit-content;
             padding: 8px 12px;
             border-radius: 999px;
-            background: rgba(37, 99, 235, 0.10);
-            color: #1d4ed8;
+            background: rgba(15, 118, 110, 0.12);
+            color: #0f766e;
             font-weight: 700;
         }
         .detail-name {
@@ -1091,8 +1111,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             margin-top: 4px;
         }
         .detail-tag {
-            background: #dbeafe;
-            color: #1e3a8a;
+            background: #ccfbf1;
+            color: #115e59;
             border-radius: 999px;
             padding: 6px 10px;
             font-size: 12px;
@@ -1105,8 +1125,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             gap: 10px;
         }
         .info-item {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
+            background: #ecfeff;
+            border: 1px solid #99f6e4;
             border-radius: 12px;
             padding: 10px 12px;
         }
@@ -1167,9 +1187,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             z-index: -1;
             border-radius: 32px;
             background:
-                radial-gradient(circle 280px at 12% 35%, rgba(59, 130, 246, 0.18) 0%, transparent 58%),
-                radial-gradient(circle 320px at 88% 8%, rgba(30, 144, 255, 0.14) 0%, transparent 55%),
-                radial-gradient(circle 360px at 75% 92%, rgba(100, 150, 255, 0.12) 0%, transparent 50%);
+                radial-gradient(circle 280px at 12% 35%, rgba(14, 165, 233, 0.18) 0%, transparent 58%),
+                radial-gradient(circle 320px at 88% 8%, rgba(15, 118, 110, 0.14) 0%, transparent 55%),
+                radial-gradient(circle 360px at 75% 92%, rgba(249, 115, 22, 0.12) 0%, transparent 50%);
             filter: blur(1px);
         }
         .home-section-features {
@@ -1185,9 +1205,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             pointer-events: none;
             z-index: -1;
             background:
-                radial-gradient(circle 280px at 18% 22%, rgba(37, 99, 235, 0.14) 0%, transparent 60%),
-                radial-gradient(circle 320px at 92% 75%, rgba(59, 130, 246, 0.12) 0%, transparent 58%),
-                linear-gradient(135deg, rgba(219, 234, 254, 0.08) 0%, rgba(240, 249, 255, 0.05) 100%);
+                radial-gradient(circle 280px at 18% 22%, rgba(14, 165, 233, 0.14) 0%, transparent 60%),
+                radial-gradient(circle 320px at 92% 75%, rgba(15, 118, 110, 0.12) 0%, transparent 58%),
+                linear-gradient(135deg, rgba(236, 254, 255, 0.08) 0%, rgba(240, 249, 255, 0.05) 100%);
         }
         .home-team {
             position: relative;
@@ -1200,8 +1220,8 @@ const renderLayout = (title, body, activePage = 'home') => `
             z-index: -1;
             border-radius: 24px;
             background:
-                radial-gradient(circle 260px at 22% 50%, rgba(59, 130, 246, 0.16) 0%, transparent 58%),
-                radial-gradient(circle 300px at 85% 15%, rgba(30, 144, 255, 0.12) 0%, transparent 56%);
+                radial-gradient(circle 260px at 22% 50%, rgba(14, 165, 233, 0.16) 0%, transparent 58%),
+                radial-gradient(circle 300px at 85% 15%, rgba(15, 118, 110, 0.12) 0%, transparent 56%);
         }
         @media (max-width: 720px) {
             .hero, .detail, .home-hero {

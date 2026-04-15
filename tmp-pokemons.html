@@ -13,10 +13,11 @@
             --text: #0f172a;
             --text-soft: #334155;
             --muted: #475569;
-            --brand: #4338ca;
-            --brand-strong: #3730a3;
-            --brand-alt: #0284c7;
-            --card-shadow: 0 24px 50px rgba(15, 23, 42, 0.14);
+            --brand: #0f766e;
+            --brand-strong: #115e59;
+            --brand-alt: #0ea5e9;
+            --accent: #f97316;
+            --card-shadow: 0 24px 50px rgba(15, 23, 42, 0.15);
             --surface: rgba(255, 255, 255, 0.9);
             --surface-strong: rgba(255, 255, 255, 0.98);
             --outline: rgba(148, 163, 184, 0.28);
@@ -39,15 +40,17 @@
             margin: 0;
             font-family: 'Manrope', 'Segoe UI', sans-serif;
             background:
-                radial-gradient(circle at 12% 16%, rgba(67, 56, 202, 0.16) 0, rgba(67, 56, 202, 0.05) 28%, transparent 48%),
-                radial-gradient(circle at 90% 14%, rgba(2, 132, 199, 0.14) 0, rgba(2, 132, 199, 0.03) 24%, transparent 44%),
-                radial-gradient(circle at 84% 84%, rgba(251, 191, 36, 0.12) 0, rgba(251, 191, 36, 0.02) 20%, transparent 40%),
-                linear-gradient(180deg, #f8faff 0%, #f2f6ff 52%, #edf2ff 100%);
+                linear-gradient(120deg, rgba(255, 255, 255, 0.42) 1px, transparent 1px),
+                linear-gradient(30deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+                radial-gradient(circle at 10% 12%, rgba(15, 118, 110, 0.2) 0, rgba(15, 118, 110, 0.05) 24%, transparent 46%),
+                radial-gradient(circle at 90% 10%, rgba(14, 165, 233, 0.17) 0, rgba(14, 165, 233, 0.04) 24%, transparent 46%),
+                radial-gradient(circle at 82% 86%, rgba(249, 115, 22, 0.14) 0, rgba(249, 115, 22, 0.03) 26%, transparent 46%),
+                linear-gradient(180deg, #f7fffd 0%, #eef9ff 52%, #eaf3ff 100%);
             color: var(--text);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            background-size: auto, auto, auto, auto;
+            background-size: 60px 60px, 60px 60px, auto, auto, auto, auto;
         }
         body::before,
         body::after {
@@ -64,8 +67,8 @@
             height: 320px;
             left: -120px;
             top: 120px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.18) 55%, transparent 72%);
-            opacity: 0.6;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.32) 0%, rgba(14, 165, 233, 0.08) 55%, transparent 72%);
+            opacity: 0.8;
             animation: orbLeft 11s ease-in-out infinite;
         }
         body::after {
@@ -73,8 +76,8 @@
             height: 420px;
             right: -150px;
             bottom: -120px;
-            background: radial-gradient(circle, rgba(96, 165, 250, 0.55) 0%, rgba(96, 165, 250, 0.12) 45%, transparent 72%);
-            opacity: 0.45;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.35) 0%, rgba(249, 115, 22, 0.08) 45%, transparent 72%);
+            opacity: 0.62;
             animation: orbRight 13s ease-in-out infinite;
         }
         .wrap {
@@ -83,6 +86,14 @@
             padding: 24px 20px 40px;
             position: relative;
             z-index: 1;
+        }
+        .wrap::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.7), transparent 55%);
+            z-index: -1;
         }
         .site-nav {
             position: sticky;
@@ -95,7 +106,7 @@
             gap: 10px;
             padding: 10px 12px;
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 246, 255, 0.92));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 253, 250, 0.92));
             border: 1px solid var(--outline);
             box-shadow: 0 12px 24px rgba(51, 65, 85, 0.14);
             backdrop-filter: blur(10px);
@@ -116,8 +127,8 @@
             width: 10px;
             height: 10px;
             border-radius: 999px;
-            background: radial-gradient(circle at 35% 35%, #a5b4fc 0%, #6366f1 55%, #3730a3 100%);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
+            background: radial-gradient(circle at 35% 35%, #67e8f9 0%, #0ea5e9 55%, #0f766e 100%);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.16);
         }
         .site-links {
             display: flex;
@@ -130,9 +141,9 @@
             padding: 8px 11px;
             font-size: 13px;
             font-weight: 700;
-            color: #312e81;
-            background: #eef2ff;
-            border: 1px solid #c7d2fe;
+            color: #115e59;
+            background: #ecfeff;
+            border: 1px solid #99f6e4;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
             position: relative;
             overflow: hidden;
@@ -149,9 +160,9 @@
             transition: left 0.35s ease;
         }
         .site-link:hover {
-            background: #e0e7ff;
+            background: #ccfbf1;
             transform: translateY(-1px);
-            box-shadow: 0 8px 16px rgba(67, 56, 202, 0.18);
+            box-shadow: 0 8px 16px rgba(15, 118, 110, 0.18);
         }
         .site-link:hover::after {
             left: 140%;
@@ -188,6 +199,13 @@
             position: relative;
             overflow: hidden;
         }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.34), transparent 52%);
+        }
         .hero::after {
             content: '';
             position: absolute;
@@ -196,7 +214,7 @@
             right: -120px;
             top: -130px;
             border-radius: 999px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.06) 48%, transparent 72%);
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.24) 0%, rgba(14, 165, 233, 0.06) 48%, transparent 72%);
             pointer-events: none;
         }
         .hero h1, .hero p {
@@ -208,9 +226,9 @@
         }
         .list-hero {
             background:
-                radial-gradient(circle at 86% 24%, rgba(79, 70, 229, 0.14) 0, transparent 44%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 246, 255, 0.95));
-            border-color: rgba(99, 102, 241, 0.22);
+                radial-gradient(circle at 86% 24%, rgba(14, 165, 233, 0.17) 0, transparent 44%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(236, 254, 255, 0.94));
+            border-color: rgba(14, 165, 233, 0.24);
             box-shadow: 0 24px 50px rgba(30, 41, 59, 0.11);
         }
         .list-hero::before {
@@ -235,7 +253,7 @@
         }
         .list-hero-main .muted {
             font-size: 20px;
-            color: #1e293b;
+            color: #1f3f52;
             font-weight: 700;
             margin-top: 6px;
         }
@@ -249,8 +267,8 @@
             min-width: 190px;
             border-radius: 18px;
             padding: 14px 16px;
-            background: linear-gradient(165deg, #1e1b4b, #1e3a8a);
-            border: 1px solid rgba(129, 140, 248, 0.32);
+            background: linear-gradient(165deg, #0f172a, #0f766e);
+            border: 1px solid rgba(45, 212, 191, 0.32);
             box-shadow: 0 16px 26px rgba(30, 41, 59, 0.28);
             text-align: right;
         }
@@ -269,7 +287,7 @@
         }
         .list-hero-sub {
             margin-top: 8px;
-            color: #bfdbfe;
+            color: #99f6e4;
             font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
@@ -283,8 +301,8 @@
         }
         .metric-pill {
             background: rgba(255, 255, 255, 0.92);
-            color: #312e81;
-            border: 1px solid #c7d2fe;
+            color: #115e59;
+            border: 1px solid #99f6e4;
             border-radius: 999px;
             padding: 5px 10px;
             font-size: 12px;
@@ -292,7 +310,7 @@
         }
         .metric-pill strong {
             font-weight: 800;
-            color: #3730a3;
+            color: #0f766e;
         }
         .home-hero {
             position: relative;
@@ -303,7 +321,7 @@
             padding: 34px;
             border-radius: 30px;
             background:
-                linear-gradient(114deg, rgba(30, 27, 75, 0.92) 0%, rgba(30, 58, 138, 0.82) 42%, rgba(3, 105, 161, 0.86) 100%),
+                linear-gradient(114deg, rgba(6, 45, 57, 0.92) 0%, rgba(15, 118, 110, 0.84) 42%, rgba(14, 165, 233, 0.86) 100%),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'),
                 url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png');
@@ -314,7 +332,7 @@
             box-shadow: 0 28px 54px rgba(8, 47, 73, 0.34);
             overflow: hidden;
             isolation: isolate;
-            border: 1px solid rgba(165, 180, 252, 0.32);
+            border: 1px solid rgba(103, 232, 249, 0.34);
             animation: fadeUp 0.62s ease both;
         }
         .home-hero::before {
@@ -345,7 +363,7 @@
         }
         .home-lead {
             margin: 0 0 18px;
-            color: #dbeafe;
+            color: #cffafe;
             font-size: 18px;
         }
         .home-cta {
@@ -379,13 +397,13 @@
         }
         .btn.primary {
             background: linear-gradient(135deg, #ffffff, #dbeafe);
-            color: #1e1b4b;
-            box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
+            color: #0b3a4a;
+            box-shadow: 0 10px 22px rgba(14, 165, 233, 0.24);
         }
         .btn.secondary {
-            color: #e0e7ff;
-            border-color: rgba(165, 180, 252, 0.7);
-            background: rgba(79, 70, 229, 0.24);
+            color: #e0f2fe;
+            border-color: rgba(103, 232, 249, 0.72);
+            background: rgba(8, 145, 178, 0.24);
         }
         .btn:hover {
             transform: translateY(-1px);
@@ -408,8 +426,8 @@
             width: fit-content;
             border-radius: 999px;
             padding: 7px 12px;
-            background: rgba(224, 231, 255, 0.22);
-            border: 1px solid rgba(165, 180, 252, 0.56);
+            background: rgba(236, 254, 255, 0.24);
+            border: 1px solid rgba(103, 232, 249, 0.56);
             font-size: 13px;
             font-weight: 700;
             backdrop-filter: blur(8px);
@@ -441,12 +459,12 @@
         }
         .feature:hover {
             transform: translateY(-3px);
-            box-shadow: 0 18px 30px rgba(67, 56, 202, 0.14);
-            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 18px 30px rgba(14, 165, 233, 0.14);
+            border-color: rgba(14, 165, 233, 0.32);
         }
         .feature-kicker {
             margin: 0 0 8px;
-            color: #4338ca;
+            color: #0f766e;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.08em;
@@ -523,14 +541,14 @@
         }
         .power-badge {
             background: #e0e7ff;
-            color: #3730a3;
+            color: #0f766e;
             border-radius: 10px;
             padding: 6px 8px;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.03em;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.18);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.18);
         }
         .card-types {
             display: flex;
@@ -570,6 +588,14 @@
             font-weight: 700;
             letter-spacing: 0.01em;
         }
+        .card-extra {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #475569;
+            text-align: left;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
         .card-foot {
             display: flex;
             align-items: center;
@@ -597,8 +623,8 @@
             animation: fadeUp 0.5s ease both;
         }
         .list-toolbar {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 255, 0.9));
-            border-color: rgba(129, 140, 248, 0.22);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(236, 254, 255, 0.9));
+            border-color: rgba(14, 165, 233, 0.22);
             box-shadow: 0 14px 28px rgba(51, 65, 85, 0.12);
             position: sticky;
             top: 84px;
@@ -654,9 +680,9 @@
             padding: 12px 14px;
             text-decoration: none;
             font-weight: 700;
-            border: 1px solid #c7d2fe;
-            color: #312e81;
-            background: linear-gradient(180deg, #f8faff, #e0e7ff);
+            border: 1px solid #99f6e4;
+            color: #115e59;
+            background: linear-gradient(180deg, #ecfeff, #ccfbf1);
             transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
         .filter-reset:hover {
@@ -763,11 +789,13 @@
             grid-template-columns: minmax(260px, 360px) 1fr;
             gap: 24px;
             align-items: center;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 248, 255, 0.93));
+            background:
+                radial-gradient(circle at 88% 10%, rgba(14, 165, 233, 0.14), transparent 36%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 252, 251, 0.93));
             padding: 24px;
             border-radius: 24px;
             box-shadow: var(--card-shadow);
-            border: 1px solid var(--outline);
+            border: 1px solid rgba(14, 165, 233, 0.2);
             animation: fadeUp 0.58s ease both;
         }
         .grid .card:nth-child(2n) { animation-delay: 0.04s; }
@@ -827,8 +855,8 @@
             width: fit-content;
             padding: 8px 12px;
             border-radius: 999px;
-            background: rgba(37, 99, 235, 0.10);
-            color: #1d4ed8;
+            background: rgba(15, 118, 110, 0.12);
+            color: #0f766e;
             font-weight: 700;
         }
         .detail-name {
@@ -849,8 +877,8 @@
             margin-top: 4px;
         }
         .detail-tag {
-            background: #dbeafe;
-            color: #1e3a8a;
+            background: #ccfbf1;
+            color: #115e59;
             border-radius: 999px;
             padding: 6px 10px;
             font-size: 12px;
@@ -863,8 +891,8 @@
             gap: 10px;
         }
         .info-item {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
+            background: #ecfeff;
+            border: 1px solid #99f6e4;
             border-radius: 12px;
             padding: 10px 12px;
         }
@@ -925,9 +953,9 @@
             z-index: -1;
             border-radius: 32px;
             background:
-                radial-gradient(circle 280px at 12% 35%, rgba(59, 130, 246, 0.18) 0%, transparent 58%),
-                radial-gradient(circle 320px at 88% 8%, rgba(30, 144, 255, 0.14) 0%, transparent 55%),
-                radial-gradient(circle 360px at 75% 92%, rgba(100, 150, 255, 0.12) 0%, transparent 50%);
+                radial-gradient(circle 280px at 12% 35%, rgba(14, 165, 233, 0.18) 0%, transparent 58%),
+                radial-gradient(circle 320px at 88% 8%, rgba(15, 118, 110, 0.14) 0%, transparent 55%),
+                radial-gradient(circle 360px at 75% 92%, rgba(249, 115, 22, 0.12) 0%, transparent 50%);
             filter: blur(1px);
         }
         .home-section-features {
@@ -943,9 +971,9 @@
             pointer-events: none;
             z-index: -1;
             background:
-                radial-gradient(circle 280px at 18% 22%, rgba(37, 99, 235, 0.14) 0%, transparent 60%),
-                radial-gradient(circle 320px at 92% 75%, rgba(59, 130, 246, 0.12) 0%, transparent 58%),
-                linear-gradient(135deg, rgba(219, 234, 254, 0.08) 0%, rgba(240, 249, 255, 0.05) 100%);
+                radial-gradient(circle 280px at 18% 22%, rgba(14, 165, 233, 0.14) 0%, transparent 60%),
+                radial-gradient(circle 320px at 92% 75%, rgba(15, 118, 110, 0.12) 0%, transparent 58%),
+                linear-gradient(135deg, rgba(236, 254, 255, 0.08) 0%, rgba(240, 249, 255, 0.05) 100%);
         }
         .home-team {
             position: relative;
@@ -958,8 +986,8 @@
             z-index: -1;
             border-radius: 24px;
             background:
-                radial-gradient(circle 260px at 22% 50%, rgba(59, 130, 246, 0.16) 0%, transparent 58%),
-                radial-gradient(circle 300px at 85% 15%, rgba(30, 144, 255, 0.12) 0%, transparent 56%);
+                radial-gradient(circle 260px at 22% 50%, rgba(14, 165, 233, 0.16) 0%, transparent 58%),
+                radial-gradient(circle 300px at 85% 15%, rgba(15, 118, 110, 0.12) 0%, transparent 56%);
         }
         @media (max-width: 720px) {
             .hero, .detail, .home-hero {
@@ -1128,6 +1156,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-psy">Psy</span></div>
         <p class="card-substats">ATK 97 • DEF 66 • VIT 82</p>
+        <p class="card-extra">Finisseur offensif • Ruines mystiques</p>
         <div class="card-foot">
             <span>★★★★★</span>
             <span>1 type</span>
@@ -1146,6 +1175,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-normal">Normal</span><span class="type-badge type-vol">Vol</span></div>
         <p class="card-substats">ATK 77 • DEF 56 • VIT 74</p>
+        <p class="card-extra">Finisseur offensif • Prairies ouvertes</p>
         <div class="card-foot">
             <span>★★★★★</span>
             <span>2 types</span>
@@ -1164,6 +1194,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span><span class="type-badge type-psy">Psy</span></div>
         <p class="card-substats">ATK 66 • DEF 51 • VIT 71</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>2 types</span>
@@ -1182,6 +1213,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
         <p class="card-substats">ATK 69 • DEF 49 • VIT 71</p>
+        <p class="card-extra">Eclaireur rapide • Zones volcaniques</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1200,6 +1232,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-combat">Combat</span></div>
         <p class="card-substats">ATK 69 • DEF 49 • VIT 71</p>
+        <p class="card-extra">Eclaireur rapide • Arenes rocheuses</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1218,6 +1251,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-roche">Roche</span><span class="type-badge type-sol">Sol</span></div>
         <p class="card-substats">ATK 60 • DEF 48 • VIT 69</p>
+        <p class="card-extra">Eclaireur rapide • Montagnes abruptes</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>2 types</span>
@@ -1236,6 +1270,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
         <p class="card-substats">ATK 70 • DEF 49 • VIT 71</p>
+        <p class="card-extra">Eclaireur rapide • Zones volcaniques</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1254,6 +1289,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
         <p class="card-substats">ATK 70 • DEF 47 • VIT 69</p>
+        <p class="card-extra">Finisseur offensif • Prairies ouvertes</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1272,6 +1308,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-plante">Plante</span><span class="type-badge type-poison">Poison</span></div>
         <p class="card-substats">ATK 61 • DEF 45 • VIT 67</p>
+        <p class="card-extra">Eclaireur rapide • Forets profondes</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>2 types</span>
@@ -1290,6 +1327,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-fee">Fée</span></div>
         <p class="card-substats">ATK 61 • DEF 43 • VIT 67</p>
+        <p class="card-extra">Eclaireur rapide • Zone inconnue</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1308,6 +1346,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
         <p class="card-substats">ATK 66 • DEF 45 • VIT 68</p>
+        <p class="card-extra">Eclaireur rapide • Zones volcaniques</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1326,6 +1365,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
         <p class="card-substats">ATK 59 • DEF 42 • VIT 66</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1344,6 +1384,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
         <p class="card-substats">ATK 59 • DEF 42 • VIT 66</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1362,6 +1403,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-dragon">Dragon</span></div>
         <p class="card-substats">ATK 69 • DEF 45 • VIT 68</p>
+        <p class="card-extra">Finisseur offensif • Pics recules</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1380,6 +1422,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-electrik">Electrik</span></div>
         <p class="card-substats">ATK 62 • DEF 42 • VIT 66</p>
+        <p class="card-extra">Eclaireur rapide • Plaines orageuses</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1398,6 +1441,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
         <p class="card-substats">ATK 60 • DEF 42 • VIT 66</p>
+        <p class="card-extra">Eclaireur rapide • Prairies ouvertes</p>
         <div class="card-foot">
             <span>★★★★☆</span>
             <span>1 type</span>
@@ -1416,6 +1460,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-electrik">Electrik</span><span class="type-badge type-acier">Acier</span></div>
         <p class="card-substats">ATK 62 • DEF 43 • VIT 65</p>
+        <p class="card-extra">Eclaireur rapide • Plaines orageuses</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>2 types</span>
@@ -1434,6 +1479,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
         <p class="card-substats">ATK 54 • DEF 38 • VIT 64</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1452,6 +1498,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
         <p class="card-substats">ATK 50 • DEF 36 • VIT 63</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1470,6 +1517,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-feu">Feu</span></div>
         <p class="card-substats">ATK 60 • DEF 39 • VIT 64</p>
+        <p class="card-extra">Eclaireur rapide • Zones volcaniques</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1488,6 +1536,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-poison">Poison</span><span class="type-badge type-vol">Vol</span></div>
         <p class="card-substats">ATK 53 • DEF 39 • VIT 63</p>
+        <p class="card-extra">Eclaireur rapide • Marais toxiques</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>2 types</span>
@@ -1506,6 +1555,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-psy">Psy</span></div>
         <p class="card-substats">ATK 63 • DEF 40 • VIT 64</p>
+        <p class="card-extra">Eclaireur rapide • Ruines mystiques</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1524,6 +1574,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span><span class="type-badge type-poison">Poison</span></div>
         <p class="card-substats">ATK 50 • DEF 38 • VIT 63</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>2 types</span>
@@ -1542,6 +1593,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-normal">Normal</span><span class="type-badge type-vol">Vol</span></div>
         <p class="card-substats">ATK 55 • DEF 40 • VIT 63</p>
+        <p class="card-extra">Eclaireur rapide • Prairies ouvertes</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>2 types</span>
@@ -1560,6 +1612,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
         <p class="card-substats">ATK 53 • DEF 37 • VIT 63</p>
+        <p class="card-extra">Eclaireur rapide • Prairies ouvertes</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1578,6 +1631,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
         <p class="card-substats">ATK 48 • DEF 35 • VIT 62</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1596,6 +1650,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-plante">Plante</span><span class="type-badge type-poison">Poison</span></div>
         <p class="card-substats">ATK 51 • DEF 38 • VIT 62</p>
+        <p class="card-extra">Eclaireur rapide • Forets profondes</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>2 types</span>
@@ -1614,6 +1669,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-electrik">Electrik</span></div>
         <p class="card-substats">ATK 56 • DEF 37 • VIT 63</p>
+        <p class="card-extra">Eclaireur rapide • Plaines orageuses</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1632,6 +1688,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-normal">Normal</span></div>
         <p class="card-substats">ATK 43 • DEF 32 • VIT 60</p>
+        <p class="card-extra">Eclaireur rapide • Prairies ouvertes</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1650,6 +1707,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-eau">Eau</span></div>
         <p class="card-substats">ATK 45 • DEF 33 • VIT 60</p>
+        <p class="card-extra">Eclaireur rapide • Lacs et rivieres</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1668,6 +1726,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-poison">Poison</span></div>
         <p class="card-substats">ATK 42 • DEF 30 • VIT 58</p>
+        <p class="card-extra">Eclaireur rapide • Marais toxiques</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>1 type</span>
@@ -1686,6 +1745,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-normal">Normal</span><span class="type-badge type-vol">Vol</span></div>
         <p class="card-substats">ATK 43 • DEF 32 • VIT 58</p>
+        <p class="card-extra">Eclaireur rapide • Prairies ouvertes</p>
         <div class="card-foot">
             <span>★★★☆☆</span>
             <span>2 types</span>
@@ -1704,6 +1764,7 @@
         </div>
         <div class="card-types"><span class="type-badge type-insecte">Insecte</span><span class="type-badge type-poison">Poison</span></div>
         <p class="card-substats">ATK 34 • DEF 28 • VIT 56</p>
+        <p class="card-extra">Eclaireur rapide • Bois denses</p>
         <div class="card-foot">
             <span>★★☆☆☆</span>
             <span>2 types</span>
