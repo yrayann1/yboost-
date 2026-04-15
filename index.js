@@ -170,11 +170,12 @@ const renderLayout = (title, body) => `
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
         :root {
-            --text: #10203a;
-            --muted: #64748b;
-            --card-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
-            --surface: rgba(255, 255, 255, 0.90);
-            --surface-strong: rgba(255, 255, 255, 0.96);
+            --text: #0f1b3d;
+            --muted: #55627f;
+            --card-shadow: 0 22px 44px rgba(13, 24, 57, 0.14);
+            --surface: rgba(255, 255, 255, 0.88);
+            --surface-strong: rgba(255, 255, 255, 0.95);
+            --outline: rgba(148, 163, 184, 0.22);
             --type-plante: #78c850;
             --type-feu: #f08030;
             --type-eau: #6890f0;
@@ -194,10 +195,10 @@ const renderLayout = (title, body) => `
             margin: 0;
             font-family: 'Manrope', 'Segoe UI', sans-serif;
             background:
-                radial-gradient(circle at 15% 20%, rgba(250, 204, 21, 0.28) 0, rgba(250, 204, 21, 0.08) 18%, transparent 40%),
-                radial-gradient(circle at 85% 10%, rgba(59, 130, 246, 0.26) 0, rgba(59, 130, 246, 0.08) 16%, transparent 36%),
-                radial-gradient(circle at 80% 85%, rgba(244, 114, 182, 0.18) 0, rgba(244, 114, 182, 0.06) 20%, transparent 42%),
-                linear-gradient(180deg, #f8fbff 0%, #eef4ff 48%, #e9f1ff 100%);
+                radial-gradient(circle at 8% 22%, rgba(148, 187, 255, 0.34) 0, rgba(148, 187, 255, 0.1) 22%, transparent 45%),
+                radial-gradient(circle at 92% 14%, rgba(109, 167, 255, 0.28) 0, rgba(109, 167, 255, 0.08) 18%, transparent 42%),
+                radial-gradient(circle at 85% 82%, rgba(253, 224, 71, 0.18) 0, rgba(253, 224, 71, 0.04) 20%, transparent 44%),
+                linear-gradient(180deg, #f8fbff 0%, #eaf2ff 54%, #e6efff 100%);
             color: var(--text);
             min-height: 100vh;
             position: relative;
@@ -244,9 +245,10 @@ const renderLayout = (title, body) => `
             margin-bottom: 24px;
             padding: 20px 24px;
             border-radius: 20px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.72));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.82));
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(148, 163, 184, 0.16);
+            border: 1px solid var(--outline);
+            backdrop-filter: blur(8px);
         }
         .hero h1, .hero p {
             margin: 0;
@@ -261,17 +263,21 @@ const renderLayout = (title, body) => `
             grid-template-columns: 1.2fr 1fr;
             gap: 20px;
             margin-bottom: 24px;
-            padding: 28px;
-            border-radius: 28px;
+            padding: 34px;
+            border-radius: 30px;
             background:
-                linear-gradient(135deg, rgba(30, 144, 255, 0.85) 0%, rgba(59, 130, 246, 0.75) 50%, rgba(30, 61, 124, 0.80) 100%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><radialGradient id="g1" cx="20%" cy="30%" r="40%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.3);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient><radialGradient id="g2" cx="80%" cy="70%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.2);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient></defs><circle cx="200" cy="100" r="180" fill="url(%23g1)" /><circle cx="1000" cy="350" r="220" fill="url(%23g2)" /><path d="M 600 300 Q 700 250 800 300 Q 850 320 900 300" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none" /></svg>');
-            background-size: cover, 400px 400px;
-            background-position: center, 0 0;
-            color: #fff7ed;
-            box-shadow: 0 18px 44px rgba(30, 61, 124, 0.34);
+                linear-gradient(110deg, rgba(7, 19, 56, 0.84) 0%, rgba(10, 33, 93, 0.72) 42%, rgba(8, 24, 72, 0.8) 100%),
+                url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'),
+                url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'),
+                url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png');
+            background-size: cover, 320px, 210px, 240px;
+            background-repeat: no-repeat;
+            background-position: center, 96% 108%, 78% 14%, 62% 88%;
+            color: #f8fbff;
+            box-shadow: 0 26px 52px rgba(9, 24, 67, 0.36);
             overflow: hidden;
             isolation: isolate;
+            border: 1px solid rgba(255, 255, 255, 0.22);
         }
         .home-hero::before {
             content: '';
@@ -300,7 +306,7 @@ const renderLayout = (title, body) => `
         }
         .home-lead {
             margin: 0 0 18px;
-            color: #ffedd5;
+            color: #dbeafe;
             font-size: 18px;
         }
         .home-cta {
@@ -319,14 +325,14 @@ const renderLayout = (title, body) => `
             border: 1px solid transparent;
         }
         .btn.primary {
-            background: rgba(15, 23, 42, 0.95);
-            color: #f8fafc;
+            background: linear-gradient(135deg, #f8fafc, #dbeafe);
+            color: #0f1b3d;
             box-shadow: 0 10px 22px rgba(15, 23, 42, 0.20);
         }
         .btn.secondary {
-            color: #fff7ed;
-            border-color: rgba(255, 237, 213, 0.7);
-            background: rgba(124, 45, 18, 0.18);
+            color: #eff6ff;
+            border-color: rgba(219, 234, 254, 0.72);
+            background: rgba(37, 99, 235, 0.24);
         }
         .home-hero-right {
             z-index: 1;
@@ -339,8 +345,8 @@ const renderLayout = (title, body) => `
             width: fit-content;
             border-radius: 999px;
             padding: 7px 12px;
-            background: rgba(255, 247, 237, 0.22);
-            border: 1px solid rgba(255, 237, 213, 0.44);
+            background: rgba(239, 246, 255, 0.22);
+            border: 1px solid rgba(191, 219, 254, 0.44);
             font-size: 13px;
             font-weight: 700;
             backdrop-filter: blur(8px);
@@ -355,8 +361,8 @@ const renderLayout = (title, body) => `
             background: var(--surface-strong);
             border-radius: 18px;
             padding: 16px;
-            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-            border: 1px solid rgba(148, 163, 184, 0.14);
+            box-shadow: 0 12px 26px rgba(28, 66, 152, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.18);
         }
         .feature h3 {
             margin: 0 0 6px;
@@ -401,7 +407,7 @@ const renderLayout = (title, body) => `
         }
         .card-meta {
             margin: 10px 0 0;
-            text-align: center;
+            text-align: left;
             color: var(--muted);
             font-size: 14px;
             font-weight: 600;
@@ -432,7 +438,7 @@ const renderLayout = (title, body) => `
             gap: 6px;
             flex-wrap: wrap;
             margin: 10px 0 0;
-            justify-content: center;
+            justify-content: flex-start;
         }
         .type-badge {
             display: inline-block;
@@ -461,7 +467,7 @@ const renderLayout = (title, body) => `
             margin-top: 6px;
             font-size: 12px;
             color: #475569;
-            text-align: center;
+            text-align: left;
             font-weight: 700;
             letter-spacing: 0.01em;
         }
@@ -472,9 +478,9 @@ const renderLayout = (title, body) => `
             margin-bottom: 20px;
             padding: 16px;
             border-radius: 20px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.80));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 255, 0.86));
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(148, 163, 184, 0.14);
+            border: 1px solid var(--outline);
         }
         .search-panel input,
         .search-panel select,
@@ -512,12 +518,12 @@ const renderLayout = (title, body) => `
             position: relative;
             text-decoration: none;
             color: inherit;
-            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,250,252,0.98));
+            background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(247,250,255,0.98));
             border-radius: 20px;
             padding: 16px;
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.10);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-            border: 1px solid rgba(148, 163, 184, 0.14);
+            box-shadow: 0 14px 34px rgba(27, 67, 157, 0.12);
+            transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+            border: 1px solid var(--outline);
             overflow: hidden;
         }
         .card::before {
@@ -525,12 +531,12 @@ const renderLayout = (title, body) => `
             position: absolute;
             inset: 0 0 auto;
             height: 5px;
-            background: linear-gradient(90deg, #f97316, #facc15, #3b82f6);
+            background: linear-gradient(90deg, #1d4ed8, #3b82f6, #60a5fa);
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 36px rgba(15, 23, 42, 0.14);
-            border-color: rgba(37, 99, 235, 0.20);
+            transform: translateY(-6px);
+            box-shadow: 0 22px 42px rgba(27, 67, 157, 0.2);
+            border-color: rgba(59, 130, 246, 0.34);
         }
         .card img, .detail img {
             width: 100%;
@@ -538,13 +544,13 @@ const renderLayout = (title, body) => `
             display: block;
         }
         .card img {
-            background: #f8fafc;
+            background: linear-gradient(145deg, #eff6ff 0%, #f8fafc 100%);
             border-radius: 14px;
         }
         .name {
             margin: 12px 0 0;
-            font-weight: 700;
-            text-align: center;
+            font-weight: 800;
+            text-align: left;
             letter-spacing: -0.02em;
             color: var(--text);
         }
@@ -567,11 +573,11 @@ const renderLayout = (title, body) => `
             grid-template-columns: minmax(260px, 360px) 1fr;
             gap: 24px;
             align-items: center;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 248, 255, 0.93));
             padding: 24px;
             border-radius: 24px;
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(148, 163, 184, 0.14);
+            border: 1px solid var(--outline);
         }
         .panel {
             display: grid;
@@ -719,6 +725,11 @@ const renderLayout = (title, body) => `
             .hero, .detail, .home-hero {
                 grid-template-columns: 1fr;
                 display: grid;
+            }
+            .home-hero {
+                background-size: cover, 180px, 140px, 150px;
+                background-position: center, 102% 104%, 88% 10%, 62% 100%;
+                padding: 26px;
             }
             .search-panel {
                 grid-template-columns: 1fr;
