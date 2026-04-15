@@ -460,10 +460,11 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .list-hero {
             background:
-                radial-gradient(circle at 86% 24%, rgba(14, 165, 233, 0.17) 0, transparent 44%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(236, 254, 255, 0.94));
-            border-color: rgba(14, 165, 233, 0.24);
-            box-shadow: 0 24px 50px rgba(30, 41, 59, 0.11);
+                radial-gradient(circle at 86% 24%, rgba(6, 182, 212, 0.22) 0, transparent 44%),
+                linear-gradient(145deg, rgba(15, 23, 42, 0.94), rgba(30, 41, 59, 0.92));
+            border-color: rgba(103, 232, 249, 0.24);
+            box-shadow: 0 26px 52px rgba(15, 23, 42, 0.24);
+            color: #e2e8f0;
         }
         .list-hero::before {
             content: '';
@@ -484,16 +485,20 @@ const renderLayout = (title, body, activePage = 'home') => `
             line-height: 1.04;
             letter-spacing: -0.04em;
             margin-bottom: 8px;
+            background: linear-gradient(120deg, #ffffff, #bfdbfe 50%, #67e8f9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         .list-hero-main .muted {
             font-size: 20px;
-            color: #1f3f52;
+            color: #cbd5e1;
             font-weight: 700;
             margin-top: 6px;
         }
         .list-hero-note {
             margin-top: 10px;
-            color: #475569;
+            color: #94a3b8;
             font-weight: 600;
             font-size: 14px;
         }
@@ -501,9 +506,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             min-width: 190px;
             border-radius: 18px;
             padding: 14px 16px;
-            background: linear-gradient(165deg, #0f172a, #0f766e);
-            border: 1px solid rgba(45, 212, 191, 0.32);
-            box-shadow: 0 16px 26px rgba(30, 41, 59, 0.28);
+            background: linear-gradient(165deg, rgba(14, 165, 233, 0.2), rgba(15, 118, 110, 0.24));
+            border: 1px solid rgba(103, 232, 249, 0.42);
+            box-shadow: 0 16px 26px rgba(8, 47, 73, 0.32);
             text-align: right;
         }
         .list-hero-count {
@@ -521,7 +526,7 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .list-hero-sub {
             margin-top: 8px;
-            color: #99f6e4;
+            color: #bae6fd;
             font-weight: 700;
             font-size: 12px;
             text-transform: uppercase;
@@ -533,9 +538,12 @@ const renderLayout = (title, body, activePage = 'home') => `
             padding: 16px;
             border-radius: 28px;
             background:
-                linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(240, 253, 250, 0.58));
-            border: 1px solid rgba(14, 165, 233, 0.22);
-            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+                linear-gradient(120deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(30deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(145deg, rgba(6, 45, 57, 0.9), rgba(15, 118, 110, 0.84), rgba(14, 165, 233, 0.84));
+            background-size: 44px 44px, 44px 44px, auto;
+            border: 1px solid rgba(103, 232, 249, 0.36);
+            box-shadow: 0 22px 48px rgba(8, 47, 73, 0.28);
             overflow: hidden;
             isolation: isolate;
         }
@@ -546,7 +554,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             width: 420px;
             height: 420px;
             border-radius: 999px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(14, 165, 233, 0.05) 46%, transparent 70%);
+            background: radial-gradient(circle, rgba(125, 211, 252, 0.24) 0%, rgba(125, 211, 252, 0.06) 46%, transparent 70%);
             pointer-events: none;
             z-index: -1;
         }
@@ -558,7 +566,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             width: 360px;
             height: 360px;
             border-radius: 999px;
-            background: radial-gradient(circle, rgba(249, 115, 22, 0.14) 0%, rgba(249, 115, 22, 0.03) 44%, transparent 72%);
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.22) 0%, rgba(251, 191, 36, 0.06) 44%, transparent 72%);
             pointer-events: none;
             z-index: -1;
         }
@@ -575,9 +583,9 @@ const renderLayout = (title, body, activePage = 'home') => `
             margin-top: 10px;
         }
         .metric-pill {
-            background: rgba(255, 255, 255, 0.92);
-            color: #115e59;
-            border: 1px solid #99f6e4;
+            background: rgba(15, 23, 42, 0.44);
+            color: #dbeafe;
+            border: 1px solid rgba(147, 197, 253, 0.42);
             border-radius: 999px;
             padding: 5px 10px;
             font-size: 12px;
@@ -585,7 +593,7 @@ const renderLayout = (title, body, activePage = 'home') => `
         }
         .metric-pill strong {
             font-weight: 800;
-            color: #0f766e;
+            color: #67e8f9;
         }
         .home-hero {
             position: relative;
@@ -898,13 +906,14 @@ const renderLayout = (title, body, activePage = 'home') => `
             animation: fadeUp 0.5s ease both;
         }
         .list-toolbar {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(236, 254, 255, 0.9));
-            border-color: rgba(14, 165, 233, 0.22);
-            box-shadow: 0 14px 28px rgba(51, 65, 85, 0.12);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 246, 255, 0.94));
+            border-color: rgba(125, 211, 252, 0.42);
+            box-shadow: 0 16px 30px rgba(30, 41, 59, 0.18);
             position: sticky;
             top: 84px;
             z-index: 12;
             backdrop-filter: blur(6px);
+            border-radius: 16px;
         }
         .search-panel input,
         .search-panel select,
@@ -924,9 +933,9 @@ const renderLayout = (title, body, activePage = 'home') => `
         .search-panel input,
         .search-panel select {
             width: 100%;
-            background: white;
+            background: #f8fbff;
             color: var(--text);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
         .search-panel button {
             cursor: pointer;
