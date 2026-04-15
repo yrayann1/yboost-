@@ -1,244 +1,10 @@
-/* index.js */
-const express = require('express');
-let pokemons = require('./db-pokemons');
-let helper = require('./helper');
 
-
-// Les variables utilisees dans le programme
-const app = express();
-const PORT = process.env.PORT || 3003;
-
-const escapeHtml = (value) => String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-
-const formatDate = (value) => {
-    const date = new Date(value);
-    return date.toLocaleDateString('fr-FR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-};
-
-const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-
-const getPokemonExtraStats = (pokemon) => {
-    const attack = clamp(Math.round((pokemon.power || 0) * 1.6 + (pokemon.cp || 0) * 2.5), 15, 99);
-    const defense = clamp(Math.round((pokemon.hp || 0) * 1.25 + (pokemon.cp || 0) * 2 + (pokemon.types?.length || 1) * 2), 15, 99);
-    const speed = clamp(Math.round((pokemon.power || 0) * 1.2 + 40 - (pokemon.hp || 0) * 0.35), 15, 99);
-
-    let rarity = 'Commun';
-    if ((pokemon.power || 0) >= 40) rarity = 'Légendaire';
-    else if ((pokemon.power || 0) >= 34) rarity = 'Épique';
-    else if ((pokemon.power || 0) >= 28) rarity = 'Rare';
-
-    return { attack, defense, speed, rarity };
-};
-
-const TYPE_WEAKNESSES = {
-    Plante: ['Feu', 'Glace', 'Vol', 'Insecte'],
-    Feu: ['Eau', 'Roche', 'Sol'],
-    Eau: ['Electrik', 'Plante'],
-    Electrik: ['Sol'],
-    Psy: ['Insecte', 'Spectre', 'Ténèbres'],
-    Poison: ['Sol', 'Psy'],
-    Insecte: ['Feu', 'Vol', 'Roche'],
-    Roche: ['Eau', 'Plante', 'Combat', 'Sol', 'Acier'],
-    Sol: ['Eau', 'Plante', 'Glace'],
-    Vol: ['Electrik', 'Glace', 'Roche'],
-    Combat: ['Vol', 'Psy', 'Fée'],
-    Fée: ['Poison', 'Acier'],
-    Acier: ['Feu', 'Combat', 'Sol'],
-    Normal: ['Combat'],
-    Dragon: ['Glace', 'Dragon', 'Fée']
-};
-
-const TYPE_RESISTANCES = {
-    Plante: ['Eau', 'Electrik', 'Plante', 'Sol'],
-    Feu: ['Feu', 'Plante', 'Glace', 'Insecte', 'Acier', 'Fée'],
-    Eau: ['Feu', 'Eau', 'Glace', 'Acier'],
-    Electrik: ['Electrik', 'Vol', 'Acier'],
-    Psy: ['Combat', 'Psy'],
-    Poison: ['Plante', 'Combat', 'Poison', 'Insecte', 'Fée'],
-    Insecte: ['Plante', 'Combat', 'Sol'],
-    Roche: ['Normal', 'Feu', 'Poison', 'Vol'],
-    Sol: ['Poison', 'Roche'],
-    Vol: ['Plante', 'Combat', 'Insecte'],
-    Combat: ['Roche', 'Insecte', 'Ténèbres'],
-    Fée: ['Combat', 'Insecte', 'Ténèbres'],
-    Acier: ['Normal', 'Plante', 'Glace', 'Vol', 'Psy', 'Insecte', 'Roche', 'Dragon', 'Acier', 'Fée'],
-    Normal: [],
-    Dragon: ['Feu', 'Eau', 'Plante', 'Electrik']
-};
-
-const TYPE_TALENTS = {
-    Plante: ['Engrais', 'Chlorophylle'],
-    Feu: ['Brasier', 'Corps Ardent'],
-    Eau: ['Torrent', 'Glissade'],
-    Electrik: ['Statik', 'Paratonnerre'],
-    Psy: ['Synchro', 'Lévitation'],
-    Poison: ['Point Poison', 'Mue'],
-    Insecte: ['Essaim', 'Poudreur'],
-    Roche: ['Tête de Roc', 'Fermeté'],
-    Sol: ['Voile Sable', 'Force Sable'],
-    Vol: ['Regard Vif', 'Pieds Confus'],
-    Combat: ['Cran', 'Impassible'],
-    Fée: ['Joli Sourire', 'Peau Féérique'],
-    Acier: ['Magnépiège', 'Corps Sain'],
-    Normal: ['Fuite', 'Attention'],
-    Dragon: ['Mue', 'Attention']
-};
-
-const TYPE_HABITATS = {
-    Plante: 'Forets profondes',
-    Feu: 'Zones volcaniques',
-    Eau: 'Lacs et rivieres',
-    Electrik: 'Plaines orageuses',
-    Psy: 'Ruines mystiques',
-    Poison: 'Marais toxiques',
-    Insecte: 'Bois denses',
-    Roche: 'Montagnes abruptes',
-    Sol: 'Canyons arides',
-    Vol: 'Falaises ventees',
-    Combat: 'Arenes rocheuses',
-    Fee: 'Clairieres lumineuses',
-    Acier: 'Sites industriels',
-    Normal: 'Prairies ouvertes',
-    Dragon: 'Pics recules'
-};
-
-const TYPE_SIGNATURE_MOVES = {
-    Plante: 'Lame Feuille',
-    Feu: 'Lance-Flammes',
-    Eau: 'Hydrocanon',
-    Electrik: 'Tonnerre',
-    Psy: 'Psyko',
-    Poison: 'Bomb-Beurk',
-    Insecte: 'Plaie-Croix',
-    Roche: 'Lame de Roc',
-    Sol: 'Seisme',
-    Vol: 'Aero-Lame',
-    Combat: 'Close Combat',
-    Fee: 'Pouvoir Lunaire',
-    Acier: 'Tete de Fer',
-    Normal: 'Vive-Attaque',
-    Dragon: 'Draco Meteor'
-};
-
-const EVOLUTION_CHAINS = {
-    Bulbizarre: 'Bulbizarre -> Herbizarre -> Florizarre',
-    Salamèche: 'Salamèche -> Reptincel -> Dracaufeu',
-    Carapuce: 'Carapuce -> Carabaffe -> Tortank',
-    Aspicot: 'Aspicot -> Coconfort -> Dardargnan',
-    Roucool: 'Roucool -> Roucoups -> Roucarnage',
-    Rattata: 'Rattata -> Rattatac',
-    Piafabec: 'Piafabec -> Rapasdepic',
-    Abo: 'Abo -> Arbok',
-    Pikachu: 'Pichu -> Pikachu -> Raichu',
-    Sabelette: 'Sabelette -> Sablaireau',
-    Mélofée: 'Mélo -> Mélofée -> Mélodelfe',
-    Groupix: 'Goupix -> Feunard',
-    Nosferapti: 'Nosferapti -> Nosferalto -> Nostenfer',
-    Miaouss: 'Miaouss -> Persian',
-    Psykokwak: 'Psykokwak -> Akwakwak',
-    Caninos: 'Caninos -> Arcanin',
-    Ptitard: 'Ptitard -> Têtarte -> Tartard',
-    Abra: 'Abra -> Kadabra -> Alakazam',
-    Machoc: 'Machoc -> Machopeur -> Mackogneur',
-    Chétiflor: 'Chétiflor -> Boustiflor -> Empiflor',
-    Tentacool: 'Tentacool -> Tentacruel',
-    Racaillou: 'Racaillou -> Gravalanch -> Grolem',
-    Ponyta: 'Ponyta -> Galopa',
-    Ramoloss: 'Ramoloss -> Flagadoss',
-    Magnéti: 'Magnéti -> Magnéton -> Magnézone',
-    Canarticho: 'Canarticho (forme unique)',
-    Otaria: 'Otaria -> Lamantine',
-    Krabby: 'Krabby -> Krabboss',
-    Voltorbe: 'Voltorbe -> Électrode',
-    Kokiyas: 'Kokiyas -> Crustabri',
-    Evoli: 'Évoli -> Aquali / Voltali / Pyroli / etc.',
-    Minidraco: 'Minidraco -> Draco -> Dracolosse',
-    Mew: 'Mew (Pokémon fabuleux)'
-};
-
-const getPokemonFullInfo = (pokemon) => {
-    const firstType = pokemon.types[0] || 'Normal';
-    const secondType = pokemon.types[1] || null;
-    const extra = getPokemonExtraStats(pokemon);
-    const weaknesses = [...new Set(pokemon.types.flatMap((type) => TYPE_WEAKNESSES[type] || []))].slice(0, 5);
-    const resistances = [...new Set(pokemon.types.flatMap((type) => TYPE_RESISTANCES[type] || []))].slice(0, 6);
-    const statEntries = [
-        ['Attaque', extra.attack],
-        ['Defense', extra.defense],
-        ['Vitesse', extra.speed]
-    ];
-    const dominantStat = statEntries.sort((left, right) => right[1] - left[1])[0][0];
-    const baseTotal = (pokemon.hp || 0) + (pokemon.cp || 0) + (pokemon.power || 0) + extra.attack + extra.defense + extra.speed;
-    const captureRate = clamp(65 - (pokemon.power || 0), 8, 60);
-
-    let roleCombat = 'Polyvalent';
-    if (dominantStat === 'Attaque') roleCombat = 'Finisseur offensif';
-    else if (dominantStat === 'Defense') roleCombat = 'Tank defensif';
-    else if (dominantStat === 'Vitesse') roleCombat = 'Eclaireur rapide';
-
-    let temperament = 'Equilibre';
-    if (extra.attack - extra.defense >= 14) temperament = 'Impulsif';
-    else if (extra.defense - extra.attack >= 14) temperament = 'Protecteur';
-    else if (extra.speed >= 78) temperament = 'Nerveux';
-
-    const genre = pokemon.id % 7 === 0
-        ? 'Asexue'
-        : (pokemon.id % 2 === 0 ? '50% male / 50% femelle' : '62% male / 38% femelle');
-    const niveauConseille = clamp(Math.round((pokemon.power || 0) * 1.7 + (pokemon.cp || 0) * 6), 8, 90);
-
-    let difficulte = 'Accessible';
-    if (captureRate <= 15) difficulte = 'Extreme';
-    else if (captureRate <= 30) difficulte = 'Elevee';
-    else if (captureRate <= 45) difficulte = 'Moyenne';
-
-    const talentPool = [
-        ...(TYPE_TALENTS[firstType] || ['Adaptation']),
-        ...(secondType ? (TYPE_TALENTS[secondType] || []) : [])
-    ];
-    const talents = [...new Set(talentPool)].slice(0, 3);
-
-    return {
-        taille: `${(0.4 + pokemon.hp / 22).toFixed(2)} m`,
-        poids: `${(4.8 + pokemon.power * 0.85 + pokemon.cp * 0.35).toFixed(1)} kg`,
-        generation: 'Génération I',
-        region: 'Kanto',
-        categorie: `Pokémon ${firstType.toLowerCase()}`,
-        habitat: TYPE_HABITATS[firstType] || 'Zone inconnue',
-        roleCombat,
-        temperament,
-        genre,
-        niveauConseille,
-        difficulte,
-        baseTotal,
-        dominantStat,
-        mouvementSignature: TYPE_SIGNATURE_MOVES[firstType] || 'Charge',
-        talents,
-        faiblesses: weaknesses.length ? weaknesses : ['Aucune notable'],
-        resistances: resistances.length ? resistances : ['Aucune notable'],
-        evolution: EVOLUTION_CHAINS[pokemon.name] || `${pokemon.name} (évolution inconnue)`,
-        capture: `${captureRate}%`,
-        description: `${pokemon.name} est un Pokémon de type ${pokemon.types.join(' / ')}. Il se distingue par une puissance de ${pokemon.power}, une attaque de ${extra.attack} et une défense de ${extra.defense}.`
-    };
-};
-
-const renderLayout = (title, body, activePage = 'home') => `
 <!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${title}</title>
+    <title>Pokemon sélectionné</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -1251,321 +1017,144 @@ const renderLayout = (title, body, activePage = 'home') => `
         <nav class="site-nav">
             <div class="site-brand">YBoost Pokedex</div>
             <div class="site-links">
-                <a class="site-link ${activePage === 'home' ? 'active' : ''}" href="/" ${activePage === 'home' ? 'aria-current="page"' : ''}>Accueil</a>
-                <a class="site-link ${activePage === 'pokemons' ? 'active' : ''}" href="/api/pokemons" ${activePage === 'pokemons' ? 'aria-current="page"' : ''}>Pokemons</a>
-                <a class="site-link ${activePage === 'top' ? 'active' : ''}" href="/api/pokemons?sort=power-desc" ${activePage === 'top' ? 'aria-current="page"' : ''}>Top puissance</a>
+                <a class="site-link " href="/" >Accueil</a>
+                <a class="site-link " href="/api/pokemons" >Pokemons</a>
+                <a class="site-link active" href="/api/pokemons?sort=power-desc" aria-current="page">Top puissance</a>
             </div>
         </nav>
-        ${body}
-    </div>
-</body>
-</html>`;
-
-const renderHomePage = () => {
-    const averagePower = Math.round(pokemons.reduce((total, pokemon) => total + (pokemon.power || 0), 0) / pokemons.length);
-    const strongestPokemon = [...pokemons].sort((left, right) => (right.power || 0) - (left.power || 0))[0];
-    const highlighted = pokemons.slice(0, 4).map((pokemon) => renderCardFull(pokemon)).join('');
-
-    return renderLayout('Accueil Pokedex', `
-        <section class="home-section home-hero">
-            <div>
-                <h1 class="home-title">Explore ton Pokedex</h1>
-                <p class="home-lead">Recherche, compare et découvre les stats de chaque Pokémon dans une interface premium.</p>
-                <div class="home-cta">
-                    <a class="btn primary" href="/api/pokemons">Ouvrir la recherche</a>
-                    <a class="btn secondary" href="/api/pokemons?id=9">Voir Pikachu</a>
-                </div>
-                <div class="home-stats">
-                    <div class="home-stat"><small>Pokémon</small><strong>${pokemons.length}</strong></div>
-                    <div class="home-stat"><small>Puissance moyenne</small><strong>${averagePower}</strong></div>
-                    <div class="home-stat"><small>Plus fort</small><strong>${escapeHtml(strongestPokemon.name)}</strong></div>
-                </div>
-            </div>
-            <div class="home-hero-right">
-                <div class="badge">${pokemons.length} pokemons disponibles</div>
-                <div class="badge">Version Pro UI</div>
-                <div class="badge">Top puissance ${strongestPokemon.power}</div>
-            </div>
-        </section>
-
-        <section class="home-section-features">
-            <section class="home-panels">
-            <article class="feature">
-                <p class="feature-kicker">Navigation</p>
-                <h3>Recherche rapide</h3>
-                <p>Trouve un pokemon par nom en quelques lettres.</p>
-            </article>
-            <article class="feature">
-                <p class="feature-kicker">Filtrage</p>
-                <h3>Sélection directe</h3>
-                <p>Choisis dans la liste et affiche sa fiche complète.</p>
-            </article>
-            <article class="feature">
-                <p class="feature-kicker">Analyse</p>
-                <h3>Infos complètes</h3>
-                <p>Image, HP, CP, puissance, types et date de création.</p>
-            </article>
-        </section>
-        </section>
-
-        <section class="home-team">
-            <h2 class="section-title">Aperçu de l’équipe</h2>
-            <div class="preview-grid">
-                ${highlighted}
-            </div>
-        </section>
-    `, 'home');
-};
-
-const renderSearchPanel = (query, selectedId, sortBy) => `
+        
+            <a class="back" href="/api/pokemons">← Retour à la recherche</a>
+            
     <form class="search-panel list-toolbar" method="get" action="/api/pokemons">
-        <input type="text" name="q" placeholder="Chercher un pokemon par nom" value="${escapeHtml(query)}" />
+        <input type="text" name="q" placeholder="Chercher un pokemon par nom" value="" />
         <select name="id">
             <option value="">Choisir un pokemon</option>
-            ${pokemons.map((pokemon) => `
-                <option value="${pokemon.id}" ${String(selectedId) === String(pokemon.id) ? 'selected' : ''}>${escapeHtml(pokemon.name)}</option>
-            `).join('')}
+            
+                <option value="1" >Bulbizarre</option>
+            
+                <option value="2" >Salamèche</option>
+            
+                <option value="3" >Carapuce</option>
+            
+                <option value="4" >Aspicot</option>
+            
+                <option value="5" >Roucool</option>
+            
+                <option value="6" >Rattata</option>
+            
+                <option value="7" >Piafabec</option>
+            
+                <option value="8" >Abo</option>
+            
+                <option value="9" >Pikachu</option>
+            
+                <option value="10" >Sabelette</option>
+            
+                <option value="11" >Mélofée</option>
+            
+                <option value="12" >Groupix</option>
+            
+                <option value="13" >Nosferapti</option>
+            
+                <option value="14" >Miaouss</option>
+            
+                <option value="15" >Psykokwak</option>
+            
+                <option value="16" >Caninos</option>
+            
+                <option value="17" >Ptitard</option>
+            
+                <option value="18" >Abra</option>
+            
+                <option value="19" >Machoc</option>
+            
+                <option value="20" >Chétiflor</option>
+            
+                <option value="21" >Tentacool</option>
+            
+                <option value="22" >Racaillou</option>
+            
+                <option value="23" >Ponyta</option>
+            
+                <option value="24" >Ramoloss</option>
+            
+                <option value="25" >Magnéti</option>
+            
+                <option value="26" >Canarticho</option>
+            
+                <option value="27" >Otaria</option>
+            
+                <option value="28" >Krabby</option>
+            
+                <option value="29" >Voltorbe</option>
+            
+                <option value="30" >Kokiyas</option>
+            
+                <option value="31" >Evoli</option>
+            
+                <option value="32" >Minidraco</option>
+            
+                <option value="33" selected>Mew</option>
+            
         </select>
         <select name="sort">
-            <option value="power-desc" ${sortBy === 'power-desc' ? 'selected' : ''}>Puissance décroissante</option>
-            <option value="power-asc" ${sortBy === 'power-asc' ? 'selected' : ''}>Puissance croissante</option>
-            <option value="hp-desc" ${sortBy === 'hp-desc' ? 'selected' : ''}>HP décroissants</option>
-            <option value="attack-desc" ${sortBy === 'attack-desc' ? 'selected' : ''}>Attaque décroissante</option>
+            <option value="power-desc" selected>Puissance décroissante</option>
+            <option value="power-asc" >Puissance croissante</option>
+            <option value="hp-desc" >HP décroissants</option>
+            <option value="attack-desc" >Attaque décroissante</option>
         </select>
         <button type="submit">Voir</button>
         <a class="filter-reset" href="/api/pokemons">Réinitialiser</a>
     </form>
-`;
 
-const sortPokemons = (items, sortBy) => {
-    const list = [...items];
-
-    if (sortBy === 'power-asc') {
-        return list.sort((left, right) => (left.power || 0) - (right.power || 0));
-    }
-
-    if (sortBy === 'hp-desc') {
-        return list.sort((left, right) => (right.hp || 0) - (left.hp || 0));
-    }
-
-    if (sortBy === 'attack-desc') {
-        return list.sort((left, right) => getPokemonExtraStats(right).attack - getPokemonExtraStats(left).attack);
-    }
-
-    return list.sort((left, right) => (right.power || 0) - (left.power || 0));
-};
-
-const getPowerStars = (power) => {
-    const stars = Math.min(5, Math.max(1, Math.ceil((power || 0) / 9)));
-    return '★'.repeat(stars) + '☆'.repeat(5 - stars);
-};
-
-const getTypeClass = (type) => {
-    return 'type-' + (type || 'normal').toLowerCase().replace(/[éè]/g, 'e');
-};
-
-const renderTypesBadges = (types) => {
-    return types.map(type => `<span class="type-badge ${getTypeClass(type)}">${escapeHtml(type)}</span>`).join('');
-};
-
-const renderCardFull = (pokemon) => {
-    const extra = getPokemonExtraStats(pokemon);
-    const full = getPokemonFullInfo(pokemon);
-
-    return `
-    <a class="card" href="/api/pokemons?id=${pokemon.id}">
-        <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
-        <div class="card-header">
-            <div class="card-name-section">
-                <p class="name">${escapeHtml(pokemon.name)}</p>
-                <p class="card-meta">n°${pokemon.id} • ${extra.rarity}</p>
-            </div>
-            <div class="power-badge">PWR ${pokemon.power}</div>
-        </div>
-        <div class="card-types">${renderTypesBadges(pokemon.types)}</div>
-        <p class="card-substats">ATK ${extra.attack} • DEF ${extra.defense} • VIT ${extra.speed}</p>
-        <p class="card-extra">${escapeHtml(full.roleCombat)} • ${escapeHtml(full.habitat)}</p>
-        <div class="card-foot">
-            <span>${getPowerStars(pokemon.power)}</span>
-            <span>${pokemon.types.length} type${pokemon.types.length > 1 ? 's' : ''}</span>
-        </div>
-        <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
-    </a>
-`;
-};
-
-const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc') => {
-    const cards = items.map((pokemon) => renderCardFull(pokemon)).join('');
-    const avgPower = items.length ? Math.round(items.reduce((total, pokemon) => total + (pokemon.power || 0), 0) / items.length) : 0;
-    const topAttack = items.length ? Math.max(...items.map((pokemon) => getPokemonExtraStats(pokemon).attack)) : 0;
-    const sortLabel = {
-        'power-desc': 'Puissance décroissante',
-        'power-asc': 'Puissance croissante',
-        'hp-desc': 'HP décroissants',
-        'attack-desc': 'Attaque décroissante'
-    }[sortBy] || sortBy;
-
-    const activePage = sortBy === 'power-desc' ? 'top' : 'pokemons';
-
-    return renderLayout('Pokemons', `
-        <section class="hero list-hero">
-            <div class="list-hero-main">
-                <h1>Collection Pokemon</h1>
-                <p class="muted">Une galerie nette pour choisir vite et bien.</p>
-                <div class="hero-metrics">
-                    <span class="metric-pill">Moyenne <strong>${avgPower}</strong></span>
-                    <span class="metric-pill">Attaque max <strong>${topAttack}</strong></span>
-                    <span class="metric-pill">Tri <strong>${escapeHtml(sortLabel)}</strong></span>
-                </div>
-                <p class="list-hero-note">Choisis un Pokémon pour ouvrir sa fiche complète, ses talents et son évolution.</p>
-            </div>
-            <div class="list-hero-aside">
-                <span class="list-hero-count">${items.length}</span>
-                <div class="list-hero-label">Pokemon disponibles</div>
-                <div class="list-hero-sub">Pokedex YBoost</div>
-            </div>
-        </section>
-        ${renderSearchPanel(query, selectedId, sortBy)}
-        <main class="grid list-grid">
-            ${cards.length ? cards : '<div class="empty">Aucun pokemon trouvé.</div>'}
-        </main>
-    `, activePage);
-};
-
-const renderPokemonDetailBlock = (pokemon) => {
-    if (!pokemon) {
-        return `
-            <section class="detail">
-                <div class="panel">
-                    <h1>Pokemon introuvable</h1>
-                    <p class="muted">Aucune image n’est disponible pour cet identifiant.</p>
-                </div>
-            </section>
-        `;
-    }
-
-    const extra = getPokemonExtraStats(pokemon);
-    const full = getPokemonFullInfo(pokemon);
-
-    return `
+            
         <section class="detail">
-            <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png" alt="Mew" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
             <div class="panel">
-                <div class="detail-badge">Pokémon n°${pokemon.id}</div>
-                <h1 class="detail-name">${escapeHtml(pokemon.name)}</h1>
-                <p class="muted">Pokemon n°${pokemon.id}</p>
+                <div class="detail-badge">Pokémon n°33</div>
+                <h1 class="detail-name">Mew</h1>
+                <p class="muted">Pokemon n°33</p>
                 <div class="detail-tags">
-                    <span class="detail-tag">Rareté: ${extra.rarity}</span>
-                    <span class="detail-tag">Étoiles: ${getPowerStars(pokemon.power)}</span>
+                    <span class="detail-tag">Rareté: Légendaire</span>
+                    <span class="detail-tag">Étoiles: ★★★★★</span>
                 </div>
                 <div class="stats">
-                    <div class="stat"><small>HP</small><strong>${pokemon.hp}</strong></div>
-                    <div class="stat"><small>CP</small><strong>${pokemon.cp}</strong></div>
-                    <div class="stat"><small>Puissance</small><strong>${pokemon.power}</strong></div>
-                    <div class="stat"><small>Attaque</small><strong>${extra.attack}</strong></div>
-                    <div class="stat"><small>Défense</small><strong>${extra.defense}</strong></div>
-                    <div class="stat"><small>Vitesse</small><strong>${extra.speed}</strong></div>
-                    <div class="stat"><small>Types</small><strong>${pokemon.types.join(' / ')}</strong></div>
-                    <div class="stat"><small>Créé le</small><strong>${formatDate(pokemon.created)}</strong></div>
+                    <div class="stat"><small>HP</small><strong>35</strong></div>
+                    <div class="stat"><small>CP</small><strong>10</strong></div>
+                    <div class="stat"><small>Puissance</small><strong>45</strong></div>
+                    <div class="stat"><small>Attaque</small><strong>97</strong></div>
+                    <div class="stat"><small>Défense</small><strong>66</strong></div>
+                    <div class="stat"><small>Vitesse</small><strong>82</strong></div>
+                    <div class="stat"><small>Types</small><strong>Psy</strong></div>
+                    <div class="stat"><small>Créé le</small><strong>15/04/2026 20:30</strong></div>
                 </div>
                 <div class="info-grid">
-                    <div class="info-item"><small>Catégorie</small><strong>${escapeHtml(full.categorie)}</strong></div>
-                    <div class="info-item"><small>Taille</small><strong>${full.taille}</strong></div>
-                    <div class="info-item"><small>Poids</small><strong>${full.poids}</strong></div>
-                    <div class="info-item"><small>Génération</small><strong>${full.generation}</strong></div>
-                    <div class="info-item"><small>Région</small><strong>${full.region}</strong></div>
-                    <div class="info-item"><small>Habitat</small><strong>${escapeHtml(full.habitat)}</strong></div>
-                    <div class="info-item"><small>Rôle</small><strong>${escapeHtml(full.roleCombat)}</strong></div>
-                    <div class="info-item"><small>Tempérament</small><strong>${escapeHtml(full.temperament)}</strong></div>
-                    <div class="info-item"><small>Genre</small><strong>${escapeHtml(full.genre)}</strong></div>
-                    <div class="info-item"><small>Niveau conseillé</small><strong>${full.niveauConseille}</strong></div>
-                    <div class="info-item"><small>Difficulté</small><strong>${escapeHtml(full.difficulte)}</strong></div>
-                    <div class="info-item"><small>Total stats</small><strong>${full.baseTotal}</strong></div>
-                    <div class="info-item"><small>Stat dominante</small><strong>${escapeHtml(full.dominantStat)}</strong></div>
-                    <div class="info-item"><small>Mouvement signature</small><strong>${escapeHtml(full.mouvementSignature)}</strong></div>
-                    <div class="info-item"><small>Capture</small><strong>${full.capture}</strong></div>
-                    <div class="info-item"><small>Talents</small><strong>${full.talents.join(' / ')}</strong></div>
-                    <div class="info-item"><small>Faiblesses</small><strong>${full.faiblesses.join(' / ')}</strong></div>
-                    <div class="info-item"><small>Résistances</small><strong>${full.resistances.join(' / ')}</strong></div>
-                    <div class="info-item"><small>Évolution</small><strong>${escapeHtml(full.evolution)}</strong></div>
+                    <div class="info-item"><small>Catégorie</small><strong>Pokémon psy</strong></div>
+                    <div class="info-item"><small>Taille</small><strong>1.99 m</strong></div>
+                    <div class="info-item"><small>Poids</small><strong>46.5 kg</strong></div>
+                    <div class="info-item"><small>Génération</small><strong>Génération I</strong></div>
+                    <div class="info-item"><small>Région</small><strong>Kanto</strong></div>
+                    <div class="info-item"><small>Habitat</small><strong>Ruines mystiques</strong></div>
+                    <div class="info-item"><small>Rôle</small><strong>Finisseur offensif</strong></div>
+                    <div class="info-item"><small>Tempérament</small><strong>Impulsif</strong></div>
+                    <div class="info-item"><small>Genre</small><strong>62% male / 38% femelle</strong></div>
+                    <div class="info-item"><small>Niveau conseillé</small><strong>90</strong></div>
+                    <div class="info-item"><small>Difficulté</small><strong>Elevee</strong></div>
+                    <div class="info-item"><small>Total stats</small><strong>335</strong></div>
+                    <div class="info-item"><small>Stat dominante</small><strong>Attaque</strong></div>
+                    <div class="info-item"><small>Mouvement signature</small><strong>Psyko</strong></div>
+                    <div class="info-item"><small>Capture</small><strong>20%</strong></div>
+                    <div class="info-item"><small>Talents</small><strong>Synchro / Lévitation</strong></div>
+                    <div class="info-item"><small>Faiblesses</small><strong>Insecte / Spectre / Ténèbres</strong></div>
+                    <div class="info-item"><small>Résistances</small><strong>Combat / Psy</strong></div>
+                    <div class="info-item"><small>Évolution</small><strong>Mew (Pokémon fabuleux)</strong></div>
                 </div>
-                <p class="muted">${escapeHtml(full.description)}</p>
-                <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
+                <p class="muted">Mew est un Pokémon de type Psy. Il se distingue par une puissance de 45, une attaque de 97 et une défense de 66.</p>
+                <div class="power-bar"><span style="width:99.00000000000001%;"></span></div>
             </div>
         </section>
-    `;
-};
-/*
-*---------------
-* R O U T I N G
-*---------------
-*/
-// GET
-app.get('/', (req, res) => {
-    res.send(renderHomePage());
-});
-/*
-app.get('/api/pokemons/1', (req, res) => {
-    res.send(`<h3>Bulbizarre !</h3>`);
-});
-*/
-// parameter
-/*
-app.get('/api/pokemons/:id', (req, res) => {
-    const id = req.params.id;
-    res.send(`<h3>About Pokemon ${id} !</h3>`);
-});
-// parameters
-app.get('/api/pokemons/:id/:name', (req, res) => {
-    //
-    const id = req.params.id;
-    const name = req.params.name;
-    //
-    res.send(`<h3>About Pokemon ${id} : ${name} !</h3>`);
-});
-*/
-app.get('/api/pokemons', (req, res) => {
-    const query = String(req.query.q || '').trim();
-    const sortBy = String(req.query.sort || 'power-desc');
-    const selectedId = parseInt(req.query.id, 10);
-    const filteredPokemons = query
-        ? pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(query.toLowerCase()))
-        : pokemons;
-    const visiblePokemons = sortPokemons(filteredPokemons, sortBy);
-    const selectedPokemon = Number.isInteger(selectedId)
-        ? pokemons.find((pokemon) => pokemon.id === selectedId)
-        : null;
-
-    if (selectedPokemon) {
-        return res.send(renderLayout('Pokemon sélectionné', `
-            <a class="back" href="/api/pokemons">← Retour à la recherche</a>
-            ${renderSearchPanel(query, selectedId, sortBy)}
-            ${renderPokemonDetailBlock(selectedPokemon)}
-        `, sortBy === 'power-desc' ? 'top' : 'pokemons'));
-    }
-
-    res.send(renderGallery(visiblePokemons, query, '', sortBy));
-});
-app.get('/api/pokemons/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    // search for the id & give the name if exist...
-    const pokemon = pokemons.find( pokemon=> pokemon.id === id );
-    res.send(renderLayout('Pokemon sélectionné', `
-        <a class="back" href="/api/pokemons">← Retour à la recherche</a>
-        ${renderSearchPanel('', pokemon ? pokemon.id : '', 'power-desc')}
-        ${renderPokemonDetailBlock(pokemon)}
-    `, 'pokemons'));
-});
-
-
-/*
-*-----------------------------------------------
-* L O G  O N  A D M I N  S C R E E N
-*-----------------------------------------------
-*/
-app.listen(PORT, () => {
-console.log(`Server listening on http://localhost:${PORT}`);
-});
-
-
-
+    
+        
+    </div>
+</body>
+</html>
