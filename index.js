@@ -37,13 +37,48 @@ const renderLayout = (title, body) => `
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(180deg, #f5f7ff 0%, #eef3ff 100%);
+            background:
+                radial-gradient(circle at 15% 20%, rgba(250, 204, 21, 0.28) 0, rgba(250, 204, 21, 0.08) 18%, transparent 40%),
+                radial-gradient(circle at 85% 10%, rgba(59, 130, 246, 0.26) 0, rgba(59, 130, 246, 0.08) 16%, transparent 36%),
+                radial-gradient(circle at 80% 85%, rgba(244, 114, 182, 0.18) 0, rgba(244, 114, 182, 0.06) 20%, transparent 42%),
+                linear-gradient(180deg, #f8fbff 0%, #eef4ff 48%, #e9f1ff 100%);
             color: #1f2937;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            inset: auto;
+            border-radius: 999px;
+            pointer-events: none;
+            filter: blur(8px);
+            z-index: 0;
+        }
+        body::before {
+            width: 320px;
+            height: 320px;
+            left: -120px;
+            top: 120px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.18) 55%, transparent 72%);
+            opacity: 0.6;
+        }
+        body::after {
+            width: 420px;
+            height: 420px;
+            right: -150px;
+            bottom: -120px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.55) 0%, rgba(96, 165, 250, 0.12) 45%, transparent 72%);
+            opacity: 0.45;
         }
         .wrap {
             max-width: 1100px;
             margin: 0 auto;
             padding: 24px;
+            position: relative;
+            z-index: 1;
         }
         .hero {
             display: flex;
