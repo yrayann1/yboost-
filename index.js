@@ -169,20 +169,8 @@ const renderLayout = (title, body, activePage = 'home') => `
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-            .card::after {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            }
         :root {
             --text: #0f1b3d;
-                box-shadow: 0 28px 52px rgba(27, 67, 157, 0.2);
-            }
-            .card:hover::after {
-                opacity: 1;
             --card-shadow: 0 22px 44px rgba(13, 24, 57, 0.14);
             --surface: rgba(255, 255, 255, 0.88);
             --surface-strong: rgba(255, 255, 255, 0.95);
@@ -218,27 +206,13 @@ const renderLayout = (title, body, activePage = 'home') => `
         body::before,
         body::after {
             content: '';
-            @keyframes bgOrbFloat {
-                0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-                25% { transform: translate(40px, -30px) scale(1.05); opacity: 0.7; }
-                50% { transform: translate(80px, 0) scale(0.95); opacity: 0.5; }
-                75% { transform: translate(40px, 40px) scale(1.02); opacity: 0.65; }
-            }
-            @keyframes bgOrbFloat2 {
-                0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.45; }
-                25% { transform: translate(-50px, 40px) scale(0.98); opacity: 0.5; }
-                50% { transform: translate(-80px, 0) scale(1.05); opacity: 0.6; }
-                75% { transform: translate(-40px, -40px) scale(0.97); opacity: 0.4; }
-            }
-            body::before { animation: bgOrbFloat 10s ease-in-out infinite; }
-            body::after { animation: bgOrbFloat2 12s ease-in-out infinite; }
             position: fixed;
             inset: auto;
             border-radius: 999px;
             pointer-events: none;
             filter: blur(8px);
             z-index: 0;
-                z-index: 2;
+        }
         body::before {
             width: 320px;
             height: 320px;
@@ -351,26 +325,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             border: 1px solid var(--outline);
             backdrop-filter: blur(8px);
             animation: fadeUp 0.55s ease both;
-                position: relative;
-                overflow: hidden;
         }
-            .hero::before {
-                content: '';
-                position: absolute;
-                top: -45%;
-                right: -15%;
-                width: 600px;
-                height: 600px;
-                background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.04) 35%, transparent 70%);
-                border-radius: 999px;
-                filter: blur(50px);
-                pointer-events: none;
-                animation: heroGlow 6s ease-in-out infinite;
-            }
-            @keyframes heroGlow {
-                0%, 100% { transform: translate(0, 0); opacity: 0.7; }
-                50% { transform: translate(30px, -20px); opacity: 0.5; }
-            }
         .hero h1, .hero p {
             margin: 0;
         }
@@ -666,23 +621,6 @@ const renderLayout = (title, body, activePage = 'home') => `
         .search-panel input:focus,
         .search-panel select:focus,
         .search-panel button:focus {
-                position: relative;
-                overflow: hidden;
-            }
-            .search-panel::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: 
-                    radial-gradient(circle 250px at -20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle 200px at 120% 30%, rgba(96, 165, 250, 0.04) 0%, transparent 50%);
-                pointer-events: none;
-                animation: searchBgShift 7s ease-in-out infinite;
-            }
-            @keyframes searchBgShift {
-                0%, 100% { transform: translate(0, 0); }
-                50% { transform: translate(15px, 10px); }
-            }
             outline: none;
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
@@ -690,8 +628,6 @@ const renderLayout = (title, body, activePage = 'home') => `
         .search-panel input,
         .search-panel select {
             width: 100%;
-                position: relative;
-                z-index: 1;
             background: white;
             color: var(--text);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -737,25 +673,6 @@ const renderLayout = (title, body, activePage = 'home') => `
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 18px;
-                position: relative;
-                z-index: 2;
-            }
-            .grid::before {
-                content: '';
-                position: absolute;
-                inset: -40px;
-                background: 
-                    radial-gradient(circle 400px at 30% 40%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                    radial-gradient(circle 350px at 75% 60%, rgba(96, 165, 250, 0.06) 0%, transparent 50%);
-                pointer-events: none;
-                border-radius: 30px;
-                z-index: -1;
-                animation: gridBgShift 8s ease-in-out infinite;
-            }
-            @keyframes gridBgShift {
-                0%, 100% { transform: translate(0, 0); filter: blur(1px); }
-                50% { transform: translate(20px, 15px); filter: blur(2px); }
-            }
         }
         .card {
             position: relative;
