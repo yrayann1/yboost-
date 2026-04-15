@@ -527,6 +527,47 @@ const renderLayout = (title, body, activePage = 'home') => `
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
+        .list-stage {
+            position: relative;
+            margin-bottom: 22px;
+            padding: 16px;
+            border-radius: 28px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(240, 253, 250, 0.58));
+            border: 1px solid rgba(14, 165, 233, 0.22);
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .list-stage::before {
+            content: '';
+            position: absolute;
+            inset: -120px -120px auto auto;
+            width: 420px;
+            height: 420px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(14, 165, 233, 0.05) 46%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .list-stage::after {
+            content: '';
+            position: absolute;
+            left: -90px;
+            bottom: -140px;
+            width: 360px;
+            height: 360px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.14) 0%, rgba(249, 115, 22, 0.03) 44%, transparent 72%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .list-stage .hero {
+            margin-bottom: 14px;
+        }
+        .list-stage .search-panel {
+            margin-bottom: 0;
+        }
         .hero-metrics {
             display: flex;
             gap: 8px;
@@ -863,6 +904,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             position: sticky;
             top: 84px;
             z-index: 12;
+            backdrop-filter: blur(6px);
         }
         .search-panel input,
         .search-panel select,
@@ -1243,6 +1285,10 @@ const renderLayout = (title, body, activePage = 'home') => `
             .search-panel {
                 grid-template-columns: 1fr;
             }
+            .list-stage {
+                padding: 12px;
+                border-radius: 22px;
+            }
             .list-toolbar {
                 position: static;
             }
@@ -1428,24 +1474,26 @@ const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc'
     const activePage = sortBy === 'power-desc' ? 'top' : 'pokemons';
 
     return renderLayout('Pokemons', `
-        <section class="hero list-hero">
-            <div class="list-hero-main">
-                <h1>Collection Pokemon</h1>
-                <p class="muted">Une galerie nette pour choisir vite et bien.</p>
-                <div class="hero-metrics">
-                    <span class="metric-pill">Moyenne <strong>${avgPower}</strong></span>
-                    <span class="metric-pill">Attaque max <strong>${topAttack}</strong></span>
-                    <span class="metric-pill">Tri <strong>${escapeHtml(sortLabel)}</strong></span>
+        <section class="list-stage">
+            <section class="hero list-hero">
+                <div class="list-hero-main">
+                    <h1>Collection Pokemon</h1>
+                    <p class="muted">Une galerie nette pour choisir vite et bien.</p>
+                    <div class="hero-metrics">
+                        <span class="metric-pill">Moyenne <strong>${avgPower}</strong></span>
+                        <span class="metric-pill">Attaque max <strong>${topAttack}</strong></span>
+                        <span class="metric-pill">Tri <strong>${escapeHtml(sortLabel)}</strong></span>
+                    </div>
+                    <p class="list-hero-note">Choisis un Pokémon pour ouvrir sa fiche complète, ses talents et son évolution.</p>
                 </div>
-                <p class="list-hero-note">Choisis un Pokémon pour ouvrir sa fiche complète, ses talents et son évolution.</p>
-            </div>
-            <div class="list-hero-aside">
-                <span class="list-hero-count">${items.length}</span>
-                <div class="list-hero-label">Pokemon disponibles</div>
-                <div class="list-hero-sub">Pokedex YBoost</div>
-            </div>
+                <div class="list-hero-aside">
+                    <span class="list-hero-count">${items.length}</span>
+                    <div class="list-hero-label">Pokemon disponibles</div>
+                    <div class="list-hero-sub">Pokedex YBoost</div>
+                </div>
+            </section>
+            ${renderSearchPanel(query, selectedId, sortBy)}
         </section>
-        ${renderSearchPanel(query, selectedId, sortBy)}
         <main class="grid list-grid">
             ${cards.length ? cards : '<div class="empty">Aucun pokemon trouvé.</div>'}
         </main>
