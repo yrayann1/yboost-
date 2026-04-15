@@ -334,6 +334,21 @@ const renderLayout = (title, body, activePage = 'home') => `
             font-size: 28px;
             letter-spacing: -0.04em;
         }
+        .hero-metrics {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .metric-pill {
+            background: #eff6ff;
+            color: #1e3a8a;
+            border: 1px solid #bfdbfe;
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
         .home-hero {
             position: relative;
             display: grid;
@@ -535,6 +550,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             font-weight: 800;
             letter-spacing: 0.03em;
             white-space: nowrap;
+            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.16);
         }
         .card-types {
             display: flex;
@@ -569,10 +585,19 @@ const renderLayout = (title, body, activePage = 'home') => `
         .card-substats {
             margin-top: 6px;
             font-size: 12px;
-            color: #475569;
+            color: #334155;
             text-align: left;
             font-weight: 700;
             letter-spacing: 0.01em;
+        }
+        .card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 700;
         }
         .search-panel {
             display: grid;
@@ -593,6 +618,13 @@ const renderLayout = (title, body, activePage = 'home') => `
             border-radius: 12px;
             padding: 12px 14px;
             font-size: 16px;
+        }
+        .search-panel input:focus,
+        .search-panel select:focus,
+        .search-panel button:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
         .search-panel input,
         .search-panel select {
@@ -620,6 +652,23 @@ const renderLayout = (title, body, activePage = 'home') => `
         .search-panel .secondary {
             background: #e2e8f0;
             color: #0f172a;
+        }
+        .filter-reset {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 12px 14px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .filter-reset:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.12);
         }
         .grid {
             display: grid;
@@ -659,6 +708,12 @@ const renderLayout = (title, body, activePage = 'home') => `
         .card img {
             background: linear-gradient(145deg, #eff6ff 0%, #f8fafc 100%);
             border-radius: 14px;
+            padding: 8px;
+            box-sizing: border-box;
+            transition: transform 0.26s ease;
+        }
+        .card:hover img {
+            transform: scale(1.04);
         }
         .name {
             margin: 12px 0 0;
@@ -666,6 +721,7 @@ const renderLayout = (title, body, activePage = 'home') => `
             text-align: left;
             letter-spacing: -0.02em;
             color: var(--text);
+            font-size: 20px;
         }
         .power-bar {
             margin-top: auto;
@@ -986,7 +1042,7 @@ const renderSearchPanel = (query, selectedId, sortBy) => `
             <option value="attack-desc" ${sortBy === 'attack-desc' ? 'selected' : ''}>Attaque décroissante</option>
         </select>
         <button type="submit">Voir</button>
-        <a class="card secondary" href="/api/pokemons" style="display:flex;align-items:center;justify-content:center;padding:12px 14px;text-decoration:none;font-weight:700;">Réinitialiser</a>
+        <a class="filter-reset" href="/api/pokemons">Réinitialiser</a>
     </form>
 `;
 
@@ -1036,6 +1092,10 @@ const renderCardFull = (pokemon) => {
         </div>
         <div class="card-types">${renderTypesBadges(pokemon.types)}</div>
         <p class="card-substats">ATK ${extra.attack} • DEF ${extra.defense} • VIT ${extra.speed}</p>
+        <div class="card-foot">
+            <span>${getPowerStars(pokemon.power)}</span>
+            <span>${pokemon.types.length} type${pokemon.types.length > 1 ? 's' : ''}</span>
+        </div>
         <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
     </a>
 `;
@@ -1043,6 +1103,8 @@ const renderCardFull = (pokemon) => {
 
 const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc') => {
     const cards = items.map((pokemon) => renderCardFull(pokemon)).join('');
+    const avgPower = items.length ? Math.round(items.reduce((total, pokemon) => total + (pokemon.power || 0), 0) / items.length) : 0;
+    const topAttack = items.length ? Math.max(...items.map((pokemon) => getPokemonExtraStats(pokemon).attack)) : 0;
 
     const activePage = sortBy === 'power-desc' ? 'top' : 'pokemons';
 
@@ -1051,6 +1113,11 @@ const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc'
             <div>
                 <h1>Pokemons en images</h1>
                 <p class="muted">Recherche un nom ou choisis un pokemon dans la liste.</p>
+                <div class="hero-metrics">
+                    <span class="metric-pill">Puissance moy. ${avgPower}</span>
+                    <span class="metric-pill">Top attaque ${topAttack}</span>
+                    <span class="metric-pill">Tri: ${escapeHtml(sortBy)}</span>
+                </div>
             </div>
             <div>
                 <strong>${items.length}</strong>
