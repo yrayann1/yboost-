@@ -41,6 +41,123 @@ const getPokemonExtraStats = (pokemon) => {
     return { attack, defense, speed, rarity };
 };
 
+const TYPE_WEAKNESSES = {
+    Plante: ['Feu', 'Glace', 'Vol', 'Insecte'],
+    Feu: ['Eau', 'Roche', 'Sol'],
+    Eau: ['Electrik', 'Plante'],
+    Electrik: ['Sol'],
+    Psy: ['Insecte', 'Spectre', 'Ténèbres'],
+    Poison: ['Sol', 'Psy'],
+    Insecte: ['Feu', 'Vol', 'Roche'],
+    Roche: ['Eau', 'Plante', 'Combat', 'Sol', 'Acier'],
+    Sol: ['Eau', 'Plante', 'Glace'],
+    Vol: ['Electrik', 'Glace', 'Roche'],
+    Combat: ['Vol', 'Psy', 'Fée'],
+    Fée: ['Poison', 'Acier'],
+    Acier: ['Feu', 'Combat', 'Sol'],
+    Normal: ['Combat'],
+    Dragon: ['Glace', 'Dragon', 'Fée']
+};
+
+const TYPE_RESISTANCES = {
+    Plante: ['Eau', 'Electrik', 'Plante', 'Sol'],
+    Feu: ['Feu', 'Plante', 'Glace', 'Insecte', 'Acier', 'Fée'],
+    Eau: ['Feu', 'Eau', 'Glace', 'Acier'],
+    Electrik: ['Electrik', 'Vol', 'Acier'],
+    Psy: ['Combat', 'Psy'],
+    Poison: ['Plante', 'Combat', 'Poison', 'Insecte', 'Fée'],
+    Insecte: ['Plante', 'Combat', 'Sol'],
+    Roche: ['Normal', 'Feu', 'Poison', 'Vol'],
+    Sol: ['Poison', 'Roche'],
+    Vol: ['Plante', 'Combat', 'Insecte'],
+    Combat: ['Roche', 'Insecte', 'Ténèbres'],
+    Fée: ['Combat', 'Insecte', 'Ténèbres'],
+    Acier: ['Normal', 'Plante', 'Glace', 'Vol', 'Psy', 'Insecte', 'Roche', 'Dragon', 'Acier', 'Fée'],
+    Normal: [],
+    Dragon: ['Feu', 'Eau', 'Plante', 'Electrik']
+};
+
+const TYPE_TALENTS = {
+    Plante: ['Engrais', 'Chlorophylle'],
+    Feu: ['Brasier', 'Corps Ardent'],
+    Eau: ['Torrent', 'Glissade'],
+    Electrik: ['Statik', 'Paratonnerre'],
+    Psy: ['Synchro', 'Lévitation'],
+    Poison: ['Point Poison', 'Mue'],
+    Insecte: ['Essaim', 'Poudreur'],
+    Roche: ['Tête de Roc', 'Fermeté'],
+    Sol: ['Voile Sable', 'Force Sable'],
+    Vol: ['Regard Vif', 'Pieds Confus'],
+    Combat: ['Cran', 'Impassible'],
+    Fée: ['Joli Sourire', 'Peau Féérique'],
+    Acier: ['Magnépiège', 'Corps Sain'],
+    Normal: ['Fuite', 'Attention'],
+    Dragon: ['Mue', 'Attention']
+};
+
+const EVOLUTION_CHAINS = {
+    Bulbizarre: 'Bulbizarre -> Herbizarre -> Florizarre',
+    Salamèche: 'Salamèche -> Reptincel -> Dracaufeu',
+    Carapuce: 'Carapuce -> Carabaffe -> Tortank',
+    Aspicot: 'Aspicot -> Coconfort -> Dardargnan',
+    Roucool: 'Roucool -> Roucoups -> Roucarnage',
+    Rattata: 'Rattata -> Rattatac',
+    Piafabec: 'Piafabec -> Rapasdepic',
+    Abo: 'Abo -> Arbok',
+    Pikachu: 'Pichu -> Pikachu -> Raichu',
+    Sabelette: 'Sabelette -> Sablaireau',
+    Mélofée: 'Mélo -> Mélofée -> Mélodelfe',
+    Groupix: 'Goupix -> Feunard',
+    Nosferapti: 'Nosferapti -> Nosferalto -> Nostenfer',
+    Miaouss: 'Miaouss -> Persian',
+    Psykokwak: 'Psykokwak -> Akwakwak',
+    Caninos: 'Caninos -> Arcanin',
+    Ptitard: 'Ptitard -> Têtarte -> Tartard',
+    Abra: 'Abra -> Kadabra -> Alakazam',
+    Machoc: 'Machoc -> Machopeur -> Mackogneur',
+    Chétiflor: 'Chétiflor -> Boustiflor -> Empiflor',
+    Tentacool: 'Tentacool -> Tentacruel',
+    Racaillou: 'Racaillou -> Gravalanch -> Grolem',
+    Ponyta: 'Ponyta -> Galopa',
+    Ramoloss: 'Ramoloss -> Flagadoss',
+    Magnéti: 'Magnéti -> Magnéton -> Magnézone',
+    Canarticho: 'Canarticho (forme unique)',
+    Otaria: 'Otaria -> Lamantine',
+    Krabby: 'Krabby -> Krabboss',
+    Voltorbe: 'Voltorbe -> Électrode',
+    Kokiyas: 'Kokiyas -> Crustabri',
+    Evoli: 'Évoli -> Aquali / Voltali / Pyroli / etc.',
+    Minidraco: 'Minidraco -> Draco -> Dracolosse',
+    Mew: 'Mew (Pokémon fabuleux)'
+};
+
+const getPokemonFullInfo = (pokemon) => {
+    const firstType = pokemon.types[0] || 'Normal';
+    const secondType = pokemon.types[1] || null;
+    const extra = getPokemonExtraStats(pokemon);
+    const weaknesses = [...new Set(pokemon.types.flatMap((type) => TYPE_WEAKNESSES[type] || []))].slice(0, 5);
+    const resistances = [...new Set(pokemon.types.flatMap((type) => TYPE_RESISTANCES[type] || []))].slice(0, 6);
+    const talentPool = [
+        ...(TYPE_TALENTS[firstType] || ['Adaptation']),
+        ...(secondType ? (TYPE_TALENTS[secondType] || []) : [])
+    ];
+    const talents = [...new Set(talentPool)].slice(0, 3);
+
+    return {
+        taille: `${(0.4 + pokemon.hp / 22).toFixed(2)} m`,
+        poids: `${(4.8 + pokemon.power * 0.85 + pokemon.cp * 0.35).toFixed(1)} kg`,
+        generation: 'Génération I',
+        region: 'Kanto',
+        categorie: `Pokémon ${firstType.toLowerCase()}`,
+        talents,
+        faiblesses: weaknesses.length ? weaknesses : ['Aucune notable'],
+        resistances: resistances.length ? resistances : ['Aucune notable'],
+        evolution: EVOLUTION_CHAINS[pokemon.name] || `${pokemon.name} (évolution inconnue)`,
+        capture: `${clamp(65 - pokemon.power, 8, 60)}%`,
+        description: `${pokemon.name} est un Pokémon de type ${pokemon.types.join(' / ')}. Il se distingue par une puissance de ${pokemon.power}, une attaque de ${extra.attack} et une défense de ${extra.defense}.`
+    };
+};
+
 const renderLayout = (title, body) => `
 <!doctype html>
 <html lang="fr">
@@ -289,6 +406,57 @@ const renderLayout = (title, body) => `
             font-size: 14px;
             font-weight: 600;
         }
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .card-name-section {
+            min-width: 0;
+            flex: 1;
+        }
+        .power-badge {
+            background: #dbeafe;
+            color: #1e3a8a;
+            border-radius: 10px;
+            padding: 6px 8px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+        .card-types {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 10px 0 0;
+            justify-content: center;
+        }
+        .type-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+        }
+        .type-plante { background: var(--type-plante); }
+        .type-feu { background: var(--type-feu); }
+        .type-eau { background: var(--type-eau); }
+        .type-electrik { background: var(--type-electrik); color: #3f3f46; }
+        .type-psy { background: var(--type-psy); }
+        .type-glace { background: var(--type-glace); color: #3f3f46; }
+        .type-roche { background: var(--type-roche); }
+        .type-sol { background: var(--type-sol); color: #3f3f46; }
+        .type-vol { background: var(--type-vol); }
+        .type-insecte { background: var(--type-insecte); }
+        .type-poison { background: var(--type-poison); }
+        .type-combat { background: var(--type-combat); }
+        .type-fee { background: var(--type-fee); color: #3f3f46; }
+        .type-acier { background: var(--type-acier); color: #3f3f46; }
         .card-substats {
             margin-top: 6px;
             font-size: 12px;
@@ -441,6 +609,31 @@ const renderLayout = (title, body) => `
             padding: 6px 10px;
             font-size: 12px;
             font-weight: 700;
+        }
+        .info-grid {
+            margin-top: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+        }
+        .info-item {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 10px 12px;
+        }
+        .info-item small {
+            display: block;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.04em;
+            color: #475569;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .info-item strong {
+            font-size: 13px;
+            color: #0f172a;
         }
         .stat {
             background: #f8fafc;
@@ -653,10 +846,10 @@ const renderTypesBadges = (types) => {
     return types.map(type => `<span class="type-badge ${getTypeClass(type)}">${escapeHtml(type)}</span>`).join('');
 };
 
-const renderCardFull = (pokemon) => `
-    (() => {
-        const extra = getPokemonExtraStats(pokemon);
-        return `
+const renderCardFull = (pokemon) => {
+    const extra = getPokemonExtraStats(pokemon);
+
+    return `
     <a class="card" href="/api/pokemons?id=${pokemon.id}">
         <img src="${pokemon.picture}" alt="${escapeHtml(pokemon.name)}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png';" />
         <div class="card-header">
@@ -671,8 +864,7 @@ const renderCardFull = (pokemon) => `
         <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
     </a>
 `;
-    })()
-);
+};
 
 const renderGallery = (items, query = '', selectedId = '', sortBy = 'power-desc') => {
     const cards = items.map((pokemon) => renderCardFull(pokemon)).join('');
@@ -708,6 +900,7 @@ const renderPokemonDetailBlock = (pokemon) => {
     }
 
     const extra = getPokemonExtraStats(pokemon);
+    const full = getPokemonFullInfo(pokemon);
 
     return `
         <section class="detail">
@@ -730,6 +923,19 @@ const renderPokemonDetailBlock = (pokemon) => {
                     <div class="stat"><small>Types</small><strong>${pokemon.types.join(' / ')}</strong></div>
                     <div class="stat"><small>Créé le</small><strong>${formatDate(pokemon.created)}</strong></div>
                 </div>
+                <div class="info-grid">
+                    <div class="info-item"><small>Catégorie</small><strong>${escapeHtml(full.categorie)}</strong></div>
+                    <div class="info-item"><small>Taille</small><strong>${full.taille}</strong></div>
+                    <div class="info-item"><small>Poids</small><strong>${full.poids}</strong></div>
+                    <div class="info-item"><small>Génération</small><strong>${full.generation}</strong></div>
+                    <div class="info-item"><small>Région</small><strong>${full.region}</strong></div>
+                    <div class="info-item"><small>Capture</small><strong>${full.capture}</strong></div>
+                    <div class="info-item"><small>Talents</small><strong>${full.talents.join(' / ')}</strong></div>
+                    <div class="info-item"><small>Faiblesses</small><strong>${full.faiblesses.join(' / ')}</strong></div>
+                    <div class="info-item"><small>Résistances</small><strong>${full.resistances.join(' / ')}</strong></div>
+                    <div class="info-item"><small>Évolution</small><strong>${escapeHtml(full.evolution)}</strong></div>
+                </div>
+                <p class="muted">${escapeHtml(full.description)}</p>
                 <div class="power-bar"><span style="width:${Math.min(100, Math.max(20, pokemon.power * 2.2))}%;"></span></div>
             </div>
         </section>
